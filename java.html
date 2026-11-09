@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="UTF-8" name="robots" content="noindex">
+  <title>Java</title>
+</head>
+<body>
+  <pre id="javabasics">Java Basics</pre>
+  <pre id="java8">Java 8</pre>
+  <script>
+    fetch("Java.txt")
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById("javabasics").textContent = text;
+      })
+      .catch(err => {
+        document.getElementById("javabasics").textContent = "Could not load file Java.txt.";
+      });
+    fetch("Java8.txt")
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById("java8").textContent = text;
+      })
+      .catch(err => {
+        document.getElementById("java8").textContent = "Could not load file Java8.txt.";
+      });
+  </script>
+</body>
+</html>
