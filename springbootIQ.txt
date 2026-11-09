@@ -115,7 +115,7 @@ Bean creation	Lazy by default: a bean is created when first requested		Eager by 
 Startup errors	Configuration and wiring problems surface later, at first use	Problems surface at startup, which is easier to catch
 Enterprise features	Not included												Event publishing, message source (i18n), resource loading, and integration with AOP and annotations
 Annotation and auto-wiring support	Minimal, usually needs manual setup			Full support, including @Autowired, @Component, and component scanning
-Typical use	Constrained environments, such as memory-sensitive or mobile apps	Almost all standard Spring applications, including web and Spring Boot apps
+Typical use    	Constrained environments, such as memory-sensitive or mobile apps	Almost all standard Spring applications, including web and Spring Boot apps
 
 In short, BeanFactory provides the core bean lifecycle and dependency injection. ApplicationContext adds the features needed in real applications. In Spring Boot you always work with an ApplicationContext.
 
