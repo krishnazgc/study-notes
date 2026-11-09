@@ -109,13 +109,19 @@ There are two types of IOC containers in spring framework.
 
 BeanFactory is the basic Spring IoC container. ApplicationContext builds on it and is the one most applications use.
 
-Aspect			BeanFactory													ApplicationContext
-Role			Basic container for creating and wiring beans				Full-featured container that extends BeanFactory
-Bean creation	Lazy by default: a bean is created when first requested		Eager by default: singleton beans are created at startup
-Startup errors	Configuration and wiring problems surface later, at first use	Problems surface at startup, which is easier to catch
-Enterprise features	Not included												Event publishing, message source (i18n), resource loading, and integration with AOP and annotations
-Annotation and auto-wiring support	Minimal, usually needs manual setup			Full support, including @Autowired, @Component, and component scanning
-Typical use    	Constrained environments, such as memory-sensitive or mobile apps	Almost all standard Spring applications, including web and Spring Boot apps
++-----------------------------------+---------------------------------------------+-----------------------------------------------------------------+
+| Aspect                            | BeanFactory                                 | ApplicationContext                                              |
++-----------------------------------+---------------------------------------------+-----------------------------------------------------------------+
+| Role                              | Basic container for creating and wiring     | Full-featured container that extends BeanFactory                |
+|                                   | beans                                       |                                                                 |
+| Bean creation                     | Lazy by default: created when first         | Eager by default: singleton beans created at startup            |
+|                                   | requested                                   |                                                                 |
+| Startup errors                    | Surface later, at first use                 | Surface at startup, easier to catch                             |
+| Enterprise features               | Not included                                | Event publishing, i18n message source, resource loading,        |
+|                                   |                                             | AOP integration                                                 |
+| Annotation and auto-wiring        | Minimal, usually needs manual setup         | Full support: @Autowired, @Component, component scanning        |
+| Typical use                       | Memory-constrained environments             | Almost all standard Spring apps, including web and Spring Boot  |
++-----------------------------------+---------------------------------------------+-----------------------------------------------------------------+
 
 In short, BeanFactory provides the core bean lifecycle and dependency injection. ApplicationContext adds the features needed in real applications. In Spring Boot you always work with an ApplicationContext.
 
