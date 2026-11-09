@@ -5,10 +5,10 @@
   <title>Java</title>
 </head>
 <body>
-  <pre id="javabasics">
-     <h2><u>Java Basics</u></h2>
-  </pre>
-  <pre id="java8"> <h2><u>Java Basics</u></h2></pre>
+  <pre id="javabasics">Java Basics</pre>
+  <pre id="java8">Java 8</pre>
+  <pre id="javacollections">Java Collections</pre>
+  <pre id="javaiqs">Java IQs</pre>
   <script>
     fetch("Java.txt")
       .then(response => response.text())
@@ -25,6 +25,22 @@
       })
       .catch(err => {
         document.getElementById("java8").textContent = "Could not load file Java8.txt.";
+      });
+    fetch("JavaCollections.txt")
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById("javacollections").textContent = text;
+      })
+      .catch(err => {
+        document.getElementById("javacollections").textContent = "Could not load file Javacollections.txt.";
+      });
+    fetch("Java-IQs.txt")
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById("javaiqs").textContent = text;
+      })
+      .catch(err => {
+        document.getElementById("javaiqs").textContent = "Could not load file Java-IQs.txt.";
       });
   </script>
 </body>
