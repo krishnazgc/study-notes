@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" name="robots" content="noindex">
+  <title>Spring/Spring Boot</title>
+</head>
+<body>
+  <pre>
+    
+ <h2><u>Spring</u></h2>
+
+
+Spring framework makes the easy development of JavaEE application. 
+The Spring framework comprises several modules such as IOC, AOP, DAO, Context, ORM, WEB MVC etc.
+
+Inversion Of Control (IOC) and Dependency Injection:
+
+These are the design patterns that are used to remove dependency from the programming code. 
+They make the code easier to test and maintain.
+
+Inversion of Control is a principle in software engineering by which the control of objects or portions of a
+program is transferred to a container or framework.
+Inversion of Control can be achieved through various mechanisms such as: Strategy design pattern, Service Locator pattern, Factory pattern, 
+and Dependency Injection (DI).
+
+Dependency injection is a pattern through which to implement IoC, where the control being inverted is the setting of object's dependencies.
+
+IoC container:
+
+In the Spring framework, the IoC container is represented by the interface ApplicationContext. 
+The Spring container is responsible for instantiating, configuring and assembling objects known as beans, 
+as well as managing their lifecycle.
+In order to assemble beans, the container uses configuration metadata, which can be in the form of XML configuration or annotations.
+
+Autowiring: 
+
+Spring @Autowired annotation is used for automatic dependency injection.
+
+Autowiring feature of spring framework enables you to inject the object dependency implicitly. It internally uses setter or constructor injection.
+
+@Autowired annotation can be applied on variables and methods for autowiring byType. We can also use @Autowired annotation on constructor for constructor based 
+spring autowiring.
+
+@Qualifier annotation – This annotation is used to avoid conflicts in bean mapping and we need to provide the bean name that will be used for autowiring. 
+This way we can avoid issues where multiple beans are defined for same type. This annotation usually works with the @Autowired annotation. 
+For constructors with multiple arguments, we can use this annotation with the argument names in the method.
+
+1. What are the advantages of spring framework?
+
+
+    1.Predefined Templates
+    2.Loose Coupling
+    3.Easy to test
+    4.Lightweight
+    5.Fast Development
+    6.Powerful Abstraction
+    7.Declarative support
+
+2. What are the different modules in Spring framework?
+
+
+    Core module
+    Bean module
+    Context module
+    Expression Language module
+    JDBC module
+    ORM module
+    OXM module
+    Java Messaging Service(JMS) module
+    Transaction module
+    Web module
+    Web-Servlet module
+    Web-Struts module
+    Web-Portlet module
+
+3. What is Dependency Injection?
+
+Inversion of Control (IoC) is a general concept, and it can be expressed in many different ways and Dependency Injection is merely one concrete example of 
+Inversion of Control.
+
+This concept says that you do not create your objects but describe how they should be created. You don't directly connect your components and services 
+together in code but describe which services are needed by which components in a configuration file. A container (the IOC container) is then responsible 
+for hooking it all up.
+
+4. What is Spring IoC container?
+
+The Spring IoC creates the objects, wire them together, configure them, and manage their complete lifecycle from creation till destruction.
+ The Spring container uses dependency injection (DI) to manage the components that make up an application.
+
+
+5. What is the role of IOC container in spring?
+
+IOC container is responsible to:
+
+    create the instance
+    configure the instance, and
+    assemble the dependencies
+
+
+6. What are the different types of IoC (dependency injection)?
+
+
+Types of IoC are −
+
+    Constructor-based dependency injection − Constructor-based DI is accomplished when the container invokes a class constructor with a number of arguments, 
+    each representing a dependency on other class.
+
+    Setter-based dependency injection − Setter-based DI is accomplished by the container calling setter methods on your beans after invoking a
+    no-argument constructor or no-argument static factory method to instantiate your bean.
+
+
+7. What are the types of IOC container in spring?
+
+There are two types of IOC containers in spring framework.
+
+    BeanFactory
+    ApplicationContext
+
+BeanFactory is the basic Spring IoC container. ApplicationContext builds on it and is the one most applications use.
+
++-----------------------------------+---------------------------------------------+-----------------------------------------------------------------+
+| Aspect                            | BeanFactory                                 | ApplicationContext                                              |
++-----------------------------------+---------------------------------------------+-----------------------------------------------------------------+
+| Role                              | Basic container for creating and wiring     | Full-featured container that extends BeanFactory                |
+|                                   | beans                                       |                                                                 |
+| Bean creation                     | Lazy by default: created when first         | Eager by default: singleton beans created at startup            |
+|                                   | requested                                   |                                                                 |
+| Startup errors                    | Surface later, at first use                 | Surface at startup, easier to catch                             |
+| Enterprise features               | Not included                                | Event publishing, i18n message source, resource loading,        |
+|                                   |                                             | AOP integration                                                 |
+| Annotation and auto-wiring        | Minimal, usually needs manual setup         | Full support: @Autowired, @Component, component scanning        |
+| Typical use                       | Memory-constrained environments             | Almost all standard Spring apps, including web and Spring Boot  |
++-----------------------------------+---------------------------------------------+-----------------------------------------------------------------+
+
+In short, BeanFactory provides the core bean lifecycle and dependency injection. ApplicationContext adds the features needed in real applications. In Spring Boot you always work with an ApplicationContext.
+
+
+8. What are Spring beans?
+
+The objects that form the backbone of your application and that are managed by the Spring IoC container are called beans.
+A bean is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container. 
+These beans are created with the configuration metadata that you supply to the container, for example, in the form of XML <bean/> definitions.
+
+When a class is annotated or decorated using the @Component, such a class is called a Bean in Spring. Beans are maintained by Application Context.
+
+9. How do you provide configuration metadata to the Spring Container?
+
+
+There are following three important methods to provide configuration metadata to the Spring Container −
+
+    XML based configuration file.
+    Annotation-based configuration
+    Java-based configuration
+
+10. How do you define a bean scope?
+
+When defining a <bean> in Spring, you have the option of declaring a scope for that bean. For example, to force Spring to produce a new bean instance each time 
+one is needed, you should declare the bean's scope attribute to be prototype. Similar way if you want Spring to return the same bean instance 
+each time one is needed, you should declare the bean's scope attribute to be singleton.
+
+11. What are the different bean scopes in spring?
+
+There are 5 bean scopes in spring framework.
+
+No.	Scope			Description
+1)	singleton		The bean instance will be only once and same instance will be returned by the IOC container. It is the default scope.
+2)	prototype		The bean instance will be created each time when requested.
+3)	request			The bean instance will be created per HTTP request.
+4)	session			The bean instance will be created per HTTP session.
+5)	globalsession		The bean instance will be created per HTTP global session. It can be used in portlet context only.
+
+12. What is default scope of bean in Spring framework?
+
+The default scope of bean is Singleton for Spring framework.
+
+13. Are Singleton beans thread safe in Spring Framework?
+
+No, singleton beans are not thread-safe in Spring framework. 
+It is because the framework creates a singleton bean at the application startup and makes sure that the same instance is autowired and reused in 
+all other dependent beans. But the framework doesn't control how the singleton is used. It is developer's responsibility to ensure that the code
+runs sqafely in multithreaded environment.
+
+Q. Explain the process of creating an ApplicationContext in Spring.
+
+The ApplicationContext can be defined in two ways (i) using XML, (ii) using @Configuration. Once the configuration is done in any of the ways defined above, 
+the ApplicationContext is created using new ClassPathXmlApplicationContext. The ClassPathXmlApplicationContext looks for the XML files, 
+using this is one of the two ways. The other way is to use AnnotationConfigApplicationContext.
+
+Q.Explain Component Scan.
+
+Component Scan is one method of asking Spring to detect Spring-managed components, the input for this search is the packages. 
+Two methods are available to define a Component Scan-
+
+(i) Java Configuration; wherein, we use the @Component annotation to which we specify all the packages, for which Spring does the search.
+
+(ii) XML Configuration- we use <context:component-scan base-package=”com.demo.compscanex”/>
+
+Q.How do you perform the same (above question) in Spring Boot?
+
+In Spring Boot the annotation used to perform the scan is @SpringBootApplication. This annotation on a class would automatically initiate the component scan
+on the package where they are in.
+
+
+Q. What are the design patterns in Spring ?
+
+ Front Controller - Dispatcher Servlet
+ Prototype - Beans
+ Dependency Injection
+ Factory Pattern - Bean Factory & Application Context
+ Template Method 
+   - org.springframework.web.servlet.mvc.AbstractController
+
+
+<h2><u>SpringBoot</u></h2>
+  
+
+1) What is Spring Boot?
+
+Spring Boot is a Spring module which provides RAD (Rapid Application Development) feature to Spring framework.
+
+It is used to create stand alone spring based application that you can just run because it needs very little spring configuration.
+
+
+2) What are the advantages of Spring Boot?
+
+    Create stand-alone Spring applications that can be started using java -jar.
+    Embed Tomcat, Jetty or Undertow directly. You don't need to deploy WAR files.
+    It provides opinionated 'starter' POMs to simplify your Maven configuration.
+    It automatically configure Spring whenever possible.
+
+
+3) What are the features of Spring Boot?
+
+    Web Development
+    SpringApplication
+    Application events and listeners
+    Admin features
+
+
+4) How to create Spring Boot application using Maven?
+
+There are multiple approaches to create Spring Boot project. We can use any of the following approach to create application.
+
+    Spring Maven Project
+    Spring Starter Project Wizard
+    Spring Initializr
+    Spring Boot CLI
+
+
+5) How to create Spring Boot project using Spring Initializer?
+
+It is a web tool which is provided by Spring on official site. You can create Spring Boot project by providing project details.
+
+
+6) How to create Spring Boot project using boot CLI?
+
+It is a tool which you can download from the official site of Spring Framework. Here, we are explaining steps.
+
+Download the CLI tool from official site
+
+7) How to create simple Spring Boot application?
+
+To create an application. We are using STS (Spring Tool Suite) IDE and it includes the various steps that are explaining in steps.
+
+
+
+8) What are the Spring Boot Annotations?
+
+The @RestController is a stereotype annotation. It adds @Controller and @ResponseBody annotations to the class. 
+We need to import org.springframework.web.bind.annotation package in our file, in order to implement it.
+
+
+9) What is Spring Boot dependency management?
+
+Spring Boot manages dependencies and configuration automatically. You don't need to specify version for any of that dependencies.
+
+Spring Boot upgrades all dependencies automatically when you upgrade Spring Boot.
+
+
+
+10) What are the Spring Boot properties?
+
+Spring Boot provides various properties which can be specified inside our project's application.properties file. 
+These properties have default values and you can set that inside the properties file. 
+Properties are used to set values like: server-port number, database connection configuration etc.
+
+
+11) What are the Spring Boot Starters?
+
+Starters are a set of convenient dependency descriptors which we can include in our application.
+
+Spring Boot provides built-in starters which makes development easier and rapid. 
+For example, if we want to get started using Spring and JPA for database access, just include the spring-boot-starter-data-jpa dependency in your project.
+
+
+12) What is Spring Boot Actuator?
+
+Spring Boot provides actuator to monitor and manage our application. Actuator is a tool which has HTTP endpoints. when application is pushed to production,
+ you can choose to manage and monitor your application using HTTP endpoints.
+Add spring-boot-starter-actuator to enable. 
+
+Q. What is a shutdown in the actuator?
+
+Shutdown is an endpoint that allows the application to be gracefully shutdown. This feature is not enabled by default. 
+You can enable this by using management.endpoint.shutdown.enabled=true in your application.properties file.
+
+
+13) What is thymeleaf?
+
+It is a server side Java template engine for web application. It's main goal is to bring elegant natural templates to your web application.
+
+It can be integrate with Spring Framework and ideal for HTML5 Java web applications.
+
+14) How to use thymeleaf?
+
+In order to use Thymeleaf we must add it into our pom.xml file like:
+
+    <dependency>    
+    <groupId>org.springframework.boot</groupId>    
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>    
+    </dependency>    
+
+
+15) How to connect Spring Boot to the database using JPA?
+
+Spring Boot provides spring-boot-starter-data-jpa starter to connect Spring application with relational database efficiently. 
+You can use it into project POM (Project Object Model) file.
+
+
+16) How to connect Spring Boot application to database using JDBC?
+
+Spring Boot provides starter and libraries for connecting to our application with JDBC. Here, we are creating an application which connects with Mysql database.
+ It includes the following steps to create and setup JDBC with Spring Boot.
+
+Q. Differentiate @Component, @Repository and @Service and @Controller?
+
+Typically a web application is developed in layers like the controller (which is the initial point of client communication), 
+business (where the actual code or logic of the application is written) and DAO (where the database connections and interaction happens). 
+In such an architecture web application, @Component can be used in any of the layers. 
+Whereas, the @Controller is used in the controller/web layer. @Service is used in the business layer and @Repository is used in the DAO layer.
+
+Q.  What does the @RequestParam annotation do?
+
+This allows the server side to read from data and automatically bind it to a parameter coming into the method.
+
+Q. What is the use of @webmvctest in Spring MVC ?
+
+@WebMvcTest annotation is used for Spring MVC tests. It disables full auto-configuration and instead apply only configuration relevant to MVC tests.
+
+@WebMvcTest is used in combination with @RunWith(SpringRunner.class) when a test focuses only on Spring MVC components. It provides the following features
+
+    *Disable full auto-configuration (not @Component, @Service or @Repository beans) and instead apply only configuration relevant to MVC tests 
+     such as @Controller and @ControllerAdvice
+
+    *Auto-configure Spring Security and MockMvc
+
+
+
+17) What is @RestController annotation in Spring Boot?
+
+The @RestController is a stereotype annotation. It adds @Controller and @ResponseBody annotations to the class. 
+We need to import org.springframework.web.bind.annotation package in our file, in order to implement it.
+
+Feature			@Controller			@RestController
+--------		-------------			----------------
+Purpose	Returns 	view (HTML, JSP)		Returns JSON/XML data
+Response Type		Views (Model & View)		Serialized data (REST API)
+@ResponseBody		Manual annotation needed	Automatic (built-in)
+Use Case		Traditional web applications	RESTful web services/APIs
+
+
+18) What is @RequestMapping annotation in Spring Boot?
+
+The @RequestMapping annotation is used to provide routing information. It tells to the Spring that any HTTP request should map to the corresponding method. 
+We need to import org.springframework.web.annotation package in our file.
+
+
+19) How to create Spring Boot application using Spring Starter Project Wizard?
+
+There is one more way to create Spring Boot project in STS (Spring Tool Suite). Creating project by using IDE is always a convenient way. 
+Follow the following steps in order to create a Spring Boot Application by using this wizard.
+
+
+20) Spring Vs Spring Boot?
+
+Spring is a web application framework based on Java. It provides tools and libraries to create a complete cutomized web application.
+
+Wheras Spring Boot is a spring module which is used to create spring application project that can just run.
+
+21) Usage of @SpringBootApplication Annotation.
+
+Many Spring Boot developers like their apps to use auto-configuration, component scan and be able to define extra configuration on their "application class".
+ A single @SpringBootApplication annotation can be used to enable those three features, that is:
+
+    @EnableAutoConfiguration: enable Spring Boot’s auto-configuration mechanism
+    @ComponentScan: enable @Component scan on the package where the application is located.
+    @Configuration: allow to register extra beans in the context or import additional configuration classes
+
+23) What is Component Scan and How to disable Component Scan?
+
+
+Spring needs to know which packages to scan for annotated components in order to add them to the IoC container. 
+In a Spring Boot project, we typically set the main application class with the @SpringBootApplication annotation. 
+Under the hood, @SpringBootApplication is a composition of the @Configuration,  @ComponentScan, and @EnableAutoConfiguration annotations.
+With this default setting, Spring Boot will auto scan for components in the current package (containing the @SpringBoot main class) and its sub packages.
+
+The @ComponentScan annotation is used with the @Configuration annotation to tell Spring the packages to scan for annotated components. 
+@ComponentScan is also used to specify base packages and base package classes using thebasePackageClasses or basePackages attributes of @ComponentScan.
+
+The basePackageClasses attribute is a type-safe alternative to basePackages. When you specify basePackageClasses, Spring will scan the package (and subpackages) 
+of the classes you specify.
+
+We can disable Component Scan using excludeFilters.
+
+22) Spring boot starters.
+
+The Spring Boot Framework provides application starters under the org.springframework.boot group.
+
+some of the starters are:
+
+spring-boot-starter-web
+spring-boot-starter-tomcat
+spring-boot-starter-jdbc
+spring-boot-starter-data-jpa 
+spring-boot-starter 	     -	It is used for core starter, including auto-configuration support, logging, and YAML.
+spring-boot-starter-actuator -	It is used for Spring Boot's Actuator that provides production-ready features to help you monitor and manage your application.
+spring-boot-starter-logging  -	It is used for logging using Logback. Default logging starter.
+spring-boot-starter-log4j2  -	It is used for Log4j2 for logging. An alternative to spring-boot-starter-logging.
+
+23) How Is Spring Security Implemented In A Spring Boot Application?
+
+Minimal configuration is needed for implementation. All you need to do is, add spring-boot-starter-security starter in the file pom.xml. 
+You will also need to create a Spring config class that will override the required method while extending the WebSecurityConfigurerAdapter to 
+achieve security in the application. 
+
+Here is an example code for the same:
+
+package com.gkatzioura.security.securityendpoints.config;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+            .antMatchers("/welcome").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .formLogin()
+            .permitAll()
+            .and()
+            .logout()
+            .permitAll();
+    }
+}
+
+24. How to Configure Spring Boot Application Logging?
+
+Spring Boot comes with added support for Log4J2, Java Util Logging, and Logback. It is usually pre-configured as console output. 
+They can be configured by only specifying logging.level in the application.properties file.
+
+logging.level.spring.framework=Debug
+
+25. What is Spring Cloud?
+
+Spring cloud is an Integration software that integrates with external systems. It allows microservices framework to build applications
+which perform restricted amounts of data processing. 
+
+According to the official website of Spring Cloud, Spring Cloud provides tools for developers to quickly build some of the common patterns 
+in distributed systems (e.g. configuration management, service discovery, circuit breakers, intelligent routing, leadership election, 
+distributed sessions, cluster state).
+
+Q.  What is the Spring Initializer?
+
+The Spring Initializer is a web application that generates a Spring Boot project with everything you need to start it quickly. 
+As always, we need a good skeleton of the project; it helps you to create a project structure/skeleton properly. 
+
+Q. Is this possible to change the port of Embedded Tomcat server in Spring boot?
+
+Yes, it's possible to change the port. You can use the application.properties file to change the port. But you need to mention "server.port" (i.e. server.port=8081).
+ Make sure you have application.properties in your project classpath; REST Spring framework will take care of the rest.
+If you mention server.port=0 , then it will automatically assign any available port.
+
+Q. Can we disable the default web server in the Spring Boot application?
+
+The major strong point in Spring is to provide flexibility to build your application loosely coupled.
+ Spring provides features to disable the web server in a quick configuration. 
+Yes, we can use the application.properties to configure the web application type, i.e.  spring.main.web-application-type=none.
+
+Q. Mention the steps to connect Spring Boot application to a database using JDBC
+
+Spring Boot starter projects provide the required libraries to connect the application with JDBC. 
+So, for example, if you just have to create an application  and connect it with MySQL database, you can follow the below steps:
+
+Step 1: Create a database in MySQL
+
+	
+CREATE DATABASE example;
+
+Step 2: Then you have to create a table inside this database.
+
+	
+CREATE TABLE customers(customerid INT PRIMARY KEY NOT NULL AUTO_INCREMENT, customername VARCHAR(255));  
+
+Step 3: Now, create a Spring Boot project and provide the required details
+
+Step 4: Add the JDBC, MySQL and web dependencies.
+
+Step 5: Once the project is created, you have to configure the database into application properties
+	
+spring.datasource.url=jdbc:mysql://localhost:3306/example
+spring.datasource.username=root  
+spring.datasource.password=edureka  
+spring.jpa.hibernate.ddl-auto=create-drop  
+
+Step 6: The main application.java class should have the following code:
+	
+package com.edureka;  
+import org.springframework.boot.SpringApplication;  
+import org.springframework.boot.autoconfigure.SpringBootApplication;  
+@SpringBootApplication  
+public class SampleApplication {  
+    public static void main(String[] args) {  
+        SpringApplication.run(SampleApplication.class, args);  
+    }  
+} 
+
+Step 7: Next, you have to create a controller to handle the HTTP requests, by mentioning the following code:
+	
+package com.edureka;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.RestController;
+@RestController
+public class JdbcController {
+@Autowired
+JdbcTemplate jdbc;
+@RequestMapping("/insert")
+public String index(){
+jdbc.execute("insert into customers(name)values('Aryya')");
+return "Data Entry Successful";
+}
+}
+
+Step 8: Finally, execute this project as a Java application.
+Step 9: Next, open the URL (localhost:8080/insert), and you will see the output as Data Entry Successful. 
+You can also go forward and check if the data is entered into the table.
+
+Q. What is the difference between RequestMapping and GetMapping?
+
+The @GetMapping is a composed annotation that acts as a shortcut for @RequestMapping(method = RequestMethod.GET). 
+Both these methods support the consumes. The consume options are :
+
+consumes = “text/plain”
+consumes = {“text/plain”, “application/*”}
+
+Q. What are the steps to add a custom JS code with Spring Boot?
+
+The steps to add a custom JS code with Spring Boot are as follows:
+
+    Now, create a folder and name it static under the resources folder
+    In this folder, you can put the static content in that folder.
+
+Q. What is Spring Boot profile?
+
+ The development process of an application has different stages; the typical ones are development, testing, and production. 
+Spring Boot profiles group parts of the application configuration and make it be available only in certain environments.
+
+A profile is a set of configuration settings. Spring Boot allows to define profile specific property files in the form of application-{profile}.properties. 
+It automatically loads the properties in an application.properties file for all profiles, and the ones in profile-specific property files only for the 
+specified profile. The keys in the profile-specific property override the ones in the master property file. 
+
+The @Profile annotation indicates that a component is eligible for registration when the specified profile or profiles are active. 
+The default profile is called default; all the beans that do not have a profile set belong to this profile. 
+
+There are plenty of ways of defining active profiles in Spring Boot, including command line arguments, Maven settings, JVM system parameters, 
+environment variables, spring.profiles.active property, and SpringApplication methods. 
+
+Q. How to run spring boot application to custom port ?
+
+By default, Spring Boot applications run on an embedded Tomcat via port 8080. In order to change the default port, 
+you just need to modify the server.port attribute in application.properties, which is automatically read at runtime by Spring Boot applications.
+
+* EmbeddedServletContainerCustomizer:
+
+You can customize the properties of the default servlet container by implementing the EmbeddedServletContainerCustomizer interface as follows:
+
+package com.programmer.gate;
+
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+
+public class CustomContainer implements EmbeddedServletContainerCustomizer {
+
+    @Override
+
+    public void customize(ConfigurableEmbeddedServletContainer container) {
+
+        container.setPort(9090);
+
+    }
+
+
+}
+
+
+The port defined inside the CustomContainer always overrides the value defined inside application.properties.
+
+
+* Command Line
+
+The third way is to set the port explicitly when starting up the application through the command line. You can do this in two different ways:
+
+    java -Dserver.port=9090 -jar executable.jar
+    java -jar executable.jar –server.port=9090
+
+The port defined using this way overrides any other ports defined through other ways.
+
+Q.How to read application.properties in Spring Boot ?
+
+Three ways,
+
+1. Read application.properties using Environment object. 
+
+2. Reading a property using the @Value annotation.
+
+3. Reading Application Properties with @ConfigurationProperties.
+
+Ex:
+
+1)
+
+ @Autowired
+ private Environment env;
+
+  String keyValue = env.getProperty(key);
+
+2)
+
+@Value("${app.title}")
+ private String appTitle;
+ 
+ @GetMapping("/value")
+ public String getValue()
+ {
+  return appTitle;
+ }
+
+3)
+
+Another way to read application properties in Spring Boot app is to use the @ConfigurationProperties annotation. 
+To do that we will need to create a Plain Old Java Object where each class field matches the name of the key in a property file.
+
+@Component
+@ConfigurationProperties("app")
+public class AppProperties {
+ 
+ private String title;
+ private String description;
+ public String getTitle() {
+  return title;
+ }
+ public void setTitle(String title) {
+  this.title = title;
+ }
+ public String getDescription() {
+  return description;
+ }
+ public void setDescription(String description) {
+  this.description = description;
+ }
+ 
+
+To use this class in Rest Controller or Service class we simply autowire it by using the @Autowired annotation.
+
+
+@RestController
+@RequestMapping("app")
+public class AppController {
+ 
+ 
+ @Autowired
+ AppProperties myAppProperties;
+ 
+ 
+ @GetMapping("/title")
+ public String getAppTitle()
+ {
+  return myAppProperties.getTitle();
+ }
+ 
+ @GetMapping("/description")
+ public String getAppDescription()
+ {
+  return myAppProperties.getDescription();
+ }
+ 
+}
+
+Q. How you will setup an model entity using Spring data jpa in application from start?
+
+
+1. Create Spring Boot Project
+
+Use Spring Initializr and add dependencies:
+
+	Spring Web
+	Spring Data JPA
+	MySQL Driver (or PostgreSQL)
+	Lombok (optional)
+	
+Maven Dependencies:
+
+<dependencies>
+
+	<dependency>
+
+		<groupId>org.springframework.boot</groupId>
+
+		<artifactId>spring-boot-starter-web</artifactId>
+
+	</dependency>
+
+<dependency>
+
+	<groupId>org.springframework.boot</groupId>
+
+	<artifactId>spring-boot-starter-data-jpa</artifactId>
+
+</dependency>
+
+<dependency>
+
+	<groupId>com.mysql</groupId>
+
+	<artifactId>mysql-connector-j</artifactId>
+
+</dependency>
+
+<dependency>
+
+	<groupId>org.projectlombok</groupId>
+
+	<artifactId>lombok</artifactId>
+
+	<optional>true</optional>
+</dependency>
+
+</dependencies>
+
+
+
+2. Configure Database  application.properties
+
+
+spring.datasource.url=jdbc:mysql://localhost:3306/employeedb
+
+spring.datasource.username=root
+
+spring.datasource.password=root
+
+spring.jpa.hibernate.ddl-auto=update
+
+spring.jpa.show-sql=true
+
+spring.jpa.properties.hibernate.format_sql=true
+
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect	
+
+
+3. Create Entity Model
+4. Create Repository Layer
+5. Add Custom Query Methods
+6. Create Service Layer
+7. Create Controller
+8. Entity Relationships
+
+
+Complete Flow
+
+Client
+
+|
+v
+
+Controller
+
+|
+v
+
+Service
+
+|
+v
+
+Repository (JpaRepository)
+
+|
+v
+
+Hibernate/JPA
+
+|
+v
+Database
+
+
+Q. What is circular dependency in spring boot, and how it can be resolved ?
+
+A circular dependency occurs when two or more beans depend on each other, creating a cycle in the dependency graph.
+ Spring cannot instantiate these beans because it doesn't know which one to create first.
+
+Scenario Visualization
+Bean A → depends on → Bean B → depends on → Bean A
+
+Comparison of Solutions:
+
+Solution		Pros			Cons					Use Case
+--------		-----			----					---------
+Setter Injection	✅ Simple		❌ Late error detection			Simple dependencies
+@Lazy			✅ Clean syntax		❌ Still has circular dependency	Lazy initialization needed
+ObjectProvider		✅ Type-safe, Optional	⚠️ More verbose				Optional dependencies
+Refactoring		✅ Best design		❌ Requires code changes		Always recommended
+ApplicationContext	✅ Flexible		❌ Service locator pattern		Dynamic lookup needed
+Event-Driven		✅ Loose coupling	❌ Complex setup			Large systems
+
+
+Q. Spring Bean life cycle
+
+Instantiation: The container creates the bean instance by calling its constructor or factory method.
+--------------
+Dependency injection: The container populates properties, fields, and setters with their dependencies.
+---------------------
+Aware callbacks: If the bean implements them, the container calls BeanNameAware.setBeanName(), BeanFactoryAware.setBeanFactory(), and 
+----------------
+ApplicationContextAware.setApplicationContext().
+
+BeanPostProcessor (before init): postProcessBeforeInitialization() runs on every bean, which is how many framework features hook in.
+--------------------------------
+Initialization: Spring runs the initialization callbacks in this order:
+--------------
+	@PostConstruct method
+	InitializingBean.afterPropertiesSet()
+	Custom init-method (from XML or @Bean(initMethod = "..."))
+
+BeanPostProcessor (after init): postProcessAfterInitialization() runs. This is where AOP proxies are usually created, so the object placed in the context 
+-------------------------------
+may be a proxy rather than the original instance.
+
+Ready for use: The bean stays in the context and serves requests.
+--------------
+
+Destruction: When the context closes, Spring runs the destruction callbacks in this order:
+------------
+	@PreDestroy method
+	DisposableBean.destroy()
+	Custom destroy-method
+
+Spring Bean Lifecycle Flow Diagram
+┌─────────────────────────────────────────────────────────────┐
+│                    Spring Container Starts                  			   │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+                         ↓
+            ┌────────────────────────────┐
+            │ 1. INSTANTIATION           │
+            │ (new MyBean())             │
+            │ Constructor called         │
+            └────────────┬───────────────┘
+                         │
+                         ↓
+            ┌────────────────────────────┐
+            │ 2. DEPENDENCY INJECTION    │
+            │ Set properties/fields      │
+            │ Setter methods called      │
+            └────────────┬───────────────┘
+                         │
+                         ↓
+            ┌────────────────────────────┐
+            │ 3. AWARE INTERFACES        │
+            │ • BeanNameAware            │
+            │ • BeanFactoryAware         │
+            │ • ApplicationContextAware  │
+            │ • EnvironmentAware         │
+            └────────────┬───────────────┘
+                         │
+                         ↓
+            ┌────────────────────────────┐
+            │ 4. BeanPostProcessor       │
+            │ postProcessBeforeInit()    │
+            │ (Custom processing)        │
+            └────────────┬───────────────┘
+                         │
+                         ↓
+            ┌────────────────────────────┐
+            │ 5. INITIALIZATION          │
+            │ • @PostConstruct           │
+            │ • InitializingBean.after() │
+            │ • init-method attribute    │
+            └────────────┬───────────────┘
+                         │
+                         ↓
+            ┌────────────────────────────┐
+            │ 6. BeanPostProcessor       │
+            │ postProcessAfterInit()     │
+            │ (Custom processing)        │
+            └────────────┬───────────────┘
+                         │
+                         ↓
+            ┌────────────────────────────┐
+            │ 7. BEAN READY FOR USE      │
+            │ Available for injection    │
+            │ in other beans             │
+            └────────────┬───────────────┘
+                         │
+            (Bean is used by application)
+                         │
+                         ↓
+            ┌────────────────────────────┐
+            │ 8. DESTRUCTION             │
+            │ (Container shutdown)       │
+            └────────────┬───────────────┘
+                         │
+                         ↓
+            ┌────────────────────────────┐
+            │ 9. PRE-DESTRUCTION         │
+            │ DestructionAwareBeanPost   │
+            │ Processor.before...()      │
+            └────────────┬───────────────┘
+                         │
+                         ↓
+            ┌────────────────────────────┐
+            │ 10. DESTROY                │
+            │ • @PreDestroy              │
+            │ • DisposableBean.destroy() │
+            │ • destroy-method attribute │
+            └────────────┬───────────────┘
+                         │
+                         ↓
+            ┌────────────────────────────┐
+            │ 11. POST-DESTRUCTION       │
+            │ Cleanup resources          │
+            └────────────────────────────┘
+
+
+Spring Security Workflow
+-------------------------
+
+Spring Security follows a filter-based architecture that intercepts HTTP requests. Here's the core flow:
+
+1. Request Interception
+
+A request arrives and passes through a chain of security filters (managed by FilterChainProxy). Key filters include:
+
+UsernamePasswordAuthenticationFilter (handles login)
+ExceptionTranslationFilter (catches security exceptions)
+FilterSecurityInterceptor (enforces authorization)
+
+2. Authentication
+
+When credentials are submitted (typically via login):
+
+UsernamePasswordAuthenticationFilter extracts username/password
+Creates an Authentication object (unauthenticated)
+Delegates to the AuthenticationManager to authenticate
+
+The AuthenticationManager uses AuthenticationProvider(s) to:
+
+Fetch user details (via UserDetailsService)
+Compare credentials (using PasswordEncoder)
+Return an authenticated Authentication object with granted authorities
+
+3. Session Management
+
+The authenticated Authentication is stored in the SecurityContext
+By default, stored in the HttpSession (for web apps)
+Subsequent requests retrieve the context from session
+
+4. Authorization
+
+For each protected request, FilterSecurityInterceptor:
+
+Extracts the current Authentication from the SecurityContext
+Checks if the user has required permissions/roles
+Grants or denies access based on configured rules
+
+5. Response
+
+Success: Request proceeds to the resource
+Failure: Exception is thrown → ExceptionTranslationFilter catches it → redirects to login or error page
+
+Key Components
+--------------
+
+Component			Role
+
+SecurityContext			Holds the authenticated user
+Authentication			Represents credentials/principal
+AuthenticationManager		Orchestrates authentication
+UserDetailsService		Loads user data from DB/directory
+PasswordEncoder			Securely hashes/validates passwords
+AccessDecisionManager		Makes authorization decisions
+GrantedAuthority		Represents roles/permissions
+
+
+Typical Login Sequence
+-----------------------
+
+HTTP Request → SecurityFilter Chain → 
+UsernamePasswordAuthenticationFilter → 
+AuthenticationManager → AuthenticationProvider → 
+UserDetailsService (load user) → 
+PasswordEncoder (validate) → 
+SecurityContext stored → Response
+
+
+OAuth2
+------
+
+OAuth2 enables delegated authorization without sharing passwords.
+
+Perfect for:
+
+Third-party app access (login with Google/GitHub)
+Microservices authentication
+Resource servers protecting APIs
+Stateless authentication via tokens
+
+Core Components
+---------------
+1. OAuth2 Roles
+
+	Resource Owner: The user (who owns the data)
+	Client: Your application
+	Authorization Server: Issues tokens (Google, GitHub, your server)
+	Resource Server: Protects APIs using tokens
+2. Tokens
+
+	Access Token: Short-lived, grants API access
+	Refresh Token: Long-lived, obtains new access tokens
+	ID Token (OpenID Connect): Contains user identity info
+
+
+1. Authorization Code Flow (Most Common)
+----------------------------------------
+Used by web apps that need user login through a third party.
+
+Flow:
+
+User clicks "Login with Google"
+    ↓
+1. Client redirects to Authorization Server
+   GET /oauth/authorize?client_id=xxx&redirect_uri=...
+    ↓
+2. User logs in and grants permission
+    ↓
+3. Authorization Server redirects back to Client with authorization code
+   GET http://myapp.com/callback?code=AUTH_CODE
+    ↓
+4. Client exchanges code for token (backend, secure)
+   POST /oauth/token
+   {client_id, client_secret, code, grant_type=authorization_code}
+    ↓
+5. Authorization Server returns access token
+    ↓
+6. Client stores token, user is logged in
+
+
+Spring Security Implementation with Oauth2:
+-------------------------------
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+    
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .oauth2Login()  // Enable OAuth2 login
+                .authorizationEndpoint()
+                    .authorizationRequestRepository(...)
+                .and()
+                .tokenEndpoint()
+                    .accessTokenResponseClient(...)
+                .and()
+                .userInfoEndpoint()
+                    .userService(...)  // Custom user mapping
+            .and()
+            .authorizeRequests()
+                .anyRequest().authenticated();
+        
+        return http.build();
+    }
+}
+
+Properties (application.yml):
+------------------------------
+
+yaml
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: xxx.apps.googleusercontent.com
+            client-secret: xxx
+            scope: openid,profile,email
+          github:
+            client-id: xxx
+            client-secret: xxx
+            scope: user:email
+
+2. Client Credentials Flow
+------------------------------
+Used when the client (service) needs to access resources as itself, not on behalf of a user.
+
+Flow:
+-----
+Service A needs to call Service B API
+    ↓
+1. Service A sends credentials directly
+   POST /oauth/token
+   {client_id, client_secret, grant_type=client_credentials}
+    ↓
+2. Authorization Server validates and returns access token
+    ↓
+3. Service A uses token to call Service B
+   Authorization: Bearer ACCESS_TOKEN
+
+
+Request Flow with OAuth2 (Complete)
+-----------------------------------
+
+1. USER REQUEST
+   GET /protected-resource
+   (No token yet)
+        ↓
+2. CLIENT REDIRECTS TO AUTH SERVER
+   GET https://auth-server.com/oauth/authorize
+   ?client_id=xxx
+   &redirect_uri=http://myapp.com/callback
+   &scope=read,write
+        ↓
+3. USER LOGS IN & CONSENTS
+   (At Auth Server)
+        ↓
+4. AUTH SERVER REDIRECTS WITH CODE
+   GET http://myapp.com/callback?code=AUTH_CODE
+        ↓
+5. CLIENT BACKEND EXCHANGES CODE
+   POST https://auth-server.com/oauth/token
+   {client_id, client_secret, code}
+        ↓
+6. RECEIVES ACCESS TOKEN
+   {
+       "access_token": "eyJhbGc...",
+       "token_type": "Bearer",
+       "expires_in": 3600,
+       "refresh_token": "xyz..."
+   }
+        ↓
+7. CLIENT STORES TOKEN (Session/Cookie)
+        ↓
+8. SUBSEQUENT REQUESTS
+   GET /protected-resource
+   Authorization: Bearer eyJhbGc...
+        ↓
+9. RESOURCE SERVER VALIDATES TOKEN
+   - Check signature (JWT)
+   - Verify expiration
+   - Extract authorities
+        ↓
+10. GRANT OR DENY ACCESS
+
+
+Refresh Token Flow
+------------------
+
+Access tokens expire. Use refresh tokens to get new ones:
+
+POST /oauth/token
+{
+    grant_type: "refresh_token",
+    refresh_token: "xyz...",
+    client_id: "xxx",
+    client_secret: "xxx"
+}
+
+Response:
+{
+    access_token: "new_token...",
+    expires_in: 3600
+}
+
+Summary Table
+--------------
+
+Flow			Use Case				Token Issued By
+
+Authorization Code	Web apps, third-party login		Auth Server (after user consent)
+Client Credentials	Service-to-service			Auth Server (no user involved)
+Password		Legacy/trusted apps			Auth Server (user creds)
+Implicit		Browser apps (deprecated)		Auth Server (direct)
+Refresh Token		Extend session				Auth Server (using old token)
+
+
+JWT Authentication Flow
+------------------------
+
+JWT (JSON Web Token) is a stateless, self-contained token that carries user information and can be verified without hitting the database each time.
+
+Structure: header.payload.signature
+
+JWT Structure
+--------------
+
+1. Header
+
+Specifies algorithm and token type.
+
+json
+{
+  "alg": "HS256",    // Algorithm (HS256, RS256, etc.)
+  "typ": "JWT"       // Token type
+}
+
+
+2. Payload (Claims)
+
+Contains user data and metadata.
+
+json
+{
+  "sub": "user123",              // Subject (user ID)
+  "name": "John Doe",
+  "email": "john@example.com",
+  "roles": ["USER", "ADMIN"],    // Authorities
+  "iat": 1516239022,             // Issued at
+  "exp": 1516242622             // Expiration time
+}
+
+
+3. Signature
+
+Ensures token hasn't been tampered with.
+
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  SECRET_KEY
+)
+
+Complete JWT Authentication Flow
+----------------------------------
+
+┌─────────────┐
+│   CLIENT        │
+└──────┬──────┘
+       │
+       │ 1. POST /authenticate
+       │    {username, password}
+       ↓
+┌──────────────────┐
+│  SPRING SECURITY       │
+└──────┬───────────┘
+       │
+       │ 2. AuthenticationFilter intercepts
+       │    Creates UsernamePasswordAuthenticationToken
+       ↓
+┌──────────────────────────┐
+│  AuthenticationManager            │
+└──────┬───────────────────┘
+       │
+       │ 3. Calls AuthenticationProvider
+       ├─→ UserDetailsService.loadUserByUsername()
+       ├─→ PasswordEncoder.matches()
+       ↓
+┌──────────────────────────┐
+│  Authentication SUCCESS           │
+└──────┬───────────────────┘
+       │
+       │ 4. JwtProvider generates JWT token
+       │    - Encodes user info
+       │    - Signs with secret key
+       ↓
+┌──────────────────────────┐
+│  Return JWT to Client             │
+│  {accessToken, ...}               │
+└──────┬───────────────────┘
+       │
+       │ 5. Client stores token
+       │    (localStorage, sessionStorage, etc.)
+       ↓
+┌──────────────────────────┐
+│  Subsequent Requests              │
+│  Authorization: Bearer            │
+│  JWT_TOKEN                        │
+└──────┬───────────────────┘
+       │
+       │ 6. JwtAuthenticationFilter intercepts
+       │    Extracts token from header
+       ↓
+┌──────────────────────────┐
+│  JWT Validation          	    │
+│  - Verify signature      	    │
+│  - Check expiration      	    │
+│  - Extract claims        	    │
+└──────┬───────────────────┘
+       │
+       │ 7. Create Authentication object
+       │    with roles from token
+       ↓
+┌──────────────────────────┐
+│  Store in SecurityContext	    │
+└──────┬───────────────────┘
+       │
+       │ 8. Request proceeds
+       │    Authorization checks pass
+       ↓
+┌──────────────────────────┐
+│  Response with data               │
+└──────────────────────────┘
+
+Difference
+------------
+
+Use OAuth2 When:
+
+✅ You need "Login with Google/GitHub/Facebook"
+✅ Multiple apps need to access user's resources
+✅ You want delegated authorization
+✅ Users shouldn't share passwords
+✅ You need centralized access control
+
+Use JWT When:
+
+✅ You need stateless API authentication
+✅ Building microservices (each validates independently)
+✅ Mobile apps need tokens (no cookies)
+✅ You want to avoid database lookups per request
+✅ Scaling horizontally (no session server needed)
+
+Use Both (OAuth2 + JWT) When:
+
+✅ OAuth2 provider issues JWTs as access tokens
+✅ You want OAuth2's flow + JWT's efficiency
+✅ Example: Google auth issuing JWT tokens
+
+
+
+Example: Login with Google (OAuth2 + JWT)
+------------------------------------------
+
+┌──────────────────────────────────────────────┐
+│ FLOW: OAuth2 Authorization Code              		       │
+└──────────────────────────────────────────────┘
+
+User clicks "Login with Google"
+    ↓
+Client redirects to Google
+    GET https://accounts.google.com/o/oauth2/v2/auth
+        ?client_id=xxx
+        &redirect_uri=http://myapp/callback
+        &scope=profile email
+    ↓
+User logs in at Google
+    ↓
+Google issues TOKEN (which is a JWT)
+    {
+      "access_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjEx....",
+      "token_type": "Bearer",
+      "expires_in": 3599
+    }
+    ↓
+┌──────────────────────────────────────────────┐
+│ TOKEN FORMAT: JWT                                           │
+│                                                             │
+│ Header: {alg: RS256, kid: 11}                               │
+│ Payload: {sub: user123, name: John Doe,                     │
+│           aud: google.com, iat: ..., exp:...}               │
+│ Signature: VALID (verified with Google's                    │
+│            public key)                                      │
+└──────────────────────────────────────────────┘
+    ↓
+Client stores JWT
+    ↓
+Client uses JWT to access protected resources
+    GET /api/profile
+    Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjEx....
+    ↓
+Resource Server validates JWT signature
+    ↓
+Access granted
+
+
+Q. How is exception handling in spring boot ?
+
+
+Exception Handling in Spring Boot
+
+Spring Boot provides several mechanisms to handle exceptions gracefully. Here's an overview:
+
+1. @ExceptionHandler
+
+Handle specific exceptions within a controller or globally.
+
+java
+@RestController
+public class MyController {
+    
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException e) {
+        ErrorResponse error = new ErrorResponse("Not Found", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+}
+
+2. @ControllerAdvice (Global Exception Handler)
+
+Create a centralized exception handler for all controllers.
+
+java
+@ControllerAdvice
+public class GlobalExceptionHandler {
+    
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException e) {
+        ErrorResponse error = new ErrorResponse("Not Found", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+    
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleGenericException(Exception e) {
+        ErrorResponse error = new ErrorResponse("Internal Server Error", e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+}
+
+3. Custom Exception Class
+
+public class ResourceNotFoundException extends RuntimeException {
+    public ResourceNotFoundException(String message) {
+        super(message);
+    }
+}
+
+4. Error Response DTO
+
+@Data
+@AllArgsConstructor
+public class ErrorResponse {
+    private String error;
+    private String message;
+    private LocalDateTime timestamp = LocalDateTime.now();
+}
+
+5. Validation Exception Handling
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+    
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationException(
+            MethodArgumentNotValidException e) {
+        String message = e.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+        
+        ErrorResponse error = new ErrorResponse("Validation Failed", message);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+}
+
+6. Application Properties Configuration
+
+# application.yml
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on-param
+    include-exception: false
+
+Key Points
+
+Feature				Purpose
+
+@ExceptionHandler		Handles specific exceptions in a controller
+@ControllerAdvice		Centralizes exception handling across all controllers
+@RestControllerAdvice		Same as @ControllerAdvice but defaults to JSON responses
+ResponseEntity			Return custom HTTP status and body
+Error Page Configuration	Customize error pages for UI applications
+
+
+Best Practices
+✅ Use @ControllerAdvice for centralized exception handling
+✅ Create custom exception classes for domain-specific errors
+✅ Return meaningful error messages and HTTP status codes
+✅ Log exceptions appropriately
+✅ Avoid exposing sensitive information in error responses
+✅ Handle validation exceptions separately from business logic exceptions
+
+
+Q. Difference between Component and Bean in spring boot
+
+
+@Component and @Bean are both used to create Spring beans, but they work differently and have different use cases.
+
+@Component
+-----------
+* @Component is a class level annotation. 
+* Spring automatically detects the class through component scanning.
+* It is commonly used for classes that er develop such as utility classes.
+
+@Bean
+-----
+* @Bean is a method level annotation.
+* It is generally declared inside a class annotated with @Configuration.
+* The method explicitly define how to create and register a bean.
+* It is useful when you need to configure third party classes or have control over object creation.
+
+
+Key Differences
+----------------
+Feature				@Component			@Bean
+--------			----------			-------
+Where Applied			On a class			On a method
+Automatic Detection	Auto-scanned by Spring			Manual declaration
+Class Control		Only on your classes			Can use external/third-party classes
+Flexibility		Limited					High (method-based logic)
+Configuration		Simple					Needs @Configuration class
+
+@Component
+----------
+Applied directly to a class - Spring auto-detects and registers it as a bean.
+
+@Component
+public class UserService {
+    public void saveUser(User user) {
+        System.out.println("Saving user: " + user.getName());
+    }
+}
+
+How it works:
+
+Spring scans for classes with @Component annotation
+Automatically creates a bean instance
+Registers it in the application context
+No manual configuration needed
+
+@Bean
+------
+Declared as a method inside a @Configuration class - manually defines how to create the bean.
+
+@Configuration
+public class AppConfig {
+    
+    @Bean
+    public UserService userService() {
+        return new UserService();  // You control instantiation
+    }
+}
+
+How it works:
+
+Define a method inside @Configuration class
+Method returns an object
+Spring calls this method and registers the return value as a bean
+Gives you full control over bean creation
+
+
+Q. What is DispatcherServlet?
+
+DispatcherServlet is the central dispatcher (router) in Spring MVC that handles all incoming HTTP requests and routes them to appropriate handlers (controllers).
+
+HTTP Request
+    ↓
+DispatcherServlet (front controller)
+    ↓
+Handler Mapping (finds the controller)
+    ↓
+Controller (processes request)
+    ↓
+View Resolver (finds the view)
+    ↓
+HTTP Response (renders view/data)
+
+Configuration
+--------------
+In Spring Boot (Automatic)
+
+// Spring Boot auto-configures DispatcherServlet
+// No manual configuration needed!
+
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+
+Properties configuration:
+
+properties
+# application.properties
+spring.mvc.servlet.path=/app
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+
+Q. What is Database pooling in springboot ?
+
+Database pooling in Spring Boot is a technique for managing and reusing database connections efficiently.
+
+Database pooling maintains a pool of pre-created database connections that applications can borrow, use, and return. Instead of creating a new connection for every database request (which is expensive), the pool reuses existing connections.
+
+Popular Connection Pooling Libraries
+--------------------------------------
+Spring Boot supports several pooling solutions:
+
+* HikariCP (default and recommended):
+
+Lightweight and fast
+Excellent performance
+Default in Spring Boot 2.0+
+
+* Apache Commons DBCP2:
+
+Mature and stable
+Heavier than HikariCP
+
+* Tomcat Connection Pool:
+
+Built into Spring Boot’s embedded Tomcat
+
+* C3P0:
+
+Older, less commonly used
+
+
+Configuration in Spring Boot
+----------------------------
+
+Using HikariCP (Default)
+
+Add database dependency to pom.xml:
+
+xml
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.33</version>
+</dependency>
+
+Configure in application.properties:
+
+properties
+spring.datasource.url=jdbc:mysql://localhost:3306/mydb
+spring.datasource.username=root
+spring.datasource.password=password
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# HikariCP Pool Configuration
+spring.datasource.hikari.maximum-pool-size=10
+spring.datasource.hikari.minimum-idle=5
+spring.datasource.hikari.connection-timeout=20000
+spring.datasource.hikari.idle-timeout=300000
+spring.datasource.hikari.max-lifetime=1200000
+
+Or in application.yml:
+
+yaml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydb
+    username: root
+    password: password
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 20000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+
+
+Connection pooling is essential for production Spring Boot applications as it significantly improves performance and resource utilization!
+
+Q. What is Spring AOP ?
+
+Spring AOP (Aspect-Oriented Programming) is a framework that implements cross-cutting concerns such as transactions, logging, security, and caching by creating proxy objects around Spring beans. The proxy intercepts method calls and executes additional behavior before, after, or around the target method without modifying the business logic.
+
+Common Spring Features Built Using AOP
+---------------------------------------
+Annotation	Purpose
+----------	--------
+@Transactional	Transaction management
+@Cacheable	Caching
+@Async		Asynchronous execution
+@PreAuthorize	Security checks
+@Retryable	Retry failed operations
+Custom Aspects	Logging, auditing, monitoring
+
+Q. How @Transactional works internally ?
+
+@Transactional in Spring internally relies on AOP (Aspect-Oriented Programming), dynamic proxies, and a transaction manager.
+
+@Transactional works by letting a Spring AOP proxy intercept method calls, start a database transaction through PlatformTransactionManager, bind the connection to the current thread, execute the method, and then commit or roll back depending on whether an exception occurs.`
+
+1.Spring creates a proxy around the bean containing @Transactional.
+2.When the method is called, the proxy intercepts the call.
+3.The proxy asks the TransactionManager to start a transaction.
+4.A database connection is obtained and autoCommit is set to false.
+5.The connection is bound to the current thread, so all database operations use the same transaction.
+6.The target method executes.
+7.If the method succeeds:
+8.COMMIT is executed.
+9.If an exception occurs:
+10.ROLLBACK is executed (by default for unchecked exceptions).
+
+
+
+Q. Why might @Transactional not work when calling from the same class ?
+
+    - Self invocation can bypass Spring's proxy, so the transactional interceptor may not be triggered.
+
+
+Q. If a private method is annotated with @Transactional, will it work at runtime?
+
+              No, it will not work. Spring AOP uses dynamic proxies (either JDK dynamic proxies or CGLIB) to manage transactions.
+
+Visibility Constraint: Spring's proxy framework only intercepts public method invocations. 
+If a method is private, the proxy logic cannot wrap around it, and the @Transactional annotation is silently ignored.
+
+Self-Invocation Issue: Even if a method is public, calling it internally from another method within the same bean bypasses the proxy entirely, meaning the transaction context will not be applied.
+
+Q. What are the steps when a Spring Boot application starts?
+
+	 The initialization of a Spring Boot application (SpringApplication.run()) follows a highly structured lifecycle:
+
+1. Bootstrap & Environment Setup: 
+   Prepares the ConfigurableEnvironment, loads application properties, system variables, and active profiles (e.g., application.yml).
+2. ApplicationContext Creation:
+   Instantiates the appropriate ApplicationContext based on the application type (e.g., AnnotationConfigServletWebServerApplicationContext for web apps).
+3. Bean Definition Loading: 
+   Scans the classpath (@ComponentScan) to find components, configurations, and controllers, registering their BeanDefinitions.
+4. Context Refresh & Bean Instantiation: 
+   Executes refreshContext(). This is where core Spring lifecycle steps happen—invoking bean factory post-processors, initializing the bean post-processors, and instantiating singleton beans (including REST controllers and database drivers via dependency injection).
+5. Embedded Server Startup: 
+   If it's a web application, it starts the embedded servlet container (e.g., Tomcat, Jetty).
+Runners Execution: Executes any beans implementing CommandLineRunner or ApplicationRunner.
+
+
+Q: How do we know which interface implementation to use for which specific controller when breaking down interfaces?
+
+Answer: 
+
+	Spring provides several mechanisms to handle ambiguous dependencies:
+@Qualifier("beanName"): Explicitly specifies the exact bean name to inject at the injection point in the controller.
+@Primary: Designates one implementation as the default choice when multiple beans of the same type exist.
+Profile-Based Injection (@Profile): Determines which implementation to load based on the active runtime environment (e.g., Dev, Prod).
+Dynamic Resolution: Inject a Map<String, YourInterface> into the controller to dynamically look up the required implementation at runtime using a key.
+
+Q6: Can you give me a breakdown on the differences between constructor and field injection?
+
+Answer:
+
+Feature				Constructor Injection									Field Injection
+-------				----------------------									----------------
+Syntax				Dependencies are passed through the class constructor.			@Autowired is placed directly on private fields.
+Immutability			Supported. Fields can be declared final, ensuring thread safety.	Not supported. Fields cannot be final.
+Testability			Easy. Dependencies can be passed manually in plain unit	 tests without starting Spring.		Hard. Requires Spring context or reflection/Mockito runner to inject values.
+                               	
+Null 				Safety	Guaranteed. The object cannot be instantiated without its required dependencies.	Risk of NPE. Objects can be instantiated in an uninitialized state.
+Industry Standard		Highly recommended and preferred.						Strictly discouraged in modern Spring development.
+
+
+Q: What does component scan do?
+
+Answer: Component scanning is the mechanism Spring uses to automatically discover and register beans:
+Directive: Triggered by the @ComponentScan annotation (implicit within @SpringBootApplication).
+Package Scanning: It recursively scans the base package and its sub-packages.
+Stereotype Detection: It looks for classes annotated with @Component, @Service, @Repository, or @Controller.
+Metadata Creation: For every matching class found, Spring creates a BeanDefinition and registers it within the Application Context so it can be managed and injected.
+
+Q. How does the application context get bootstrapped and initialize all the dependencies when Spring Boot starts up?
+
+Answer: The startup process follows these core phases:
+
+1.Entry Point: Execution begins at the @SpringBootApplication class via SpringApplication.run().
+
+2.Environment Preparation: Spring creates and configures the Environment (loading application.properties, YAML, and system environment variables).
+
+3.Context Creation: The ApplicationContext (usually AnnotationConfigServletWebServerApplicationContext for web apps) is instantiated.
+
+4.Bean Definition Loading: Component scanning finds bean definitions, and auto-configuration triggers look for metadata in META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+
+5.Context Refresh: Spring iterates through bean definitions, resolves dependencies, instantiates the singleton beans, and injects them (Dependency Injection).
+
+6.Embedded Server Startup: The embedded servlet container (like Tomcat) is initialized and started.
+
+Q: What are all the different steps that happen within Spring Boot itself when a consumer makes a request to the controller?
+
+Answer: The request lifecycle follows the Front Controller pattern:
+
+Tomcat/Server: Receives the HTTP request and routes it to the DispatcherServlet.
+
+Handler Mapping: DispatcherServlet queries HandlerMapping to find the appropriate Controller and method matching the URL route.
+
+Interceptors: The request passes through any configured HandlerInterceptor chains (executing preHandle tasks like auth check or logging).
+
+Handler Adapter: DispatcherServlet uses a HandlerAdapter to dynamically invoke the actual controller method.
+
+Controller Execution: The controller processes the request, calls the service layer, and returns the response payload.
+
+Response Handling: The return value is processed by HttpMessageConverter (e.g., converting a Java object to JSON via Jackson) and sent back through the interceptors (postHandle/afterCompletion) to the consumer.
+
+Q: What are all the different levels of testing that you have been doing or that you know that are required?
+
+Answer: Enterprise applications require a comprehensive testing pyramid:
+
+Unit Testing: Testing isolated blocks of code (individual methods) using mocks (Mockito) for external dependencies.
+
+Integration Testing (@SpringBootTest): Verifying the interaction between multiple layers or modules (e.g., testing the Service layer with a real database or an H2 in-memory DB via @DataJpaTest).
+
+Component/Contract Testing: Verifying that API endpoints adhere to exact input/output structures (schemas) without testing full end-to-end setups.
+End-to-End (E2E) Testing: Testing the entire system flow from the frontend/API gateway down to the actual database and third-party systems.
+
+Q: What is the difference between unit testing and functional or end-to-end testing, and what are developer responsibilities?
+
+Answer:
+
+Unit Testing: Focuses on the smallest testable parts of an application (methods/classes) in absolute isolation. It uses mock objects to simulate external systems.
+Functional / End-to-End Testing: Tests the application from a user's perspective, verifying that business features function correctly across multiple integrated systems (databases, message queues, external APIs).
+Developer Responsibilities: Developers are directly responsible for writing Unit and Integration tests as part of the CI/CD pipeline. They must ensure high code coverage and block regressions before code reaches QA or user acceptance testing (UAT).
+
+Q12: Other than Singleton, can you give me a design pattern that you've used and explain how it works and its use cases?
+
+Answer:
+
+Factory Pattern:
+How it works: Defines an interface or abstract class for creating an object, but lets subclasses or a dedicated factory class decide which concrete class to instantiate.
+Use Case: Dynamic implementation loading. For example, creating a PaymentFactory that returns either a CreditCardPaymentProcessor or a PayPalPaymentProcessor bean at runtime based on the user's choice.
+
+Builder Pattern:
+How it works: Separates the construction of a complex object from its representation, allowing step-by-step object creation.
+Use Case: Generating immutable DTOs or Entity objects with many fields without creating bloated constructors (frequently achieved using Lombok's @Builder).
+
+Q13: Can you walk me through the repository service controller pattern?
+
+Answer: 
+This is the standard layered architecture pattern designed to enforce separation of concerns:
+
+Controller Layer: The entry point. It handles HTTP routing, parameter binding, request validation, and returns the appropriate HTTP status codes and DTO responses. It contains no business logic.
+
+Service Layer: The core engine. It implements the actual business logic, orchestrates workflows, manages data transformations, and coordinates transactions (@Transactional).
+
+Repository Layer: The data access layer. It abstracts database communication (using frameworks like Spring Data JPA or MyBatis) to execute CRUD operations and complex queries against the underlying database.
+
+
+Q14: Have you used any ORM frameworks and how does that influence code writing?
+
+Answer:
+
+ Yes, frameworks like Spring Data JPA (Hibernate) or MyBatis significantly streamline development:
+
+Abstraction of SQL: Developers work directly with Java objects (Entities) rather than writing raw, error-prone SQL strings for basic operations.
+
+Automated Lifecycle Management: Features like automatic dirty checking, caching, and relationship mapping (@OneToMany, @ManyToOne) reduce boilerplate code.
+
+Influence on Code: Code becomes much cleaner, more object-oriented, and less coupled to a specific database vendor (easier database migrations). However, developers must remain mindful of performance traps like the N+1 select problem.
+
+
+Q15: How do entities and DTOs relate, why is there separation, and would you return raw entities to the response?
+
+Answer:
+
+Definitions: Entities map directly to database tables, while DTOs (Data Transfer Objects) map directly to API request and response payloads.
+
+Why Separate?
+
+Security: Entities may contain sensitive fields (e.g., passwords, internal IDs, audit timestamps) that should never be exposed to the client.
+
+Decoupling: Decouples the database schema from the external API contract. Changes to database tables won't break client applications.
+
+Performance & Structure: APIs often require data in formats different from how they are stored in a database (e.g., aggregations or flattened fields).
+Should you return raw entities? No. It is a security risk, creates tight coupling, and often leads to infinite serialization loops if entities have bidirectional relationships.
+
+
+
+  </pre>
+</body>
+</html>
