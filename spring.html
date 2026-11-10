@@ -269,6 +269,15 @@ To create an application. We are using STS (Spring Tool Suite) IDE and it includ
 The @RestController is a stereotype annotation. It adds @Controller and @ResponseBody annotations to the class. 
 We need to import org.springframework.web.bind.annotation package in our file, in order to implement it.
 
+	
+Q. Differentiate @Component, @Repository and @Service and @Controller?
+
+Typically a web application is developed in layers like the controller (which is the initial point of client communication), 
+business (where the actual code or logic of the application is written) and DAO (where the database connections and interaction happens). 
+In such an architecture web application, @Component can be used in any of the layers. 
+Whereas, the @Controller is used in the controller/web layer. @Service is used in the business layer and @Repository is used in the DAO layer.
+
+
 
 9) What is Spring Boot dependency management?
 
@@ -332,27 +341,7 @@ You can use it into project POM (Project Object Model) file.
 Spring Boot provides starter and libraries for connecting to our application with JDBC. Here, we are creating an application which connects with Mysql database.
  It includes the following steps to create and setup JDBC with Spring Boot.
 
-Q. Differentiate @Component, @Repository and @Service and @Controller?
 
-Typically a web application is developed in layers like the controller (which is the initial point of client communication), 
-business (where the actual code or logic of the application is written) and DAO (where the database connections and interaction happens). 
-In such an architecture web application, @Component can be used in any of the layers. 
-Whereas, the @Controller is used in the controller/web layer. @Service is used in the business layer and @Repository is used in the DAO layer.
-
-Q.  What does the @RequestParam annotation do?
-
-This allows the server side to read from data and automatically bind it to a parameter coming into the method.
-
-Q. What is the use of @webmvctest in Spring MVC ?
-
-@WebMvcTest annotation is used for Spring MVC tests. It disables full auto-configuration and instead apply only configuration relevant to MVC tests.
-
-@WebMvcTest is used in combination with @RunWith(SpringRunner.class) when a test focuses only on Spring MVC components. It provides the following features
-
-    *Disable full auto-configuration (not @Component, @Service or @Repository beans) and instead apply only configuration relevant to MVC tests 
-     such as @Controller and @ControllerAdvice
-
-    *Auto-configure Spring Security and MockMvc
 
 
 
@@ -1838,7 +1827,7 @@ Unit Testing: Focuses on the smallest testable parts of an application (methods/
 Functional / End-to-End Testing: Tests the application from a user's perspective, verifying that business features function correctly across multiple integrated systems (databases, message queues, external APIs).
 Developer Responsibilities: Developers are directly responsible for writing Unit and Integration tests as part of the CI/CD pipeline. They must ensure high code coverage and block regressions before code reaches QA or user acceptance testing (UAT).
 
-Q12: Other than Singleton, can you give me a design pattern that you've used and explain how it works and its use cases?
+Q. Other than Singleton, can you give me a design pattern that you've used and explain how it works and its use cases?
 
 Answer:
 
@@ -1850,7 +1839,7 @@ Builder Pattern:
 How it works: Separates the construction of a complex object from its representation, allowing step-by-step object creation.
 Use Case: Generating immutable DTOs or Entity objects with many fields without creating bloated constructors (frequently achieved using Lombok's @Builder).
 
-Q13: Can you walk me through the repository service controller pattern?
+Q. Can you walk me through the repository service controller pattern?
 
 Answer: 
 This is the standard layered architecture pattern designed to enforce separation of concerns:
@@ -1862,7 +1851,7 @@ Service Layer: The core engine. It implements the actual business logic, orchest
 Repository Layer: The data access layer. It abstracts database communication (using frameworks like Spring Data JPA or MyBatis) to execute CRUD operations and complex queries against the underlying database.
 
 
-Q14: Have you used any ORM frameworks and how does that influence code writing?
+Q: Have you used any ORM frameworks and how does that influence code writing?
 
 Answer:
 
@@ -1875,7 +1864,7 @@ Automated Lifecycle Management: Features like automatic dirty checking, caching,
 Influence on Code: Code becomes much cleaner, more object-oriented, and less coupled to a specific database vendor (easier database migrations). However, developers must remain mindful of performance traps like the N+1 select problem.
 
 
-Q15: How do entities and DTOs relate, why is there separation, and would you return raw entities to the response?
+Q: How do entities and DTOs relate, why is there separation, and would you return raw entities to the response?
 
 Answer:
 
@@ -1890,7 +1879,20 @@ Decoupling: Decouples the database schema from the external API contract. Change
 Performance & Structure: APIs often require data in formats different from how they are stored in a database (e.g., aggregations or flattened fields).
 Should you return raw entities? No. It is a security risk, creates tight coupling, and often leads to infinite serialization loops if entities have bidirectional relationships.
 
+Q.  What does the @RequestParam annotation do?
 
+This allows the server side to read from data and automatically bind it to a parameter coming into the method.
+
+Q. What is the use of @webmvctest in Spring MVC ?
+
+@WebMvcTest annotation is used for Spring MVC tests. It disables full auto-configuration and instead apply only configuration relevant to MVC tests.
+
+@WebMvcTest is used in combination with @RunWith(SpringRunner.class) when a test focuses only on Spring MVC components. It provides the following features
+
+    *Disable full auto-configuration (not @Component, @Service or @Repository beans) and instead apply only configuration relevant to MVC tests 
+     such as @Controller and @ControllerAdvice
+
+    *Auto-configure Spring Security and MockMvc
 
   </pre>
 </body>
