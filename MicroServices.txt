@@ -389,3 +389,277 @@ Automatically retry failed requests.
 
 Isolate resources to prevent one service from affecting others.
 
+Q. What is Circuit Breaker pattern?
+Circuit breaker prevents cascading failures between services.
+
+If downstream service fails repeatedly:
+
+	Circuit opens
+	Requests fail fast temporarily
+	System recovers without overwhelming the failing dependency
+
+Common in resilient microservices.
+
+Q. Why use an API Gateway?
+	API Gateway acts as a single entry point.
+
+Responsibilities often include:
+
+	Routing
+	Authentication
+	Rate limiting
+	Logging
+	Request aggregation
+
+Very common in distributed systems.
+
+Q. What is service discovery?
+	Service discovery allows services to locate each other dynamically.
+
+	Useful because instances may scale up/down or move frequently.
+
+	Examples:
+
+		Eureka
+		Consul
+		Kubernetes DNS
+
+Q. What is CAP theorem?
+	CAP says distributed systems can only guarantee two of:
+
+	Consistency - Every read received the most recent write or an error
+	Availability - Every request receives a response, even if some nodes are unavailable.
+	Partition Tolerance - The system continues operating despite network communication failures between nodes.
+	
+Tradeoffs are inevitable.
+
+This often leads to architecture-level design discussions.
+
+The important point is that P is generally unavoidable in distributed systems.
+
+Q. Monolith vs Microservices?
+
+Monolith
+	Single deployable application
+	Easier to start
+	Easier local development
+	Harder to scale independently
+Microservices
+	Independently deployable
+	Easier scaling per service
+	Better ownership boundaries
+	More operational complexity
+
+There’s no universal winner. It depends on business scale and team maturity.
+
+Q.  Handling Cascading Failures and Thread Pool Exhaustion
+
+
+ Your Order-Service calls Payment-Service using RestTemplate or WebClient. During peak hours, 
+Payment-Service slows down. Consequently, Tomcat’s thread pool on Order-Service gets fully exhausted, 
+ causing it to reject incoming orders. How do you resolve this using Spring Boot?
+
+  The Problem: Resource exhaustion via blocked threads waiting on a dead or slow dependency.
+
+  The Solution: Implement a Circuit Breaker pattern using libraries like Resilience4j to trip and fail fast when error rates or latencies cross a threshold.
+  Set strict timeouts on all outgoing HTTP or gRPC client calls.
+  Provide fallback logic (such as returning cached or default data) where appropriate.
+
+Circuit Breaker & Bulkhead: Use Resilience4j (integrated via spring-cloud-starter-circuitbreaker-resilience4j).
+
+ Implementation:  Wrap the remote call using the @CircuitBreaker annotation. 
+ Configure a Bulkhead (@Bulkhead) to limit the maximum number of concurrent threads allocated to Payment-Service.
+ This isolates the failure and prevents it from consuming all Tomcat threads.
+
+ Asynchronous Call: Switch from synchronous RestTemplate to asynchronous, non-blocking WebClient (Spring WebFlux) to free up execution threads 
+ while waiting for network I/O
+
+
+
+
+
+
+Q. Distributed Transactions & Data Consistency Scenario: 
+
+  When a user creates a booking, Booking-Service saves the booking in MySQL, and Notification-Service must send an email. 
+If Notification-Service or Kafka goes down right after the database commit, the email is lost. 
+  How do you guarantee the message is eventually delivered without using distributed transactions (XA)?
+
+ The Problem: Traditional ACID database transactions do not span across multiple independent service databases.
+ 
+The Solution: Use the Saga Pattern to manage distributed transactions as a sequence of local transactions.
+There are two primary types:
+  
+Choreography: Each service updates its database and publishes an event (e.g., via Apache Kafka); the next service listens and reacts.
+
+Orchestration: A central orchestrator service tells each participant what local transaction or compensating rollback action to execute next
+
+If any step fails, the Saga triggers an explicit series of compensating transactions in reverse order to undo the changes made by the previous steps, maintaining eventual consistency.
+
+
+
+Transactional Outbox Pattern: 
+
+Instead of calling Kafka directly, create an outbox_events table inside the exact same database.
+Inside a single ACID transaction, insert the row in orders and insert every payload into outbox_events table.
+As both table lives in the same DB, either BOTH commit together, or BOTH rollback.
+A background worker (or change data capture tool like Debezium reading the DB transaction log) pics up unsent rows from outbox_events
+and publish them into kafka.
+Once kafka acknowledges the receipt, the row is marked as processed.
+
+
+Idempotency: Ensure the Notification-Service consumer handles messages idempotently by checking a unique eventId before sending the email, 
+preventing duplicate emails if a network retry occurs.
+
+Q. Sudden Traffic Spikes & High Availability
+
+ Scenario: Your API Gateway suddenly experiences a 10x traffic spike. Incoming requests start timing out, or the gateway crashes,
+ cutting off access to all underlying microservices. 
+
+ The Problem: Single point of failure and resource saturation at the edge of the network.
+
+ The Solution: Deploy multiple API Gateway instances behind a cloud load balancer with auto-scaling enabled.
+ Implement Rate Limiting and Bulkheading to isolate resource pools so one heavy client cannot starve others.
+ Use a Backends for Frontends (BFF) pattern if mobile and web clients require different payload aggregations.
+
+Q. Debugging 500 Internal Server Errors Across Services
+
+ Scenario:  A user reports random 500 Internal Server Error responses on a checkout flow that traverses 8 different microservices. 
+
+ The Problem: Lack of visibility across process boundaries makes it difficult to trace where the exception originated.
+
+ The Solution:Enforce a unique Correlation ID / Request ID at the API Gateway and pass it downstream via HTTP headers or message metadata. 
+ Use Distributed Tracing tools like Jaeger or Zipkin to visualize end-to-end request latency and spot the failing node.
+ Inspect centralized logs aggregated via the ELK stack or Grafana Loki, alongside system metrics (CPU, memory, garbage collection, and thread pools)
+
+Q. Zero-Downtime Deployments and Database Migrations
+
+ Scenario: You need to deploy a breaking schema change (renaming a mandatory database column) for a high-traffic microservice without
+ taking the system offline. 
+
+The Problem: Simultaneous deployment of code and database schema breaks backward compatibility with older running instances of the service.
+
+The Solution: Use the Expand-Contract (Parallel Run) pattern for database changes.
+Expand: Add the new column, update code to write to both columns, and backfill old data.
+Migrate: Switch reads to the new column once old instances are phased out.
+Contract: Drop the old column in a subsequent release.
+Employ Blue-Green or Canary deployments via Kubernetes rolling updates to shift traffic gradually to the new version
+
+Q. High CPU / OutOfMemory (OOM) Errors in ProductionScenario: 
+
+ After deploying a new version of a memory-intensive processing service container in a Kubernetes cluster, 
+the pod continually crashes with an OutOfMemoryError or gets killed by the OS (OOMKilled). 
+ How do you diagnose and fix this?
+
+ The Answer:
+
+ Diagnosis: Analyze the JVM heap memory using a heap dump. Enable automated heap dumps on OOM in your 
+ Dockerfile via JVM args: -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp.
+
+ Container Awareness: For older Java versions, Java didn't recognize Docker cgroup memory limits, causing the JVM to allocate a max heap
+ based on the host OS memory rather than the container limit. 
+ Ensure you are using Java 11/17+ which natively respects container limits using -XX:+UseContainerSupport.
+
+ Memory Tuning: Explicitly define container resource limits in Kubernetes (limits.memory) and set matching JVM flags in your 
+ deployment manifest: -Xms<size> and -Xmx<size>
+ (typically setting -Xmx to 70-80% of the container's memory limit to leave room for Metaspace and native threads).
+
+Q. Distributed Tracing and Context PropagationScenario: 
+
+  A critical business request is failing intermittently across a complex mesh of 5 Spring Boot microservices. 
+  Log files are massive, and grep-ing logs by timestamp isn't working. How do you track the exact lifecycle of this request?
+
+ The Answer:
+
+ Distributed Tracing: Implement Micrometer Tracing (Spring Boot 3+) or Spring Cloud Sleuth (Spring Boot 2.x), 
+ integrated with an exporter like OpenTelemetry or Zipkin/Jaeger.
+
+ Context Propagation: Micrometer automatically injects a traceId (unique to the whole request journey) and a spanId (unique to the specific service leg)
+ into the MDC (Mapped Diagnostic Context) of loggers like Logback.
+
+ Downstream Passing: When making outbound HTTP or Kafka calls via WebClient, FeignClient, or KafkaTemplate,
+ Spring automatically propagates these trace headers across network boundaries.
+ You can filter your centralized log aggregator (like Kibana or Grafana Loki) using the specific traceId to view a
+ chronologically unified log timeline across all 5 services.
+
+
+38. Securely Managing Secrets and Dynamic ConfigurationsScenario: 
+
+ Your microservice connects to a database and external third-party APIs. Hardcoding credentials in application.yml is a security violation, 
+and restarting the service pods every time a third-party API token rotates causes unacceptable downtime.
+
+ The Answer:
+
+ Externalized Secrets: Use Spring Cloud Config Server backed by an encrypted Git repository,
+ or integrate directly with a cloud vault using Spring Cloud Vault / Kubernetes Secrets.
+
+ Dynamic Refreshing: Annotate configuration bean classes with @RefreshScope.
+
+ Runtime Update: When a configuration or token changes, update the configuration management store and trigger a POST request 
+ to the actuator endpoint: /actor/refresh.
+
+ Spring will recreate only the beans annotated with @RefreshScope at runtime with the new configurations,
+ completely eliminating the need for a service restart.
+  
+
+Q. How does service discovery work in a containerized namespace infrastructure versus hardcoded URLs?
+
+     In modern containerized environments (like Kubernetes or OpenShift), hardcoded external URLs are replaced by DNS-based Service Discovery.
+Services deployed within the same namespace can communicate using their short Service Name (e.g., http://account-service/api).
+The cluster's internal DNS server automatically resolves this name to the correct internal cluster IP. This eliminates the need for an explicit service discovery registry (like Netflix Eureka) at the application framework level.
+
+
+Q. Can you explain the Saga pattern in microservices?
+
+The Saga pattern manages data consistency across distributed microservices by breaking a global transaction into a series of local transactions. Each service updates its own database and emits an event. 
+There are two primary types:
+Orchestration: A centralized orchestrator tells each service exactly what local transaction to execute sequentially.
+Choreography: Services act independently, listening to events and triggering their own local actions reactively.
+Compensating Transactions: If any step fails, the Saga triggers an explicit series of compensating transactions in reverse order to undo the changes made by the previous steps, maintaining eventual consistency.
+  
+
+Q. What are circuit breakers used for?
+
+ Circuit Breakers (implemented via tools like Resilience4j) prevent a localized failure in a downstream dependency from cascading throughout the entire system. It operates via three structural states:
+Closed: Normal operations; all requests pass through to the downstream service.
+Open: If the failure rate crosses a specified threshold, the breaker "trips". Requests immediately fail-fast (returning a fallback response) without calling the broken downstream service, protecting system resources.
+Half-Open: After a configured timeout period, the breaker permits a limited number of trial requests to see if the downstream service has recovered. If successful, the circuit closes again; if it fails, it returns to the open state.
+
+
+Q. What is a Two-Phase Commit (2PC) distributed system?
+
+ Two-Phase Commit (2PC) is an atomic commitment protocol used to achieve ACID compliance across multiple distributed databases or resources. It relies on a central Coordinator and multiple Participants across two phases:
+Prepare Phase: The coordinator asks all participants if they are ready to commit their changes. Participants execute everything up to the final write, lock resources, and vote "Yes" (ready) or "No".
+Commit Phase: If all participants voted "Yes", the coordinator sends a broadcast command to globally commit the data. If any participant voted "No" or timed out, the coordinator sends a command to roll back the entire transaction everywhere.
+Tradeoff: Unlike the Saga pattern (which favors eventual consistency), 2PC guarantees strong consistency but introduces high latency and locking issues, making it less scalable in massive microservice architectures.
+
+Q. In the payments industry, would you prefer SQL or NoSQL?
+
+ A hybrid approach is standard, but SQL is strictly preferred for core financial ledger transactions.
+Why SQL: Payment ledger systems require absolute data integrity, strict consistency, and multi-table relationships. Relational databases natively provide strict ACID compliance, ensuring data is never lost, corrupted, or duplicated.
+When NoSQL is used: NoSQL (like MongoDB or Cassandra) is reserved for supplementary payment domains like audit logs, real-time fraud detection pipelines, or high-throughput session state caching where horizontal scale outweights absolute transactional locking.
+
+Q: How do you go about taking on a refactor task whenever you're implementing a feature?
+
+Answer: A systematic approach ensures safety and maintainability:
+Write/Verify Tests First: Ensure there is high test coverage (unit/integration) for the existing code to create a safety net.
+Identify Code Smells: Look for tightly coupled logic, long methods, duplicate code, or violations of Single Responsibility.
+Apply Small, Incremental Changes: Refactor in tiny, verifiable steps (e.g., extracting methods, moving logic to the Service layer) rather than large, sweeping rewrites.
+
+Separate Refactoring from Feature Work: Commit the refactored code first to ensure it passes all regression tests, then implement the new feature on top of the clean codebase.
+
+
+Q: How do you go about breaking down a God interface without introducing risk to breaking other things?
+
+Answer: Apply the Interface Segregation Principle (ISP):
+Create Smaller Interfaces: Define new, highly focused interfaces that group related methods together.
+Refactor via Multi-Interface Implementation: Modify the existing implementation class to implement both the old "God" interface and the new smaller interfaces simultaneously. This ensures no existing code breaks.
+Migrate Clients Gradually: Update client classes to inject and depend on the new, smaller interfaces instead of the large one.
+Deprecate and Remove: Once all clients are migrated, deprecate the old interface and eventually remove it.
+
+
+Q: Do you have experience with containers and Docker?
+
+Answer: (Note: Even if you haven't used it recently, express a foundational understanding.)
+"Yes, I have foundational experience with Docker. I understand core container concepts such as writing Dockerfile configurations, creating container images, managing networks and volumes, and utilizing docker-compose to orchestrate multi-container environments locally."
+
