@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" name="robots" content="noindex">
+  <title>Projects</title>
+</head>
+<body>
+  <pre>
+    
+ <h2><u>Projects</u></h2>
+
+
+<b>1. Centersuite project</b>
+
+The CentreSuite app is designed for commercial cardholders and program administrators,
+providing access to various features for managing cards, statements, and expenses.
+This system centralizes commercial card administration in a single easy-to-use browser-based application.
+This allows your users and card account holders to:
+1.check statements
+2.view account statements
+3.submit expense reports
+4.update personal information, and
+5.make payments toward their card balance.
+
+ This project involves migration of existing dot net project into spring boot application
+ for commercial application.
+
+Based on the modules, seperated into different microservices, like
+
+admin, account, statement, expense etc. ui component is also a seperate microservice.
+
+Each module has both digital and commercial microservices, digital microservice communicates with UI 
+and commercial microservice communicates with backend db and other services.
+
+
+My responsibility involves understanding the existing dotnet application functionality 
+and migrate into java-based application. 
+Collaborate with Architect for solution and mentor junior members in our team.
+
+How microservices talk to each other
+-------------------------------------
+
+* Using synchronous HTTP/REST calls.
+* Uses asynchronous Kafka eventing for notification,email,otp and account changing events.
+
+Project details
+---------------
+
+Project uses AWS infrastructure including:
+
+* Docker Registry hosted in AWS
+* Nexus Repository (for artifact management)
+* Git repositories on AWS
+* Pods run on AWS EKS
+
+
+
+Deployment
+----------
+
+Pods run on AWS EKS: cluster platform02-tsysdevsyntheticdigitalinnov-us-east-1.k8s.local, namespace capapis, fronted by an internal ELB. Helm charts live in QA/helm-clouddeployments; Argo CD syncs them.
+
+Kubernetes(k8s) is an open source container orchestration platform used to deploy, manage, scale and monitor containerizes applications.
+
+ - Docker runs containers; Kubernetes manages many containers across multiple machines.
+
+
+AWS EKS (Elastic Kubernetes Service) is a managed Kubernetes service on AWS, it allows you to run and manage containerized applications using Kubernetes
+Without having to manage the Kubernates control panel yourself.
+
+Key components:
+
+EKS Control Panel - Managed by AWS; handles Kubernetes API, scheduling etc
+
+Worker Nodes - Run your application containers
+
+Pods - Smallest deployable Kubernetes units
+
+Deployments - Manage desired number/version of Pods
+
+Services - Provide network access to Pods
+
+Ingress/ Load Balancer - Expose applications externally
+
+ECR - AWS container registers where Docker images can be stored
+
+IAM - Controls AWS permissions 
+
+CloudWatch - Monitoring and logging 
+
+Flow: 
+
+Developer -> GitHub -> Jenkins CI/CD -> Docker image -> AWS ECR -> AWS EKS -> Kubernetes Pod -> Spring boot application 
+
+The application is running inside and EKS Pod, while the docker image is stored in ECR.
+
+
+One liner - EKS is AWS's managed Kubernetes service used to deploy, scale and manage containerized applications. 
+AWS manages the Kubernetes control plane, while application run on EC2 worker nodes or AWS Fargate.
+
+Helm is a package manager for Kubernetes. In AWS EKS, we use Helm Charts to package, configure, install and upgrade Kubernetes applications in a consistent and repeatable way/
+
+Example :  Jenkins -> Build Spring boot -> Docker image -> Push Image (AWS ECR) ->  -> Helm -> Deploy (AWS EKS)
+
+Argo CD is a GitOps-based continuous delivery (CD) tool for Kubernetes. It is commonly used to deploy applications to AWS EKS. It continuously compares the desired state with Git with the actual state in Kubernetes cluster and synchronizes them
+
+
+Developer -> Git Repository (Kubernetes Yaml / Helm Charts) -> Argo CD -> AWS EKS -> Kubernetes Pods
+
+
+Authentication'
+----------------
+
+The Alchemy project implements a multi-tier authentication system that supports different authentication types based on the request source.
+ Here's how it works:
+
+Request flow
+
+
+
+CORS filter → Spring Security chain (permitAll / internal-partner / authenticated)
+
+   → TraceFilter, RequestHandlerFilter, BodyEncryptionFilter
+
+      → EventInterceptor
+
+      → CustomAuthInterceptor → isOverride? → System | InternalPartner | B2C provider
+
+      → URLEncryptionInterceptor
+
+      → PermissionsInterceptor (capability cache warm-up)
+
+         → Controller @Secured method → @AuthenticateUser aspect → service
+
+
+
+Login request
+  → authentication performed (AuthenticationManager, or manually)
+  → Authentication placed in SecurityContextHolder
+  → SecurityContextRepository saves it into HttpSession
+  → JSESSIONID returned to client
+
+Subsequent request
+  → JSESSIONID → HttpSession
+  → SecurityContextHolderFilter loads SPRING_SECURITY_CONTEXT into SecurityContextHolder
+  → AuthorizationFilter checks the Authentication
+  → response completes → context cleared from ThreadLocal
+
+
+
+
+Authentication Types
+
+
+
+The system supports 4 authentication types (defined in `AuthenticationType.java`):
+
+
+
+	1. SYSTEM - System-to-system authentication
+
+	2. B2C - Business-to-Consumer authentication
+
+	3. B2B - Business-to-Business authentication
+
+	4. INTERNAL_PARTNER - Internal partner API authentication
+
+
+
+Alchemy uses Spring Security as the framework, with:
+
+
+
+	1. Server-side HTTP session (Spring Session JDBC) for browser/B2C traffic
+
+
+	2. A proprietary TSYS bearer-token scheme (com.tsys.enterprise.* interceptor/auth libraries) for machine-to-machine traffic
+
+
+
+
+
+Authentication Flow
+
+
+
+1. Request Interception
+
+
+
+The `CustomAuthInterceptor` intercepts all incoming requests and:
+
+
+
+	•  Determines the authentication type by examining the Authorization header
+
+	•  Routes to the appropriate provider based on the Bearer Type:
+
+	•  TSYS_SYSTEM → System Provider
+
+	•  TSYS → B2B (uses B2C Provider)
+
+	•  INTERNAL_PARTNER → Internal Partner Provider
+
+	•  Default → B2C Provider
+
+
+
+
+
+2. Provider-Specific Authentication
+
+
+
+B2C Provider (`GenericB2CProvider`):
+
+
+
+	•  Handles consumer/user authentication
+
+	•  Extracts SecurityUser from Spring Security context
+
+	•  Resolves brand and locale from cookies/session
+
+	•  Validates site information from cookies
+
+	•  Sets up user context with login ID, client ID, and event attributes
+
+
+
+System Provider (`SystemProvider`):
+
+
+
+	•  Handles system-to-system calls
+
+	•  Validates system token using SystemAuthenticationHandler
+
+	•  Extracts userId and clientId from headers
+
+	•  Checks authorization against capability overrides
+
+
+
+Internal Partner Provider (`InternalPartnerProvider`):
+
+
+
+	•  Handles internal partner API calls
+
+	•  Uses InternalPartnerAuthenticationHandler for token validation
+
+	•  Sets up context with source type and access ID
+
+
+
+3. Token Validation
+
+
+
+Token validation is handled by the `Authenticator` which:
+
+
+
+	•  Extends BaseAuthenticator from the enterprise framework
+
+	•  Uses `AuthTokenLoader` to fetch tokens from the security server
+
+	•  Configured with security.url property pointing to the Security Management Infrastructure (SMI)
+
+
+
+4. Spring Security Configuration
+
+
+
+The `SecurityConfigurerAdapter` configures:
+
+
+
+	•  CSRF disabled for API usage
+
+	•  Permitted endpoints (login, logout, registration, password reset, etc.) - no authentication required
+
+	•  Conditional endpoints (taxon endpoints) - only accessible with INTERNAL_PARTNER bearer token
+
+	•  All other endpoints - require authentication
+
+	•  Logout handler that clears cache and storage
+
+	•  CORS configuration for cross-origin requests
+
+	•  Content Security Policy headers
+
+
+
+5. Authorization
+
+
+
+Authorization is enforced via:
+
+
+
+	•  `@Secured` annotations on controller methods specifying required capabilities
+
+	•  Capability overrides defined in `CapabilitiesOverrides`:
+
+	•  COMMON_OVERRIDES - capabilities available to all authenticated users
+
+	•  SYSTEM_OVERRIDES - capabilities for system calls
+
+	•  APP_OVERRIDES - application-specific capabilities
+
+	•  `@AuthenticateUser` annotation (`AuthenticateUserAspect`) - AOP aspect that validates user is authenticated before method execution
+
+
+
+Security User Context
+
+
+
+The authenticated user is represented by `SecurityUser` containing:
+
+
+
+	•  Username, name, email, phone
+
+	•  Associated group (with client ID)
+
+	•  Device ID
+
+	•  Impersonation status
+
+
+
+This provides a robust, multi-channel authentication framework supporting various client types and authentication mechanisms while maintaining security and audit capabilities.
+
+
+
+
+
+
+
+Detail Explanation
+
+
+
+Layer 1 — Spring Security filter chain (edge)
+
+
+
+`SecurityConfigurerAdapter` (shared in basedigitalprovider, each app can override — alchemycommercialaccount has its own):
+
+
+
+	•  CSRF disabled; session management maximumSessions(1); requireExplicitSave(false).
+
+	•  permittedEndpoints (login/logout, registration, password/passcode, unlock, content configs, CSP report...) → permitAll, plus healthEndpoints and managementEndpoints.
+
+	•  taxonEndpoints (portfolio/product accountrules config + rules list) → custom AuthorizationManager isThisFromInternalPartner() that only checks the Authorization header's first token equals INTERNAL_PARTNER (validateInternalPartnerToken) — a header-shape check, not a cryptographic validation.
+
+	•  everything else → authenticated().
+
+	•  Logout at /user/v1/logout adds ClearSiteDataHeaderWriter(CACHE, STORAGE) and CustomLogoutSuccessHandler; CSP + frameOptions(deny); CORS filter at highest precedence with application.cors.allowed.origins.
+
+
+
+Session is the actual authentication carrier for browser traffic — the SecurityUser principal lives in the Spring SecurityContext, and the login itself happens in alchemydigitalauthentication.
+
+
+
+Layer 2 — Interceptor dispatch by bearer type
+
+
+
+Registered in `Config.addInterceptors` in order: EventInterceptor → CustomAuthInterceptor → URLEncryptionInterceptor → PermissionsInterceptor.
+
+
+
+`CustomAuthInterceptor.pre` first checks authenticationHandler.isOverride(request, AuthExceptionPaths.DEFAULT_OVERRIDES) — if the path is an override, everything below is skipped. Otherwise getAuthenticationType reads the first token of Authorization:
+
+
+
+| Bearer prefix | AuthenticationType | Provider used | |---|---|---| | TSYS_SYSTEM | SYSTEM | SystemProvider | | INTERNAL_PARTNER | INTERNAL_PARTNER | InternalPartnerProvider | | TSYS | B2B | falls through to B2CProvider | | none / other | B2C | B2CProvider |
+
+
+
+Note the B2B branch has no dedicated provider — it's handled by the else (B2C) path. Afterwards updateContextForEncrypedCardNumber copies loginId into ACCESS_ID for B2B/INTERNAL_PARTNER when the X-Encrypt-Url-Params header is present.
+
+
+
+Layer 3 — Providers
+
+
+
+`SystemProvider` (source)
+
+
+
+	•  systemAuthenticationHandler.handleAuthentication(...) with authenticator == null; exceptions are caught and only logged, so a failure here does not by itself reject the request.
+
+	•  Populates loginId, locale, and clientId (providerHelper.getClientId → client_id → clientId header) then contextLifecycleManager.initialize(clientId, "SYSTEM").
+
+	•  checkAuthorization: reads the @Secured value on the handler; missing annotation → AuthorizationException. Grants if the capability is in SYSTEM_OVERRIDES, COMMON_OVERRIDES, APP_OVERRIDES, or if the URI has both accountId and customerId path variables (checkAccountAndCustomer).
+
+
+
+`InternalPartnerProvider` (source)
+
+
+
+	•  internalPartnerAuthenticationHandler.handleAuthentication(request, response, authenticator, handler, DEFAULT_OVERRIDES) — real token validation via the Authenticator; any exception → AuthenticationException.
+
+	•  Sets sourceType (param → header, validated against MessageSourceType, default GLOBAL), REQUEST_SOURCE_TYPE = API, ACCESS_ID from loginId, locale en_US.
+
+
+
+`B2CProvider` / `GenericB2CProvider` (base)
+
+
+
+	•  setAppContext: clientId from the site cookie (sitePk|primeBankNumber|issuingBankNumber via SiteDetails), falling back to session/cookie prime_bank_number, then "9999"; marks API_REQUEST_TYPE = B2C; records START_TIME, loginId.
+
+	•  Brand/locale resolved from session-or-cookie with defaults CeSuBase / en_US.
+
+	•  If brand resolves → handleAuthentication: pulls SecurityUser from SecurityContextHolder, sets loginId and clientId from securityUser.getGroup().getClientId(), and populates event attributes (bank/corp/node numbers, CPC). No username → loginId = "anonymous".
+
+	•  If brand is null and the handler's @Secured capability isn't in the app's override list → AuthenticationException. Note: since brand defaults to CeSuBase, it's effectively never null, so this branch rarely fires.
+
+	•  Each app subclasses it: account uses COMMON_OVERRIDES, authentication service uses B2C_OVERRIDES (auth's B2CProvider).
+
+
+
+Layer 4 — Authorization / capabilities
+
+
+
+	•  `@Secured("CAN_...")` on controller methods declares the required capability (e.g. `VirtualAccountController`, `HelpController`). These are read manually by the providers, not by Spring's @EnableMethodSecurity.
+
+	•  `CapabilitiesOverrides` is a per-app enum: APP_OVERRIDES and B2C_OVERRIDES are empty in the account service; COMMON_OVERRIDES holds a large allow-list; SYSTEM_OVERRIDES has CAN_VERIFY_ACCOUNT, CAN_CREATE_CLIENT_FOR_MAGNON.
+
+	•  `PermissionsInterceptor` does not enforce — it warms a Redis cache (SharedAccessHelper) with ACCOUNT / UNIT / USER capabilities from UserCapabilityService, keyed by card number, corporate unique number, and user id. Failures are swallowed and logged. Enforcement using that cache happens downstream in services.
+
+	•  `@AuthenticateUser` (aspect) — @Before advice (skipped on @Async methods) that throws NotFoundException(USER_NOT_AUTHENTICATED) when no user is present. Under default/qa profiles it checks appContextAware.getLoginId(); otherwise it checks SecurityUser.getUserName() — and if the principal isn't a SecurityUser at all, it returns true.
+
+
+
+Token infrastructure
+
+
+
+`Authenticator extends BaseAuthenticator` delegates to `AuthTokenLoader extends BaseAuthTokenLoader`,
+ which is @RefreshScope and points at ${security.url} (SMI). The same pair exists in alchemydigitalauthentication and alchemycommercialaccount, 
+so each service resolves tokens against the central security server independently
+
+
+
+Request flow
+
+
+
+CORS filter → Spring Security chain (permitAll / internal-partner / authenticated)
+
+   → TraceFilter, RequestHandlerFilter, BodyEncryptionFilter
+
+      → EventInterceptor
+
+      → CustomAuthInterceptor → isOverride? → System | InternalPartner | B2C provider
+
+      → URLEncryptionInterceptor
+
+      → PermissionsInterceptor (capability cache warm-up)
+
+         → Controller @Secured method → @AuthenticateUser aspect → service
+
+
+Two things worth flagging: SystemProvider swallows authentication-handler exceptions, and the taxonEndpoints authorization manager
+ trusts an unverified header prefix.
+
+
+
+   
+
+Caching
+-------
+
+Redis cache is used to caching.
+Redis stores data as key value pairs  primarily in memory, making it very fast.
+We used Spring Data Redis with RedisTemplate / Spring Cache annotations such as @Cachable to cache frequently accessed data and reduce database load.
+Every entry is a hash (key → hashKey → value) with a TTL set on each write; TTLs come from either app yml/ hardcoded.
+Here hashkey  - : templated per user + app in SharedAccessConstants (e.g. USER_%s_APP_%s_CUN_PERMISSIONS), so a user's whole cache is evictable via USER_%s_APP_*.
+
+
+
+
+
+<b>2. Green Screen Modernization</b>
+
+This project involves migration of an existing pega application into spring boot microservices 
+application for all platforms [CH NA, CH INT, CC NA & CCI NT]. 
+
+In this project there were different modules including Account Search, Account, Card, Notes, Summary etc.
+I mainly worked in Account search and Notes module.
+
+Technologies Used: Java, Spring Boot, GIT, Jenkins, JIRA
+
+Database: IMS DB, DB2, ORACLE DB
+
+
+We created json files and an existing react UI framework Muon coverts those json into react UI components.
+
+Rest API acts as the communication interface between UI and backend.
+
+and internally the data is fetched from IMS / DB2 db through essential api calls or newly created apis.
+
+We used Redis cache for caching and  Multithreading / threadpools for concurrency.
+Caching improves performace by reducing expensive operations such as database calls, while multithreading improves concurrency by allowing multiple
+tasks to execute simultaneously.
+
+Note: Try checking apiframework authentication / redis cache and threadpool implementation in composite.
+
+<b>3. Mainframe CICS to Microservice Migration</b>
+
+This project involves migration of 1200 XMLM packets & 120 screens across 4 platforms [CH NA, CH INT, CC NA & CCI NT]. 
+
+Technologies Used : Java, Spring Boot, IMS DB, DB2, VSAM, GIT, Jenkins, JIRA
+
+Database : IMS DB, DB2, VSAM
+
+
+My responsibility involves understanding the mainframe application functionality from the mapping document provided by reverse 
+engineering team and migrate into java-based application and mentor junior members in our team.
+
+<b>4. Central Receiving Computerization Application</b>
+
+Central Receiving Application is developed to replace the existing excel based manual work flow existed in Central Receiving, 
+Purchase and Store departments in a Hospital.  Once a vendor delivers the materials based on the given purchase order to the Central Receiving Dept. 
+this application workflow starts. This includes creation of delivery record, inspection record, goods return record,
+interaction with different departments etc. Application is developed using Restlet, AngularJs and Ormlite Technologies and framework. 
+This application is integrated with a workflow engine called JOGET which is an open-source workflow management system and later migrated 
+to Camunda BPMN workflow engine. 
+
+My responsibility involves System Study, Requirement Gathering, Designer, Developer, QA, Bug fixing, Product Support interaction,
+ Business use-case enhancement, Peer review, UI Development.
+
+Technologies Used : Java, Restlet, AngularJS, HTML5, ORMLite, MySQL, SVN , Joget / Camunda (opensource application for Workflow integration), Maven.
+
+Application Server : JBoss
+Database :	MySQL 
+
+
+In this Restlet application authetication is implemented using an Authenticator and a credential Verifier.
+The Authenticator intercepts incoming requests, extract credentials and verifier validates them. 
+Once authenticated, the request is allowed to reach the protected Restlet resource.
+
+
+<b>5. AMRITA HOSPITAL INFORMATION SYSTEM (AHIS)</b>
+
+AHIS is a full-fledged, large scale Health care solution developed in JEE platform. Amrita HIS is now implemented at many big hospitals
+ throughout India and a few hospitals in US. The main focus area is on the integration of clinical as well as financial and administrative applications.
+ Amrita HIS uses multi-tier architecture and follows the Model View Controller (MVC) design pattern.
+ High affinity towards open source makes it always profitable to use. It is one among the few hospital information systems in world, 
+certified under CCHIT (Highest certification standard in United States in Healthcare) and ISO (International Organization for Standardization).
+
+
+Key role in the Design and Development of Material Management Module, Key Developer in Architecture Team.
+
+Technologies Used :	Java, JSP, JDO, JDBC, Hibernate, HTML, CSS, DHTML, Java Script, Ajax, Jasper Reports, Servlets, EJB, SOFIA Framework, Antlr
+Server :	Tomcat, JBoss, Wildfly
+Database :	MySQL
+
+
+
+  </pre>
+</body>
+</html>
