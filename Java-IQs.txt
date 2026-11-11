@@ -1267,6 +1267,277 @@ from a particular base class, or make use of particular annotations in order to 
 and can be any arbitrary (often relatively simple) Java object. It has getter and setter method, and all the member are declared as private.
 
 
+Q. 
+Marker interface 
+- A marker interface is an interface with no methods. It’s used to provide metadata to the JVM or frameworks. , ex: Serializable, Clonable.
+Q. 
+Can override static methods ? 
+- static methods belong to class not instances, so they are not polymorphic. That means they are typically hidden, not overridden.
+
+Q. What happens when two keys collide in a HashMap?
+If two keys produce the same hash:
+
+Both go into the same bucket
+Java uses equals() to differentiate them
+In Java 8+, buckets can convert from linked list to balanced tree when size crosses threshold
+
+Q. Is HashMap thread-safe?
+No.
+
+HashMap is not thread-safe.
+
+For concurrent use cases:
+
+ConcurrentHashMap
+Collections.synchronizedMap()
+are safer choices.
+
+ConcurrentHashMap is generally preferred because it allows better parallel access.
+
+Q. Which methods must you override when using a custom object as a Map key?
+You should override:
+
+equals()
+hashCode()
+
+If you override equals() but not hashCode(), equal objects can end up with different hash codes.
+If not implemented correctly, key lookups will behave unpredictably.
+
+Q.Difference between Runnable and Callable?
+
+Runnable and Callable are functional interfaces in Java that represent tasks that can be executed concurrently. 
+
+Runnable
+	No return value
+	Cannot throw checked exceptions
+Callable
+	Returns a result
+	Can throw checked exceptions
+	Works with Future
+
+Q. Difference between sleep() and wait()?
+sleep()
+	Belongs to Thread
+	Does not release lock
+wait()
+	Belongs to Object
+	Releases lock
+	Must be inside synchronized context
+
+
+
+Q. Arrays.asList() vs List.of
+
+At first glance, both seem to create lists easily. But the behavior is very different — and this often trips up even experienced developers.
+
+Let’s see:
+
+// Example 1: Arrays.asList()
+
+List<String> list1 = Arrays.asList("A", "B", "C");
+
+list1.set(1, "X"); // ✅ Allowed
+
+System.out.println(list1); // [A, X, C]
+
+list1.add("D"); // ❌ Throws UnsupportedOperationException
+
+
+
+// Example 2: List.of()
+
+List<String> list2 = List.of("A", "B", "C");
+
+list2.set(1, "X"); // ❌ Throws UnsupportedOperationException
+
+✅ Answer:
+🔎 Explanation
+Arrays.asList() → fixed-size list backed by an array.
+
+You can update elements with set().
+
+But you cannot add/remove.
+
+
+List.of() (Java 9+) → truly immutable list.
+
+No add, no remove, not even update.
+
+
+✅ Key Takeaway:
+
+Use Arrays.asList() when you need updates but don’t need resizing.
+
+Use List.of() when you want immutability and safety.
+
+
+Q. Try with resources
+
+
+1.With try + finally, the finally exception overrides the try one ❌.
+2.With try-with-resources, the try exception is preserved ✅, and 
+ resource exceptions are added as suppressed.
+3.This is why try-with-resources is safer and recommended for 
+ real-world resource handling (DB connections, files, streams).
+
+Q. Memory Consumption and String Pool
+
+🔹️Each String in Java is immutable, so any modification or concatenation creates new string objects, which can result in high memory usage, 
+especially in loops or intensive string operations
+
+🔹️Java uses a special memory location called the String Pool to store string literals, which reuses identical string values to save memory. 
+However, if you frequently create strings with the new keyword, 
+those objects are placed in the heap and not reused, leading to memory inefficiency.
+
+Prefer StringBuilder or StringBuffer for intensive string operations and concatenations within loops, as they are mutable and modify an internal buffer,
+ avoiding repeated object creation
+
+
+Q. HashMap vs HashTable vs ConcurrentHashMap
+
+HashMap: Not synchronized, allows null, fast in single-threaded apps.
+HashTable: Synchronized (thread-safe but slower), no null keys/values.
+ConcurrentHashMap: Thread-safe with better concurrency — locks only a portion (segment) instead of the entire map.
+
+💡 Tip: Prefer ConcurrentHashMap in multi-threaded environments for better performance.
+
+Q. equals() & hashCode() in Collections
+
+Used in HashMap, HashSet & other hash-based structures.
+hashCode() → decides bucket location.
+equals() → checks equality of two objects in the same bucket.
+
+ ✅ Rule: If two objects are equal → they must return the same hash code.
+
+
+Q.volatile vs synchronized
+
+volatile: Ensures visibility of variable changes across threads (no caching issues).
+synchronized: Ensures both atomicity and visibility by locking code blocks.
+
+ 💡 Use volatile for shared flags or status variables.
+ 💡 Use synchronized for compound actions or shared mutable state updates.
+
+
+Q.Future vs CompletableFuture
+
+ Future
+
+	Introduced in Java 5
+
+	You can submit tasks asynchronously
+
+	But calling future.get() blocks until the result arrives 😬
+
+	No chaining, no callbacks
+
+
+ CompletableFuture
+
+	Introduced in Java 8
+
+	Non-blocking and fully asynchronous
+
+	Supports chaining (thenApply, thenAccept)
+
+	Supports combining multiple async tasks
+
+If you use CompletableFuture without supplyAsync() or an executor — it still runs on the same thread 😅
+So async ≠ parallel unless you explicitly run it asynchronously.
+
+ Future → Basic async, but blocking
+ CompletableFuture → True async, non-blocking, and chainable
+
+
+Q. What’s the real difference between CountDownLatch and CyclicBarrier?
+
+CountDownLatch → The host waits for all guests to check in before unlocking the door. Once everyone’s in, the party starts — and the latch cannot be reused.
+
+CyclicBarrier → A group of guests wait for each other to arrive before starting a shared activity (like karaoke 🎤). Once done, the barrier resets automatically for the next round.
+
+Q. Stack overflow VS OutOfMemoryError?
+
+StackOverflowError: Deep or infinite recursion.
+OutOfMemoryError: Heap is full; no more memory for objects.
+
+Q. What are method references?
+Shortcut for lambda expressions that call an existing method.
+Syntax: ClassName::methodName.
+Types: static, instance, and constructor references.
+
+Q. What is the difference between map() and flatMap()?
+
+map(): Transforms elements one-to-one.
+flatMap(): Flattens nested structures (For example lists inside lists).
+
+Useful in Stream transformations.
+
+Q. What is a virtual thread (Java 21)?
+
+Lightweight threads managed by the JVM.
+Thousands can run concurrently with minimal resource usage.
+Improves scalability for I/O-heavy apps without complex async code.
+
+Q. What is the difference between wait() and sleep()?
+
+wait(): Releases lock and pauses until notified.
+sleep(): Pauses thread but doesn’t release lock.
+wait() used for inter-thread communication;
+sleep() for delay.
+
+Q. Explain Comparable vs Comparator.
+Comparable: Natural ordering; Comparator: Custom ordering.
+
+Q. What is JVM, JRE, JDK?
+JVM: Runs Java bytecode; JRE: JVM + libraries; JDK: JRE + tools.
+
+Q. What is the difference between protected and default access modifier ?
+
+
+1- protected : it means that variables, methods are accessible within the same class and all related Subclasses 
+
+
+2- default: it means that variables, methods are accessible only within the same package 
+
+Q. Explain try-with-resources
+
+  Auto-closes resources implemnting AutoClosable.
+
+Q. What is String.intern() ?
+
+Add Strings to pool or returns existing reference.
+
+Q. How does HashMap work internally?
+
+ It uses an array of Node buckets and relies on hashing. 
+
+ When you put a key-value pair, Java calls the key's hashCode() method to calculate the bucket index.
+ If a collision occurs (two keys map to the same bucket), it compares keys using equals().
+ Since Java 8, if a bucket's linked list grows past a specific threshold (TREEIFY_THRESHOLD = 8), 
+  it converts into a balanced Red-Black tree for faster \(O(\log n)\) lookup performance
+
+Q. 
+Difference between HashMap and ConcurrentHashMap
+
+HashMap is not Thread safe, while ConcurrentHashMap is Thread safe and multiple threads can read and update it concurrently.
+HashMap allows one null key and allows null values, while ConcurrentHashMap doesnot allow null key and values.
+HashMap is under java.util package, while ConcurrentHashMap is under java.util.concurrent package.
+
+
+
+Programming
+-------------
+
+Question : I have an event management system that sends a bunch of events to a queue.
+My application is reading events from that queue, ten messages at a time and processing them  to audit, maintain the state and send notifications.  
+Please write a program to,
+   1. Audit system events
+   2. Validate the event by calling a REST service using the event id/client system information
+   3.  Send an email notification if  that message failed validation.
+   4. Based on the event type insert/update /delete the object in the DB if the event id is in the table.
+
+
+
 What are Functional Interfaces?
 What is lambda expression?
 How are functional interfaces and Lambda Expressions related? 
