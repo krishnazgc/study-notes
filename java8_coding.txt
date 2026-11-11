@@ -1,5 +1,6 @@
 
-  
+  Java Code Examples
+---------------------------
 
 Programming
 -----------
@@ -94,6 +95,360 @@ string.chars().mapToObj(c -> (char) c)
 
 
 
+Class
+------
+
+package com.example.testproject;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CyclicBarrier;
+import java.util.stream.Collectors;
+
+/**
+ * Entry point for the test project.
+ */
+public class Main {
+
+	public static void main(String[] args) {
+		System.out.println("Hello from javatestproject!");
+		if (args.length > 0) {
+			System.out.println("Arguments received: " + String.join(", ", args));
+		}
+		seperateEvenAndOdd();
+		printFrequencyOfCharacters("hello world");
+		sortListOfStringsBasedOnLength();
+		findSecondLargestNumber();
+		reverseEachWordInString("Hello World");
+		findFirstNonRepeatedCharacterAmoungStrings();
+		findOccuranceOfEachCharacterInString("programming");
+		groupPersonsByCity();
+		findSetOfLastNamesForEachCity();
+		findPersonsHavingAgeGreaterThan50IncludingOthers();
+		findCountOfPersonsHavingAgeGreaterThan50ForEachCity();
+		runnableAndCallableExample();
+		executerServiceExample();
+		futureExample();
+		completableFutureExample();
+		cyclicBarrierExample();
+		countDownLatchExample();
+	}
+
+	private static void seperateEvenAndOdd() {
+		List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+		List<Integer> evenNumbers = numbers.stream()
+				.filter(n -> n % 2 == 0)
+				.toList();
+
+		List<Integer> oddNumbers = numbers.stream()
+				.filter(n -> n % 2 != 0)
+				.toList();
+
+		System.out.println(numbers.stream().collect(Collectors.partitioningBy(n-> n%2 ==0)));
+
+		System.out.println("Even Numbers: " + evenNumbers);
+		System.out.println("Odd Numbers: " + oddNumbers);
+
+	}
+
+	private static void printFrequencyOfCharacters(String string) {
+		string.chars()
+				.mapToObj(c -> (char) c)
+				.forEach(c -> System.out.println(c + ": " + string.chars().filter(ch -> ch == c).count()));
+
+	}
+
+	private static void sortListOfStringsBasedOnLength() {
+		List<String> strings = Arrays.asList("ac", "a", "abc");
+		List<String> sortedStrings = strings.stream()
+				.sorted(Comparator.comparing(String::length))
+				.toList();
+
+		System.out.println("Sorted Strings: " + sortedStrings);
+
+	}
+
+	private static void findSecondLargestNumber() {
+		List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+		Integer secondLargest = numbers.stream()
+				.sorted(Comparator.reverseOrder())
+				.skip(1)
+				.findFirst()
+				.orElse(null);
+
+		//List<String> list1 = Arrays.asList("A", "B", "C");
+		//list1.add("D");
+		//System.out.println("List after adding an element: " + list1);
+
+		System.out.println("Second Largest Number: " + secondLargest);
+
+	}
+
+	private static void reverseEachWordInString(String string) {
+			String reverseString = Arrays.stream(string.split(" "))
+					.map(word -> new StringBuilder(word).reverse().toString())
+					.collect(Collectors.joining(" "));
+		System.out.println("Reversed Words: " + reverseString);
+	}
+
+	private static void findFirstNonRepeatedCharacterAmoungStrings() {
+		List<String> strings = Arrays.asList("apple", "banana", "cherry");
+		String concatenatedString = String.join("", strings);
+		Character firstNonRepeatedChar = concatenatedString.chars().mapToObj(c -> (char) c)
+				.filter(c -> concatenatedString.indexOf(c) == concatenatedString.lastIndexOf(c))
+				.findFirst()
+				.orElse(null);
+		System.out.println("First Non-Repeated Character: " + firstNonRepeatedChar);
+	}
+
+	private static void findOccuranceOfEachCharacterInString(String string) {
+		string.chars()
+				.mapToObj(c -> (char) c)
+				.collect(Collectors.groupingBy(c -> c, Collectors.counting()))
+				.forEach((c, count) -> System.out.println(c + ": " + count));
+	}
+
+	private static void groupPersonsByCity() {
+		List<Person> people = Arrays.asList(
+				new Person("John", "Doe", "New York",50),
+				new Person("Jane", "Smith", "Los Angeles",25),
+				new Person("Mike", "Johnson", "New York",60),
+				new Person("Emily", "Davis", "Los Angeles",70)
+		);
+
+		people.stream()
+				.collect(Collectors.groupingBy(Person::getCity))
+				.forEach((city, persons) -> {
+					System.out.println(city + ": " + persons.stream()
+							.map(Person::getFirstName)
+							.collect(Collectors.toSet()));
+				});
+
+	}
+
+	private static void findSetOfLastNamesForEachCity() {
+		List<Person> people = Arrays.asList(
+				new Person("John", "Doe", "New York",50),
+				new Person("Jane", "Smith", "Los Angeles",25),
+				new Person("Mike", "Johnson", "New York",60),
+				new Person("Emily", "Davis", "Los Angeles",70)
+		);
+
+		people.stream()
+				.collect(Collectors.groupingBy(Person::getCity, Collectors.mapping(Person::getLastName, Collectors.toSet())))
+				.forEach((city, lastNames) -> System.out.println(city + ": " + lastNames));
+
+	}
+
+	private static void findPersonsHavingAgeGreaterThan50IncludingOthers() {
+		List<Person> people = Arrays.asList(
+				new Person("John", "Doe", "New York",50),
+				new Person("Jane", "Smith", "Los Angeles",25),
+				new Person("Mike", "Johnson", "New York",60),
+				new Person("Emily", "Davis", "Los Angeles",70)
+		);
+
+		people.stream()
+				.collect(Collectors.partitioningBy(p -> p.getAge() > 50))
+				.forEach((isOlderThan50, persons) -> {
+					System.out.println(isOlderThan50 ? "Persons older than 50:" : "Persons 50 or younger:");
+					persons.forEach(p -> System.out.println(p.getFirstName() + " " + p.getLastName() + ", Age: " + p.getAge()));
+				});
+
+	}
+
+	private static void findCountOfPersonsHavingAgeGreaterThan50ForEachCity() {
+		List<Person> people = Arrays.asList(
+				new Person("John", "Doe", "New York",50),
+				new Person("Jane", "Smith", "Los Angeles",25),
+				new Person("Mike", "Johnson", "New York",60),
+				new Person("Emily", "Davis", "Los Angeles",70)
+		);
+
+		System.out.println(people.stream()
+				.collect(Collectors.partitioningBy(p -> p.getAge() > 50,
+						Collectors.groupingBy(Person::getCity,Collectors.counting()))));
+
+	}
+
+	private static void runnableAndCallableExample() {
+
+		// Runnable and Callable are functional interfaces in Java that represent tasks that can be executed concurrently. 
+		// Runnable does not return a result, 
+		// while Callable can return a result and throw checked exceptions.
+
+		Runnable runnableTask = () -> {
+			System.out.println("Runnable task is running.");
+		};
+		runnableTask.run();	
+
+		System.out.println("Runnable task has completed.");
+
+		Callable<String> callableTask = () -> {
+			System.out.println("Callable task is running.");
+			return "Callable task completed.";
+		};
+
+		try {
+			String result = callableTask.call();
+			System.out.println(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private static void executerServiceExample() {
+
+		// ExecutorService is a higher-level replacement for working with threads directly. 
+		// It provides a way to manage a pool of threads and execute tasks asynchronously.
+
+		java.util.concurrent.ExecutorService executorService = java.util.concurrent.Executors.newFixedThreadPool(2);
+
+		Runnable runnableTask = () -> {
+			System.out.println("Runnable task is running.");
+		};
+
+		Callable<String> callableTask = () -> {
+			System.out.println("Callable task is running.");
+			return "Callable task completed.";
+		};
+
+		executorService.submit(runnableTask);
+		try {
+			String result = executorService.submit(callableTask).get();
+			System.out.println(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		executorService.shutdown();
+
+	}
+
+	private static void futureExample() {
+
+		// Future is an interface that represents the result of an asynchronous computation. 
+		// It allows you to check if the computation is complete, wait for its completion, and retrieve the result.
+
+		java.util.concurrent.ExecutorService executorService = java.util.concurrent.Executors.newFixedThreadPool(2);
+
+		Callable<String> callableTask = () -> {
+			System.out.println("Callable task is running.");
+			Thread.sleep(2000); // Simulate a long-running task
+			return "Callable task completed.";
+		};
+
+		java.util.concurrent.Future<String> future = executorService.submit(callableTask);
+
+		try {
+			System.out.println("Waiting for the callable task to complete...");
+			String result = future.get(); // This will block until the result is available
+			System.out.println(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		executorService.shutdown();
+
+	}
+
+	private static void completableFutureExample() {
+
+		// CompletableFuture is a class that represents a future result of an asynchronous computation. 
+		// It provides methods to handle the result when it becomes available, 
+		// allowing you to chain multiple asynchronous operations together.
+
+		java.util.concurrent.CompletableFuture<String> completableFuture = java.util.concurrent.CompletableFuture.supplyAsync(() -> {
+			System.out.println("CompletableFuture task is running.");
+			try {
+				Thread.sleep(2000); // Simulate a long-running task
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			return "CompletableFuture task completed.";
+		});
+
+		completableFuture.thenAccept(result -> System.out.println(result));
+
+		try {
+			completableFuture.get(); // Wait for the CompletableFuture to complete
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// Chaining multiple asynchronous operations 
+		java.util.concurrent.CompletableFuture<Void> chainedFuture = 
+		java.util.concurrent.CompletableFuture.supplyAsync(() -> "John")
+		.thenApply(result -> result.toUpperCase())
+		.thenAccept(result -> System.out.println("Chained Result: " + result))
+		.thenRun(() -> System.out.println("Chained CompletableFuture completed."))
+		.exceptionally(ex -> {
+			System.out.println("Exception occurred: " + ex.getMessage());
+			return null;
+		});
+
+	}
+
+	private static void cyclicBarrierExample() {
+
+		// CyclicBarrier is a synchronization aid that allows a set of threads to wait for each other
+		// to reach a common barrier point.
+
+		CyclicBarrier cyclicBarrierExample = new CyclicBarrier(3);
+
+		System.out.println("All threads are waiting at the barrier.");
+
+		Runnable task = () -> {
+			try {
+
+				cyclicBarrierExample.await(); // Wait for other threads to reach the barrier
+
+			} catch (Exception e) {
+				Thread.currentThread().interrupt();
+			}
+			System.out.println("Thread " + Thread.currentThread().getName() + " has crossed the barrier.");
+		};
+
+		new Thread(task, "Thread 1").start();
+		new Thread(task, "Thread 2").start();
+		new Thread(task, "Thread 3").start();
+
+	}
+
+	private static void countDownLatchExample() {
+
+		// CountDownLatch is a synchronization aid that allows one or more threads to wait until 
+		//a set of operations being performed in other threads completes.
+
+		java.util.concurrent.CountDownLatch countDownLatchExample = new java.util.concurrent.CountDownLatch(3);
+
+		Runnable task = () -> {
+			System.out.println("Thread " + Thread.currentThread().getName() + " is performing its task.");
+			try {
+				Thread.sleep(1000); // Simulate some work
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+			countDownLatchExample.countDown(); // Decrement the count of the latch
+			System.out.println("Thread " + Thread.currentThread().getName() + " has completed its task.");
+		};
+
+		new Thread(task, "Thread 1").start();
+		new Thread(task, "Thread 2").start();
+		new Thread(task, "Thread 3").start();
+
+		try {
+			countDownLatchExample.await(); // Wait for the count to reach zero
+			System.out.println("All threads have completed their tasks. Proceeding with the main thread.");
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+
+	}
+}
 
 
 
