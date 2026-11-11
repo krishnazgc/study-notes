@@ -1,6 +1,6 @@
-https://www.journaldev.com/1079/multithreading-in-java
 
 MultiThreading:
+---------------
 
  A thread is a light-weight smallest part of a process that can run concurrently with the other parts(other threads) of the same process. 
 Threads are independent because they all have separate path of execution that’s the reason if an exception occurs in one thread, 
@@ -658,3 +658,4 @@ Fairness support			❌ No				✅ Fair/Non-fair lock
 Multiple conditions			❌ One monitor			✅ Multiple Conditions
 Simplicity				✅ Easier			More flexible
 
+https://www.journaldev.com/1079/multithreading-in-java
