@@ -1,10 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" name="robots" content="noindex">
+  <title> Docker</title>
+</head>
+<body>
+  <pre>
+    
+ <h2><u> Docker</u></h2>
+
+
 * What is Docker?
 
 Docker is a platform used to containerize our software, using which we can easily build our applications and 
 package them, with the dependencies required, into containers, and further these containers are easily shipped to 
 run on other machines.
 
-Docker allows developers to create templates called ‘images’ using which we can create lightweight virtual machines called ‘containers.’ 
+Docker allows developers to create templates called â€˜imagesâ€™ using which we can create lightweight virtual machines called â€˜containers.â€™ 
 
 In order to create and run containers on our host OS, we require software that enables us to do so.
 This is where Docker comes into the picture!
@@ -22,7 +34,7 @@ Advantages over virtualization:
 
 Docker Architecture:
 
-Docker uses a client–server architecture. The Docker client consists of Docker build, Docker pull, and Docker run. 
+Docker uses a clientâ€“server architecture. The Docker client consists of Docker build, Docker pull, and Docker run. 
 The client approaches the Docker daemon that further helps in building, running, and distributing Docke containers. 
 Docker client and Docker daemon can be operated on the same system; otherwise, we can connect the Docker client to the remote Docker daemon. Both communicate with each other using the REST API, over UNIX sockets or a network.
 
@@ -54,8 +66,8 @@ In Docker host, we have Docker daemon and Docker objects such as containers and 
 
     Docker daemon helps in listening requests for the Docker API and in managing Docker objects such as 
     images,   containers, volumes, etc. 
-    Daemon issues to build an image based on a user’s input and then saves it in the registry.
-    In case we don’t want to create an image, then we can simply pull an image from the Docker hub 
+    Daemon issues to build an image based on a userâ€™s input and then saves it in the registry.
+    In case we donâ€™t want to create an image, then we can simply pull an image from the Docker hub 
     (which might be built by some other user). In case we want to create a running instance of our Docker image, 
     then we need to issue a run command that would create a Docker container. 
     A Docker daemon can communicate with other daemons to manage Docker services.
@@ -68,7 +80,7 @@ Docker Registry
 
 Docker file:
 
-A Dockerfile is a text file that contains a set of instructions to build a Docker image — a lightweight, standalone package that includes everything needed to run an application (code, runtime, system tools, libraries, dependencies).
+A Dockerfile is a text file that contains a set of instructions to build a Docker image â€” a lightweight, standalone package that includes everything needed to run an application (code, runtime, system tools, libraries, dependencies).
 
 Key Concepts
 
@@ -107,7 +119,7 @@ How It Works
 1.Write the Dockerfile with build instructions
 2.Build the image: docker build -t my-app:1.0 .
 3.Run containers from the image: docker run my-app:1.0
-4.Ship the image anywhere — it runs the same way on any system with Docker
+4.Ship the image anywhere â€” it runs the same way on any system with Docker
 
 
 
@@ -120,3 +132,7 @@ amma12345
 
 https://www.docker.com/blog/build-your-first-docker-windows-server-container/
 
+
+       </pre>
+</body>
+</html>
