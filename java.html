@@ -9,8 +9,11 @@
   <pre id="java8">Java 8</pre>
   <pre id="javacollections">Java Collections</pre>
   <pre id="javaiqs">Java IQs</pre>
-  <pre id="javacoding">Java coding</pre>
   <pre id="multithreading">MultiThreading</pre>
+  <pre id="javadesignpatterns">Java Design Patterns</pre>
+  <pre id="javacoding">Java coding</pre>
+  
+  
   <script>
     fetch("Java.txt")
       .then(response => response.text())
@@ -53,6 +56,15 @@
       })
       .catch(err => {
         document.getElementById("multithreading").textContent = "Could not load file MultiThreading.txt.";
+      });
+
+    fetch("Java DesignPatterns.txt")
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById("javadesignpatterns").textContent = text;
+      })
+      .catch(err => {
+        document.getElementById("javadesignpatterns").textContent = "Could not load file Java DesignPatterns.txt.";
       });
 
     fetch("java8_coding.txt")
