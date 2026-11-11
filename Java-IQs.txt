@@ -1,7 +1,6 @@
-JAVA
-*****
 
 *Java Interview Questions*
+-----------------------------
 
 1. What are the Principles of OOPS? Explain each of them.
 
