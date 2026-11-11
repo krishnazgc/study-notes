@@ -1,3 +1,6 @@
+Projects
+---------
+
 1. Centersuite project
 
 The CentreSuite app is designed for commercial cardholders and program administrators,
