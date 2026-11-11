@@ -9,6 +9,7 @@
   <pre id="java8">Java 8</pre>
   <pre id="javacollections">Java Collections</pre>
   <pre id="javaiqs">Java IQs</pre>
+  <pre id="javacoding">Java coding</pre>
   <script>
     fetch("Java.txt")
       .then(response => response.text())
@@ -42,6 +43,15 @@
       .catch(err => {
         document.getElementById("javaiqs").textContent = "Could not load file Java-IQs.txt.";
       });
+   fetch("java8_coding.txt")
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById("javacoding").textContent = text;
+      })
+      .catch(err => {
+        document.getElementById("javacoding").textContent = "Could not load file java8_coding.txt.";
+      });
+    
   </script>
 </body>
 </html>
