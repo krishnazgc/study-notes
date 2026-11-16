@@ -480,10 +480,13 @@ public class SecurityConfig {
     }
 }
 
-1. A filter extracts credentials from the request. For example, UsernamePasswordAuthenticationFilter reads a form login, BasicAuthenticationFilter reads the Authorization: Basic header, and the OAuth2 resource server reads Authorization: Bearer <JWT>.
+1. A filter extracts credentials from the request. For example, UsernamePasswordAuthenticationFilter reads a form login,
+   BasicAuthenticationFilter reads the Authorization: Basic header, and the OAuth2 resource server reads Authorization: Bearer <JWT>.
 2. The filter builds an unauthenticated Authentication and passes it to the AuthenticationManager.
-3. The AuthenticationProvider loads the user through UserDetailsService, checks the password with the PasswordEncoder, and returns an authenticated token that includes the authorities.
-4. The filter stores that token in SecurityContextHolder. For stateful apps, the context is saved in the HTTP session. For stateless APIs, it is typically rebuilt on each request from a token.
+3. The AuthenticationProvider loads the user through UserDetailsService, checks the password with the PasswordEncoder, 
+   and returns an authenticated token that includes the authorities.
+4. The filter stores that token in SecurityContextHolder. For stateful apps, the context is saved in the HTTP session. For stateless APIs, 
+   it is typically rebuilt on each request from a token.
 
 Common mechanisms
 -----------------
@@ -495,7 +498,8 @@ Common mechanisms
 Authorization
 -------------
 
-Once authenticated, the user has a set of GrantedAuthority values. These are usually roles like ROLE_ADMIN or finer permissions like orders:write. hasRole("ADMIN") automatically looks for ROLE_ADMIN. hasAuthority("orders:write") matches the exact string.
+Once authenticated, the user has a set of GrantedAuthority values. These are usually roles like ROLE_ADMIN or 
+ finer permissions like orders:write. hasRole("ADMIN") automatically looks for ROLE_ADMIN. hasAuthority("orders:write") matches the exact string.
 
 Request-level authorization (URL rules)
 --------------------------------------
