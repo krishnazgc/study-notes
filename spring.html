@@ -419,30 +419,124 @@ spring-boot-starter-log4j2  -	It is used for Log4j2 for logging. An alternative 
 23) How Is Spring Security Implemented In A Spring Boot Application?
 
 Minimal configuration is needed for implementation. All you need to do is, add spring-boot-starter-security starter in the file pom.xml. 
-You will also need to create a Spring config class that will override the required method while extending the WebSecurityConfigurerAdapter to 
-achieve security in the application. 
 
-Here is an example code for the same:
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
 
-package com.gkatzioura.security.securityendpoints.config;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+Authentication runs as a chain of servlet filters, built as a SecurityFilterChain
+
+
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-            .antMatchers("/welcome").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .permitAll()
-            .and()
-            .logout()
-            .permitAll();
+@EnableWebSecurity
+@EnableMethodSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/css/**", "/js/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form
+                .defaultSuccessUrl("/home", true)
+                .failureUrl("/login?error")
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .permitAll()
+            );
+
+        return http.build();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
+        UserDetails user = User.withUsername("user")
+            .password(encoder.encode("password"))
+            .roles("USER")
+            .build();
+
+        UserDetails admin = User.withUsername("admin")
+            .password(encoder.encode("admin123"))
+            .roles("ADMIN", "USER")
+            .build();
+
+        return new InMemoryUserDetailsManager(user, admin);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
+
+1. A filter extracts credentials from the request. For example, UsernamePasswordAuthenticationFilter reads a form login, BasicAuthenticationFilter reads the Authorization: Basic header, and the OAuth2 resource server reads Authorization: Bearer <JWT>.
+2. The filter builds an unauthenticated Authentication and passes it to the AuthenticationManager.
+3. The AuthenticationProvider loads the user through UserDetailsService, checks the password with the PasswordEncoder, and returns an authenticated token that includes the authorities.
+4. The filter stores that token in SecurityContextHolder. For stateful apps, the context is saved in the HTTP session. For stateless APIs, it is typically rebuilt on each request from a token.
+
+Common mechanisms
+-----------------
+* Form login, HTTP Basic, and session cookies for traditional web apps
+* JWT bearer tokens or opaque tokens for APIs (Spring Security’s OAuth2 resource server)
+* OAuth2 / OpenID Connect login with providers such as Google, Okta, or Azure AD
+* LDAP, SAML, and X.509 client certificate
+
+Authorization
+-------------
+
+Once authenticated, the user has a set of GrantedAuthority values. These are usually roles like ROLE_ADMIN or finer permissions like orders:write. hasRole("ADMIN") automatically looks for ROLE_ADMIN. hasAuthority("orders:write") matches the exact string.
+
+Request-level authorization (URL rules)
+--------------------------------------
+@Bean
+SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/public/**").permitAll()
+            .requestMatchers("/admin/**").hasRole("ADMIN")
+            .requestMatchers(HttpMethod.DELETE, "/orders/**").hasAuthority("orders:delete")
+            .anyRequest().authenticated()
+        )
+        .formLogin(Customizer.withDefaults())
+        .httpBasic(Customizer.withDefaults());
+    return http.build();
+}
+
+Rules are evaluated top to bottom, so put specific matchers before general ones and end with anyRequest().
+
+Method-level authorization
+-----------------------------
+Enable it with @EnableMethodSecurity, then annotate service methods:
+
+@PreAuthorize("hasRole('ADMIN') or #userId == authentication.name")
+public UserDto getUser(String userId) { ... }
+
+@PostAuthorize("returnObject.ownerId == authentication.name")
+public Document load(Long id) { ... }
+
+@Secured("ROLE_MANAGER")   // simpler, role-only alternative
+public void approve(Long id) { ... }
+
+@PreAuthorize checks before the method runs and can use SpEL expressions that reference parameters and the current user.
+@PostAuthorize checks after the method runs and can inspect the return value.
+Method checks protect the business layer even when called from non-HTTP code paths, so they are a good complement to URL rules.
+
+Decision flow
+
+An AuthorizationManager evaluates each rule against the Authentication. 
+If the user is anonymous, the app returns 401 Unauthorized and usually prompts for login. 
+If the user is authenticated but lacks permission, it returns 403 Forbidden.
 
 24. How to Configure Spring Boot Application Logging?
 
