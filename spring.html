@@ -1704,7 +1704,8 @@ Q. What is Database pooling in springboot ?
 
 Database pooling in Spring Boot is a technique for managing and reusing database connections efficiently.
 
-Database pooling maintains a pool of pre-created database connections that applications can borrow, use, and return. Instead of creating a new connection for every database request (which is expensive), the pool reuses existing connections.
+Database pooling maintains a pool of pre-created database connections that applications can borrow, use, and return. 
+Instead of creating a new connection for every database request (which is expensive), the pool reuses existing connections.
 
 Popular Connection Pooling Libraries
 --------------------------------------
@@ -1779,7 +1780,9 @@ Connection pooling is essential for production Spring Boot applications as it si
 
 Q. What is Spring AOP ?
 
-Spring AOP (Aspect-Oriented Programming) is a framework that implements cross-cutting concerns such as transactions, logging, security, and caching by creating proxy objects around Spring beans. The proxy intercepts method calls and executes additional behavior before, after, or around the target method without modifying the business logic.
+Spring AOP (Aspect-Oriented Programming) is a framework that implements cross-cutting concerns such as transactions, logging, security, and caching by 
+creating proxy objects around Spring beans. The proxy intercepts method calls and executes additional behavior before, after, 
+or around the target method without modifying the business logic.
 
 Common Spring Features Built Using AOP
 ---------------------------------------
@@ -1796,7 +1799,8 @@ Q. How @Transactional works internally ?
 
 @Transactional in Spring internally relies on AOP (Aspect-Oriented Programming), dynamic proxies, and a transaction manager.
 
-@Transactional works by letting a Spring AOP proxy intercept method calls, start a database transaction through PlatformTransactionManager, bind the connection to the current thread, execute the method, and then commit or roll back depending on whether an exception occurs.`
+@Transactional works by letting a Spring AOP proxy intercept method calls, start a database transaction through PlatformTransactionManager, 
+bind the connection to the current thread, execute the method, and then commit or roll back depending on whether an exception occurs.
 
 1.Spring creates a proxy around the bean containing @Transactional.
 2.When the method is called, the proxy intercepts the call.
@@ -1823,7 +1827,8 @@ Q. If a private method is annotated with @Transactional, will it work at runtime
 Visibility Constraint: Spring's proxy framework only intercepts public method invocations. 
 If a method is private, the proxy logic cannot wrap around it, and the @Transactional annotation is silently ignored.
 
-Self-Invocation Issue: Even if a method is public, calling it internally from another method within the same bean bypasses the proxy entirely, meaning the transaction context will not be applied.
+Self-Invocation Issue: Even if a method is public, calling it internally from another method within the same bean bypasses the proxy entirely,
+meaning the transaction context will not be applied.
 
 Q. What are the steps when a Spring Boot application starts?
 
@@ -1836,7 +1841,8 @@ Q. What are the steps when a Spring Boot application starts?
 3. Bean Definition Loading: 
    Scans the classpath (@ComponentScan) to find components, configurations, and controllers, registering their BeanDefinitions.
 4. Context Refresh & Bean Instantiation: 
-   Executes refreshContext(). This is where core Spring lifecycle steps happen—invoking bean factory post-processors, initializing the bean post-processors, and instantiating singleton beans (including REST controllers and database drivers via dependency injection).
+   Executes refreshContext(). This is where core Spring lifecycle steps happen—invoking bean factory post-processors, initializing the bean post-processors, 
+	and instantiating singleton beans (including REST controllers and database drivers via dependency injection).
 5. Embedded Server Startup: 
    If it's a web application, it starts the embedded servlet container (e.g., Tomcat, Jetty).
 Runners Execution: Executes any beans implementing CommandLineRunner or ApplicationRunner.
@@ -1904,7 +1910,8 @@ Handler Adapter: DispatcherServlet uses a HandlerAdapter to dynamically invoke t
 
 Controller Execution: The controller processes the request, calls the service layer, and returns the response payload.
 
-Response Handling: The return value is processed by HttpMessageConverter (e.g., converting a Java object to JSON via Jackson) and sent back through the interceptors (postHandle/afterCompletion) to the consumer.
+Response Handling: The return value is processed by HttpMessageConverter (e.g., converting a Java object to JSON via Jackson) and 
+sent back through the interceptors (postHandle/afterCompletion) to the consumer.
 
 Q: What are all the different levels of testing that you have been doing or that you know that are required?
 
@@ -1912,7 +1919,8 @@ Answer: Enterprise applications require a comprehensive testing pyramid:
 
 Unit Testing: Testing isolated blocks of code (individual methods) using mocks (Mockito) for external dependencies.
 
-Integration Testing (@SpringBootTest): Verifying the interaction between multiple layers or modules (e.g., testing the Service layer with a real database or an H2 in-memory DB via @DataJpaTest).
+Integration Testing (@SpringBootTest): Verifying the interaction between multiple layers or modules (e.g., testing the Service layer with a 
+real database or an H2 in-memory DB via @DataJpaTest).
 
 Component/Contract Testing: Verifying that API endpoints adhere to exact input/output structures (schemas) without testing full end-to-end setups.
 End-to-End (E2E) Testing: Testing the entire system flow from the frontend/API gateway down to the actual database and third-party systems.
