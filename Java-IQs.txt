@@ -944,13 +944,16 @@ Q. How HashMap works internally ?
 
 A Java HashMap stores key-value pairs in an array of buckets. When put() is called, it calculates the key's hash code, applies a hashing function, 
 and determines the bucket index using (n-1) & hash. If multiple keys land in the same bucket, collisions are handled using a linked list and, from Java 8 onward, 
-a Red-Black Tree when the bucket becomes large enough. During get(), HashMap recalculates the bucket index and uses equals() to find the exact key. When the number of elements crosses capacity × loadFactor (default 16 × 0.75 = 12), the map resizes and rehashes entries. This provides O(1) average lookup and insertion performance.
+a Red-Black Tree when the bucket becomes large enough. During get(), HashMap recalculates the bucket index and uses equals() to find the exact key. 
+When the number of elements crosses capacity × loadFactor (default 16 × 0.75 = 12), the map resizes and rehashes entries.
+This provides O(1) average lookup and insertion performance.
 
 Q. What is Hash Collision and how is it resolved ?
 
 A hash collision occurs when two different keys generate the same bucket index in a HashMap. Since the number of buckets is limited, collisions are unavoidable. 
-Java resolves collisions by storing multiple entries in the same bucket using a linked list. Starting from Java 8, when a bucket contains more than 8 entries and the table size is at least 64, the linked list is converted into a Red-Black Tree, improving lookup time from O(n) to O(log n). 
-Good hashCode() implementations help minimize collisions and maintain near O(1) performance.
+Java resolves collisions by storing multiple entries in the same bucket using a linked list. Starting from Java 8, 
+when a bucket contains more than 8 entries and the table size is at least 64, the linked list is converted into a Red-Black Tree,
+improving lookup time from O(n) to O(log n).Good hashCode() implementations help minimize collisions and maintain near O(1) performance.
 
 
 Q. How ConcurrentHashMap works internally and what are it's main features.
