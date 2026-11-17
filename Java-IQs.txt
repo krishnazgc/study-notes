@@ -980,8 +980,9 @@ Q. What changes were done for HashMap in Java 8	?
 
 Q. Why equals() and hashCode() must be consistent in java ? 
 
-    In Java, equals() and hashCode() must be consistent because hash-based collections such as HashMap, HashSet, and Hashtable rely on both methods to store and retrieve objects correctly.
-If two objects are equal according to equals(), they must return the same hashCode().
+    In Java, equals() and hashCode() must be consistent because hash-based collections such as HashMap, HashSet, and Hashtable rely on both methods to 
+    store and retrieve objects correctly.
+    If two objects are equal according to equals(), they must return the same hashCode().
 
 When storing an object in HashMap:
 hashCode() determines the bucket.
@@ -990,7 +991,9 @@ equals() determines the exact object within that bucket.
 hashCode() --> Bucket Selection
 equals()   --> Object Comparison inside bucket
 
-HashMap and HashSet first use hashCode() to locate a bucket and then use equals() to identify the exact object within that bucket. Therefore, if two objects are considered equal by equals(), they must return the same hashCode(). Otherwise, hash-based collections can store duplicates or fail to retrieve existing objects, leading to incorrect behavior.
+HashMap and HashSet first use hashCode() to locate a bucket and then use equals() to identify the exact object within that bucket. 
+Therefore, if two objects are considered equal by equals(), they must return the same hashCode(). 
+Otherwise, hash-based collections can store duplicates or fail to retrieve existing objects, leading to incorrect behavior.
 
 
 Q. Java 17 Features
