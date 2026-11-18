@@ -1533,6 +1533,21 @@ HashMap allows one null key and allows null values, while ConcurrentHashMap does
 HashMap is under java.util package, while ConcurrentHashMap is under java.util.concurrent package.
 
 
+Q. Other than Singleton, can you give me a design pattern that you've used and explain how it works and its use cases?
+
+Answer:
+
+Factory Pattern:
+How it works: Defines an interface or abstract class for creating an object, but lets subclasses or a dedicated factory class decide which concrete class to instantiate.
+Use Case: Dynamic implementation loading. For example, creating a PaymentFactory that returns either a CreditCardPaymentProcessor or a PayPalPaymentProcessor bean at runtime based on the user's choice.
+
+Builder Pattern:
+How it works: Separates the construction of a complex object from its representation, allowing step-by-step object creation.
+Use Case: Generating immutable DTOs or Entity objects with many fields without creating bloated constructors (frequently achieved using Lombok's @Builder).
+
+
+
+
 
 Programming
 -------------
