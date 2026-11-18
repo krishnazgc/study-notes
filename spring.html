@@ -1933,17 +1933,7 @@ Unit Testing: Focuses on the smallest testable parts of an application (methods/
 Functional / End-to-End Testing: Tests the application from a user's perspective, verifying that business features function correctly across multiple integrated systems (databases, message queues, external APIs).
 Developer Responsibilities: Developers are directly responsible for writing Unit and Integration tests as part of the CI/CD pipeline. They must ensure high code coverage and block regressions before code reaches QA or user acceptance testing (UAT).
 
-Q. Other than Singleton, can you give me a design pattern that you've used and explain how it works and its use cases?
 
-Answer:
-
-Factory Pattern:
-How it works: Defines an interface or abstract class for creating an object, but lets subclasses or a dedicated factory class decide which concrete class to instantiate.
-Use Case: Dynamic implementation loading. For example, creating a PaymentFactory that returns either a CreditCardPaymentProcessor or a PayPalPaymentProcessor bean at runtime based on the user's choice.
-
-Builder Pattern:
-How it works: Separates the construction of a complex object from its representation, allowing step-by-step object creation.
-Use Case: Generating immutable DTOs or Entity objects with many fields without creating bloated constructors (frequently achieved using Lombok's @Builder).
 
 Q. Can you walk me through the repository service controller pattern?
 
