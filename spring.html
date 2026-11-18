@@ -108,6 +108,60 @@ Types of IoC are −
     Setter-based dependency injection − Setter-based DI is accomplished by the container calling setter methods on your beans after invoking a
     no-argument constructor or no-argument static factory method to instantiate your bean.
 
+	Field injection: the container writes directly into annotated private fields (@Autowired on the field). 
+	Concise, but hides dependencies and is hard to test without Spring. Generally discouraged.  
+
+Q. Difference between Constructor-based dependency injection and Setter-based dependency injection in Springboot.
+
+	  Both are ways for Spring to inject a bean’s dependencies into it. The difference is when the dependencies are supplied and whether the object can exist
+	  in an incomplete state.
+
+	  Constructor injection
+	  ----------------------
+
+@Service
+public class OrderService {
+    private final PaymentGateway payment;
+    private final OrderRepository repo;
+
+    public OrderService(PaymentGateway payment, OrderRepository repo) {
+        this.payment = payment;
+        this.repo = repo;
+    }
+}
+	  
+* Dependencies are passed in through the constructor, so the object cannot be created without them.
+* Fields can be final, which makes them immutable and thread-safe after construction.
+* Missing dependencies fail at startup, not at the first call that uses them.
+* Easy to unit test: new OrderService(mockPayment, mockRepo), with no Spring needed.
+* Since Spring 4.3, a single constructor needs no @Autowired.
+* Makes required dependencies explicit. A constructor with 8 parameters is a visible code smell.
+* Circular dependencies between beans fail at startup (BeanCurrentlyInCreationException) unless you restructure the code.
+
+Setter injection
+-----------------
+	  
+@Service
+public class OrderService {
+    private PaymentGateway payment;
+    private OrderRepository repo;
+
+    @Autowired
+    public void setPayment(PaymentGateway payment) { this.payment = payment; }
+
+    @Autowired
+    public void setRepo(OrderRepository repo) { this.repo = repo; }
+}
+	  
+* Dependencies are assigned after the object is constructed, through setter methods.
+* Fields cannot be final, so the object is mutable and can be left half-configured.
+* Suits optional dependencies. Use @Autowired(required = false) or Optional, or the setter can be left uncalled.
+* Allows reconfiguring a dependency after creation, which is rarely needed in Spring apps.
+* Can break circular dependencies, because Spring can create a bean first and inject the other one later. This is often a sign of a design problem rather than a feature.
+* Tests must either call the setters or rely on Spring, which is more verbose.	  
+
+In Spring, the practical choice is among constructor, setter, and field injection, with constructor injection recommended for mandatory dependencies.
+
 
 7. What are the types of IOC container in spring?
 
