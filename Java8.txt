@@ -283,6 +283,21 @@ If we want to make each element in the parallel stream to be ordered, we can use
 
   Output: Hello GEEKS!
 
+Q. Does parallelStream give much performance improvement ?
+
+ It depends on the workload. Parallel streams can speed things up, but they often don’t, and they can make things worse.
+
+They help when:
+The data set is large, roughly tens of thousands of elements or more.
+Each element’s work is CPU-heavy (parsing, computing, transforming).
+
+They hurt or do nothing when:
+
+The collection is small. Splitting, scheduling, and merging cost more than the work.
+The work is I/O-bound (database calls, HTTP requests, file reads). Parallel streams use the shared ForkJoinPool.commonPool(), 
+so blocking calls can starve other parallel tasks in the same JVM, which matters in servers.
+The pipeline mutates shared state or has side effects, which causes race conditions or wrong results.
+
 
 14. What are different operations of Java Stream
 
