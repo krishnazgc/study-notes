@@ -332,6 +332,27 @@ In such an architecture web application, @Component can be used in any of the la
 Whereas, the @Controller is used in the controller/web layer. @Service is used in the business layer and @Repository is used in the DAO layer.
 
 
+Q. Whether  @Repository and @Service and @Controller can be replaced with @Component ?
+
+	Technically yes for @Service and @Repository, but no for @Controller. In practice, use the specific annotations.
+
+	@Controller: Spring MVC’s RequestMappingHandlerMapping only registers a class’s @RequestMapping, @GetMapping, 
+	and similar methods if the class has @Controller (or @RequestMapping) at the type level. 
+	With only @Component, the endpoints silently don’t exist and you get 404s. 
+	@RestController is itself @Controller plus @ResponseBody.
+	
+    @Repository: Spring registers a PersistenceExceptionTranslationPostProcessor that wraps beans marked @Repository and converts 
+	vendor-specific exceptions (such as Hibernate or JDBC errors) into Spring’s unified DataAccessException hierarchy. 
+	With @Component, raw persistence exceptions leak out, so code that catches DataAccessException breaks. 
+	Spring Data JPA repository interfaces get this translation without the annotation.
+	
+    @Service: No extra runtime behavior today. It’s a semantic marker that documents the business layer, 
+	and it’s a clean target for AOP pointcuts (for example, @within(org.springframework.stereotype.Service) for logging or transactions). 
+	Replacing it with @Component still works, but you lose that signal and any pointcut that depends on it.
+
+    Recommendation: Keep @Controller/@RestController, @Service, and @Repository for their layers.
+	Use plain @Component only for helpers that don’t fit a layer, such as a utility, a mapper, or a validator.
+	
 
 9) What is Spring Boot dependency management?
 
