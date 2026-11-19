@@ -336,7 +336,7 @@ Q. Whether  @Repository and @Service and @Controller can be replaced with @Compo
 
 	Technically yes for @Service and @Repository, but no for @Controller. In practice, use the specific annotations.
 
-	@Controller: Spring MVC’s RequestMappingHandlerMapping only registers a class’s @RequestMapping, @GetMapping, 
+    @Controller: Spring MVC’s RequestMappingHandlerMapping only registers a class’s @RequestMapping, @GetMapping, 
 	and similar methods if the class has @Controller (or @RequestMapping) at the type level. 
 	With only @Component, the endpoints silently don’t exist and you get 404s. 
 	@RestController is itself @Controller plus @ResponseBody.
