@@ -1,81 +1,2506 @@
 <!DOCTYPE html>
-<html>
-  <head>
-  <meta charset="UTF-8" name="robots" content="noindex">
-  <title>Java</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java Notes (Organized by Topic)</title>
+<style>
+:root {
+  --bg: #ffffff; --fg: #1f2328; --muted: #57606a; --border: #d0d7de;
+  --accent: #0b6e6e; --code-bg: #f6f8fa; --row-alt: #f6f8fa; --link: #0969da;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117; --fg: #e6edf3; --muted: #8b949e; --border: #30363d;
+    --accent: #3fb8b8; --code-bg: #161b22; --row-alt: #161b22; --link: #58a6ff;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --fg: #e6edf3; --muted: #8b949e; --border: #30363d;
+  --accent: #3fb8b8; --code-bg: #161b22; --row-alt: #161b22; --link: #58a6ff;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size: 16px; line-height: 1.6;
+}
+.doc { max-width: 960px; margin: 0 auto; padding: 32px 16px 64px; }
+h1 { font-size: 2em; border-bottom: 2px solid var(--accent); padding-bottom: .3em; margin: 1.6em 0 .8em; color: var(--accent); }
+h2 { font-size: 1.45em; border-bottom: 1px solid var(--border); padding-bottom: .25em; margin: 1.5em 0 .6em; }
+h3 { font-size: 1.2em; margin: 1.3em 0 .5em; }
+h4 { font-size: 1.05em; margin: 1.1em 0 .4em; color: var(--muted); }
+p { margin: .6em 0; }
+a { color: var(--link); }
+ul, ol { padding-left: 1.6em; margin: .5em 0; }
+li { margin: .25em 0; }
+code {
+  font-family: Consolas, "Cascadia Mono", "Courier New", monospace; font-size: .9em;
+  background: var(--code-bg); padding: .15em .35em; border-radius: 4px;
+}
+pre {
+  background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 12px 14px; overflow-x: auto; line-height: 1.45;
+}
+pre code { background: none; padding: 0; font-size: .88em; white-space: pre; }
+.table-wrap { overflow-x: auto; margin: 1em 0; }
+table { border-collapse: collapse; width: 100%; font-size: .95em; }
+th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; vertical-align: top; }
+th { background: var(--code-bg); font-weight: 600; }
+tbody tr:nth-child(even) { background: var(--row-alt); }
+hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
+@media (max-width: 600px) {
+  .doc { padding: 20px 14px 48px; }
+  h1 { font-size: 1.6em; }
+  h2 { font-size: 1.25em; }
+}
+</style>
 </head>
 <body>
-  <pre id="javabasics">Java Basics</pre>
-  <pre id="java8">Java 8</pre>
-  <pre id="javacollections">Java Collections</pre>
-  <pre id="javaiqs">Java IQs</pre>
-  <pre id="multithreading">MultiThreading</pre>
-  <pre id="javadesignpatterns">Java Design Patterns</pre>
-  <pre id="javacoding">Java coding</pre>
-  
-  
-  <script>
-    fetch("Java.txt")
-      .then(response => response.text())
-      .then(text => {
-        document.getElementById("javabasics").textContent = text;
-      })
-      .catch(err => {
-        document.getElementById("javabasics").textContent = "Could not load file Java.txt.";
-      });
-    fetch("Java8.txt")
-      .then(response => response.text())
-      .then(text => {
-        document.getElementById("java8").textContent = text;
-      })
-      .catch(err => {
-        document.getElementById("java8").textContent = "Could not load file Java8.txt.";
-      });
-    fetch("JavaCollections.txt")
-      .then(response => response.text())
-      .then(text => {
-        document.getElementById("javacollections").textContent = text;
-      })
-      .catch(err => {
-        document.getElementById("javacollections").textContent = "Could not load file Javacollections.txt.";
-      });
-    fetch("Java-IQs.txt")
-      .then(response => response.text())
-      .then(text => {
-        document.getElementById("javaiqs").textContent = text;
-      })
-      .catch(err => {
-        document.getElementById("javaiqs").textContent = "Could not load file Java-IQs.txt.";
-      });
-   
+<main class="doc">
+<h1 id="java-notes-organized-by-topic">Java Notes (Organized by Topic)</h1>
+<p>Repetitive content has been merged, and each topic is grouped in one section. Interview questions are placed under the topic they belong to. Where the source repeated the same explanation, the fuller version is kept.</p>
+<h2 id="contents">Contents</h2>
+<ol>
+<li>1. Java Basics
+</li>
+<li>2. Exception Handling
+</li>
+<li>3. Object-Oriented Programming (OOP)
+</li>
+<li>4. Multithreading
+</li>
+<li>5. Memory Management
+</li>
+<li>6. Serialization
+</li>
+<li>7. Java 8
+</li>
+<li>8. Java Collections
+</li>
+<li>9. Garbage Collectors
+</li>
+<li>10. Java Design Patterns
+</li>
+<li>11. General Interview Questions (Project and Web Technologies)
+</li>
+<li>12. Generics and JDBC
+</li>
+<li>13. Java 17 and Java 21 Features
+</li>
+<li>14. Programming Examples
+</li></ol>
+<hr>
+<h1 id="1-java-basics">1. Java Basics</h1>
+<h2 id="11-platform-independence-jvm-jre-and-jit">1.1 Platform Independence, JVM, JRE and JIT</h2>
+<ul>
+<li><strong>Platform independence:</strong> Java code is compiled to bytecode, which is machine independent. The same bytecode runs on any OS that has a JVM, so Java does not depend on the operating system it runs on.
+</li>
+<li><strong>JVM (Java Virtual Machine):</strong> An abstract specification that runs Java bytecode. Its implementations (Oracle, OpenJDK and others) are platform dependent.
+</li>
+<li><strong>JRE (Java Runtime Environment):</strong> The concrete implementation of the JVM, shipped with the libraries and files the JVM needs at runtime.
+</li>
+<li><strong>JIT (Just-In-Time) compiler:</strong> Part of the JRE. At runtime it compiles frequently executed bytecode sequences into native machine code to improve performance.
+</li></ul>
+<h2 id="12-class-loaders">1.2 Class Loaders</h2>
+<p>A class loader is a JVM subsystem that loads <code>.class</code> files. The program's main class is loaded first by the class loader.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Class loader</th>
+<th>Role</th>
+</tr></thead><tbody>
+<tr><td>Bootstrap</td><td>Loads core classes such as <code>java.lang.String</code>, <code>java.lang.Object</code>, <code>java.util.ArrayList</code>. Implemented in native code. In Java 8 it loaded <code>rt.jar</code>. Parent of the Platform loader.</td></tr>
+<tr><td>Platform / Extension</td><td>Child of Bootstrap, parent of System. Loads non-core Java SE modules such as <code>java.sql</code>. Replaced the Extension loader in Java 9+; in Java 8 it loaded jars from <code>jre/lib/ext</code>.</td></tr>
+<tr><td>System / Application</td><td>Loads the application's own classes and dependencies from the classpath (<code>-cp</code>, <code>-classpath</code>, <code>CLASSPATH</code>). <code>ClassLoader.getSystemClassLoader()</code> returns it.</td></tr>
+</tbody></table></div>
+<p>Custom class loaders can be created by extending <code>ClassLoader</code> or <code>URLClassLoader</code>. This is common in application servers, plugin systems and frameworks that load or isolate classes dynamically.</p>
+<h2 id="13-access-specifiers">1.3 Access Specifiers</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Modifier</th>
+<th>Accessible from</th>
+</tr></thead><tbody>
+<tr><td><code>public</code></td><td>Any class or method</td></tr>
+<tr><td><code>protected</code></td><td>Same package, and subclasses (also within the same class)</td></tr>
+<tr><td>default (no keyword)</td><td>Same package only. This is the default scope for classes, methods and variables.</td></tr>
+<tr><td><code>private</code></td><td>Same class only</td></tr>
+</tbody></table></div>
+<h2 id="14-static-members">1.4 Static Members</h2>
+<ul>
+<li>Static variables and methods belong to the class, not to any object. They are shared by all objects of the class and stored in the class area.
+</li>
+<li>Static variables get memory once, at class loading. A static method can read and change static data.
+</li>
+<li>Example: the college name is common to all students, so it is declared <code>static</code>.
+</li></ul>
+<p><strong>Restrictions on static methods:</strong></p>
+<ol>
+<li>A static method cannot use non-static data members or call non-static methods directly.
+</li>
+<li><code>this</code> and <code>super</code> cannot be used in a static context.
+</li>
+<li>Static methods cannot be overridden.
+</li></ol>
+<ul>
+<li>A static block runs at class-loading time, before <code>main</code>.
+</li>
+<li><strong>Why is <code>main</code> static?</strong> The JVM can call a static method without creating an object. If <code>main</code> were non-static, the JVM would first have to create an object, which costs extra memory.
+</li></ul>
+<h2 id="15-the-synchronized-modifier">1.5 The <code>synchronized</code> Modifier</h2>
+<p><code>synchronized</code> is a non-access modifier. It allows only one thread at a time to access a method (or block). See Multithreading.</p>
+<h2 id="16-string-immutability">1.6 String Immutability</h2>
+<ul>
+<li>A <code>String</code> object cannot be changed after creation. Any "modification" creates a new <code>String</code> object, and the old one is left unchanged.
+</li>
+<li>Because strings are immutable, they can be shared safely between threads.
+</li></ul>
+<pre><code>String a = "a";
+a = "ty";   // a new object is created; the old "a" is unchanged</code></pre>
+<ul>
+<li>To change text often, use <code>StringBuilder</code> or <code>StringBuffer</code>, which are mutable.
+</li>
+<li><code>StringBuilder</code> is faster and should be preferred. <code>StringBuffer</code> is thread-safe and should be used only when thread safety is needed.
+</li></ul>
+<h2 id="17-wrapper-classes-and-autoboxing">1.7 Wrapper Classes and Autoboxing</h2>
+<ul>
+<li><strong>Autoboxing:</strong> automatic conversion of a primitive into its wrapper type (for example <code>int</code> to <code>Integer</code>). The reverse is <strong>unboxing</strong>.
+</li>
+<li>Wrapper classes are used where objects are required, such as collections and generics, and they provide utility methods.
+</li>
+<li>All standard primitive wrapper classes (<code>Integer</code>, <code>Long</code>, <code>Double</code>, <code>Boolean</code> and others) are <strong>immutable</strong>. Their value cannot be changed after creation.
+</li>
+<li>Note: <code>AtomicInteger</code> is mutable and thread-safe. It is not an immutable wrapper.
+</li></ul>
+<h2 id="18-string-pool-and-comparison">1.8 String Pool and Comparison</h2>
+<ul>
+<li>The <strong>String pool</strong> is a pool of <code>String</code> objects kept in the heap. It reduces the number of <code>String</code> objects created.
+</li>
+<li>Ways to create a <code>String</code>:
+<ul>
+<li><code>new String("Joey")</code>: always creates a new object, outside the pool.
+</li>
+<li>Literal or constant expression, such as <code>"Joey"</code> or <code>"Joe" + "y"</code>: uses the pool. If the string already exists in the pool, the existing reference is returned. Otherwise a new object is created and added to the pool.
+</li></ul>
+</li>
+<li><code>==</code> compares references (memory addresses), and <code>equals()</code> compares content.
+</li>
+<li><code>intern()</code> returns the pooled instance for a string.
+</li></ul>
+<pre><code>String s1 = "Rachel";
+String s2 = "Rachel";
+String s3 = new String("Rachel");
+String s4 = new String("Rachel").intern();
 
-     fetch("MultiThreading.txt")
-      .then(response => response.text())
-      .then(text => {
-        document.getElementById("multithreading").textContent = text;
-      })
-      .catch(err => {
-        document.getElementById("multithreading").textContent = "Could not load file MultiThreading.txt.";
-      });
+s1 == s2;  // true  (same pooled object)
+s1 == s3;  // false (new object)
+s1 == s4;  // true  (intern returns the pooled object)</code></pre>
+<h2 id="19-object-creation-and-object-lifecycle">1.9 Object Creation and Object Lifecycle</h2>
+<ul>
+<li>In Java, an object lives in the <strong>heap</strong>. A local variable (which holds the reference) lives on the <strong>stack</strong>. Global (static or instance-level) data lives in the class area or heap, depending on the field.
+</li>
+<li>The lifecycle of an object has these states: <strong>Created, In use, Invisible, Unreachable, Collected, Finalized, De-allocated</strong>.
+</li></ul>
+<h2 id="110-primitive-types-casting-and-immutable-classes">1.10 Primitive Types, Casting and Immutable Classes</h2>
+<h3 id="type-casting">Type casting</h3>
+<p>Converting a value from one data type to another.</p>
+<ul>
+<li><strong>Widening (implicit, "casting up"):</strong> a smaller type is converted to a larger type automatically. It is safe because no data is lost. Chain: <code>byte → short → int → long → float → double</code> (<code>char</code> widens to <code>int</code> and larger types).
+<pre><code>int x = 7;
+long y = x;    // 7
+float z = y;   // 7.0</code></pre>
+</li>
+<li><strong>Narrowing (explicit, "casting down"):</strong> a larger type is converted to a smaller one manually with a cast. The fractional part or extra high-order bits can be lost. If the cast is missing, the compiler reports an error.
+<pre><code>double d = 166.66;
+long l = (long) d;   // 166
+int i = (int) l;     // 166</code></pre>
+</li></ul>
+<h3 id="nan-comparison">NaN comparison</h3>
+<p><code>Double.NaN == Double.NaN</code> returns <code>false</code>. NaN ("not a number") is the result of invalid operations, and by the IEEE 754 standard it is not equal to any number, including itself. Use <code>Double.isNaN(value)</code> to test for it.</p>
+<h3 id="immutable-classes">Immutable classes</h3>
+<p>To create an immutable class:</p>
+<ol>
+<li>Declare the class <code>final</code>, so it cannot be extended.
+</li>
+<li>Make all fields <code>private</code>.
+</li>
+<li>Do not provide setter methods.
+</li>
+<li>Make all fields <code>final</code>, so each is assigned only once.
+</li>
+<li>Initialize fields through the constructor, using a deep copy of any mutable input.
+</li>
+<li>In getters, return a copy of mutable objects rather than the actual reference.
+</li></ol>
+<h3 id="final-collections">Final collections</h3>
+<p>A <code>final</code> reference cannot be reassigned, but the object it points to can still be changed. A <code>final List</code> can be added to, but <code>list = new ArrayList&lt;&gt;();</code> will not compile.</p>
+<h3 id="counting-a-character-in-a-string-java-8">Counting a character in a string (Java 8)</h3>
+<pre><code>long count = testString.chars().filter(ch -&gt; ch == '.').count();
+long countCodePoints = testString.codePoints().filter(ch -&gt; ch == '.').count();  // better with Unicode
+// Apache Commons alternative: StringUtils.countMatches(testString, ".")</code></pre>
+<h2 id="111-jvm-jre-and-jdk">1.11 JVM, JRE and JDK</h2>
+<ul>
+<li><strong>JVM:</strong> runs Java bytecode.
+</li>
+<li><strong>JRE:</strong> the JVM plus libraries.
+</li>
+<li><strong>JDK:</strong> the JRE plus development tools (such as the compiler <code>javac</code>).
+</li></ul>
+<hr>
+<h1 id="2-exception-handling">2. Exception Handling</h1>
+<h2 id="21-basics">2.1 Basics</h2>
+<p>An exception is an error event that occurs during execution and disrupts the normal flow of the program (for example, bad user input, hardware failure or network failure).</p>
+<p>When an error occurs, an exception object is created and the JRE looks for a handler.</p>
+<ul>
+<li>If a handler is found, the exception object is passed to it (this is called *catching* the exception).
+</li>
+<li>If no handler is found, the exception is passed to the runtime environment and the JRE terminates the program.
+</li></ul>
+<h2 id="22-exception-handling-keywords">2.2 Exception Handling Keywords</h2>
+<ul>
+<li><strong><code>throw</code></strong>: explicitly creates and throws an exception object to halt normal processing.
+</li>
+<li><strong><code>throws</code></strong>: declared in a method signature when a checked exception is not handled inside the method, so callers know what may be thrown. Multiple exceptions can be listed, and it can be used on <code>main()</code>.
+</li>
+<li><strong><code>try</code> / <code>catch</code></strong>: <code>try</code> starts the block that may throw; <code>catch</code> handles the exception. Multiple <code>catch</code> blocks are allowed, and blocks can be nested. The catch parameter must be of type <code>Exception</code> (or a subclass).
+</li>
+<li><strong><code>finally</code></strong>: optional, used only with <code>try-catch</code>. It always runs, whether or not an exception occurred. Use it to release resources (such as open files) that would otherwise stay open.
+</li></ul>
+<h2 id="23-checked-vs-unchecked-exceptions">2.3 Checked vs Unchecked Exceptions</h2>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th>Checked</th>
+<th>Unchecked</th>
+</tr></thead><tbody>
+<tr><td>Checked at</td><td>Compile time</td><td>Run time</td></tr>
+<tr><td>Handling</td><td>Must be caught with <code>try-catch</code> or declared with <code>throws</code></td><td>Optional</td></tr>
+<tr><td>Parent class</td><td><code>Exception</code> (except <code>RuntimeException</code>)</td><td><code>RuntimeException</code> and <code>Error</code></td></tr>
+<tr><td>Typical example</td><td><code>FileNotFoundException</code>, <code>IOException</code></td><td><code>ArrayIndexOutOfBoundsException</code>, <code>NullPointerException</code></td></tr>
+</tbody></table></div>
+<p>Example: <code>FileReader</code> throws the checked <code>FileNotFoundException</code>, and <code>readLine()</code> and <code>close()</code> throw <code>IOException</code>. The program does not compile unless these are handled with <code>throws</code> or <code>try-catch</code>.</p>
+<h2 id="24-exception-hierarchy">2.4 Exception Hierarchy</h2>
+<ul>
+<li><code>Throwable</code> is the root. It has two children: <code>Error</code> and <code>Exception</code>.
+</li>
+<li><strong>Errors</strong> are outside the application's scope and cannot reasonably be recovered from, for example hardware failure, JVM crash or <code>OutOfMemoryError</code>.
+</li>
+<li><strong>Checked exceptions</strong> are anticipated problems that the program can recover from, for example <code>FileNotFoundException</code>. Catch them, show a helpful message and log them.
+</li>
+<li><strong>Runtime exceptions</strong> are caused by programming mistakes, for example reading an array element without checking the length first. Check the conditions in code rather than catching the exception.
+</li></ul>
+<h2 id="25-custom-exceptions">2.5 Custom Exceptions</h2>
+<ul>
+<li>To create a custom exception, extend <code>Exception</code> (for a checked exception) or <code>RuntimeException</code> (for an unchecked one).
+</li>
+<li>Provide a constructor that takes a message and passes it to <code>super(message)</code>. Retrieve it later with <code>getMessage()</code>.
+</li>
+<li>Throw it with <code>throw</code>, usually inside a <code>catch</code> block that handles a more generic exception.
+</li></ul>
+<pre><code>public class ProductDataException extends Exception {
+    public ProductDataException() { }
+    public ProductDataException(String message) { super(message); }
+}
 
-    fetch("Java DesignPatterns.txt")
-      .then(response => response.text())
-      .then(text => {
-        document.getElementById("javadesignpatterns").textContent = text;
-      })
-      .catch(err => {
-        document.getElementById("javadesignpatterns").textContent = "Could not load file Java DesignPatterns.txt.";
-      });
+public class ProductDB {
+    public static Product getProduct(String code) throws ProductDataException {
+        try {
+            Product p = new Product();   // code that may throw an IOException
+            return p;
+        } catch (IOException e) {
+            throw new ProductDataException("An IO error occurred.");
+        }
+    }
+}
 
-    fetch("java8_coding.txt")
-      .then(response => response.text())
-      .then(text => {
-        document.getElementById("javacoding").textContent = text;
-      })
-      .catch(err => {
-        document.getElementById("javacoding").textContent = "Could not load file java8_coding.txt.";
-      });
-    
-  </script>
+// Caller
+try {
+    Product p = ProductDB.getProduct(productCode);
+} catch (ProductDataException e) {
+    System.out.println(e.getMessage());
+}</code></pre>
+<h2 id="26-exception-interview-points">2.6 Exception Interview Points</h2>
+<ul>
+<li><strong>Exception vs Error:</strong>
+<ul>
+<li>*Error* signals serious, abnormal conditions outside the application's control, such as memory, hardware or JVM errors. Applications should not try to handle them.
+</li>
+<li>*Exception* is a condition in the code that the developer can handle and correct. Examples: <code>ArithmeticException</code> (divide by zero), <code>NullPointerException</code>, <code>ArrayIndexOutOfBoundsException</code>.
+</li></ul>
+</li>
+<li><strong>Checked exceptions</strong> are all exceptions except <code>RuntimeException</code> and its subclasses. The compiler checks that they are handled or declared. Examples: <code>ClassNotFoundException</code>, <code>IllegalAccessException</code>, <code>NoSuchFieldException</code>, <code>EOFException</code>.
+</li>
+<li><strong>Unchecked exceptions</strong> are <code>RuntimeException</code> and its subclasses. The compiler does not require handling them, but the programmer should prevent or handle them. Examples: <code>ArithmeticException</code>, <code>ArrayIndexOutOfBoundsException</code>, <code>NullPointerException</code>, <code>NegativeArraySizeException</code>.
+</li>
+<li><strong><code>throw</code> vs <code>throws</code>:</strong>
+</li></ul>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th><code>throw</code></th>
+<th><code>throws</code></th>
+</tr></thead><tbody>
+<tr><td>Purpose</td><td>Throws an exception explicitly</td><td>Declares the exceptions a method may throw</td></tr>
+<tr><td>Location</td><td>Inside the method body</td><td>In the method signature</td></tr>
+<tr><td>Followed by</td><td>An exception instance (<code>throw new Exception(...)</code>)</td><td>Exception class names</td></tr>
+<tr><td>Count</td><td>One exception per <code>throw</code></td><td>Multiple exception classes can be listed</td></tr>
+</tbody></table></div>
+<ul>
+<li><strong>Return values in <code>try</code>, <code>catch</code> and <code>finally</code>:</strong> if <code>finally</code> contains a <code>return</code>, it overrides the return values from <code>try</code> and <code>catch</code>. If <code>finally</code> has no <code>return</code>, the value from <code>try</code> (no exception) or <code>catch</code> (exception) is returned.
+</li>
+<li><strong>Multiple exceptions:</strong> one <code>try</code> can have several <code>catch</code> blocks. Put the more specific exception first, because a more generic catch placed earlier makes the specific one unreachable. In Java 7+, one <code>catch</code> can handle several types: <code>catch (IOException | SQLException e)</code>.
+</li>
+<li><strong>Avoid catching <code>Exception</code> broadly.</strong> Catch specific exceptions. If an exception is not handled, it propagates up the call stack and terminates the thread or program.
+</li></ul>
+<h2 id="27-checked-exceptions-and-custom-exceptions-qa">2.7 Checked Exceptions and Custom Exceptions (Q&amp;A)</h2>
+<ul>
+<li><strong>Why does the compiler report an error for checked exceptions?</strong> Checked exceptions must be caught or declared in <code>throws</code>. This compile-time check reduces unhandled exceptions. The <code>throws</code> clause is part of a method's contract with its callers. An overriding method cannot throw a checked exception that the overridden method does not declare.
+</li>
+<li><strong>Example:</strong> the <code>FileInputStream</code> constructor throws <code>FileNotFoundException</code>, so the caller must declare it with <code>throws</code> or catch it.
+</li>
+<li>Common checked exceptions: <code>IOException</code>, <code>SQLException</code>, <code>ParseException</code>.
+</li>
+<li><strong>Creating a custom exception:</strong>
+<ol>
+<li>Extend <code>java.lang.Exception</code> (or <code>RuntimeException</code> for an unchecked exception).
+</li>
+<li>Provide a constructor that takes a message and passes it to <code>super</code>.
+</li></ol>
+</li></ul>
+<pre><code>class InvalidAgeException extends Exception {
+    InvalidAgeException(String s) { super(s); }
+}
+
+class TestCustomException {
+    static void validate(int age) throws InvalidAgeException {
+        if (age &lt; 18) throw new InvalidAgeException("not valid");
+        else System.out.println("welcome to vote");
+    }
+    public static void main(String[] args) {
+        try {
+            validate(13);
+        } catch (Exception m) {
+            System.out.println("Exception occured: " + m);
+        }
+        System.out.println("rest of the code...");
+    }
+}</code></pre>
+<h2 id="28-try-with-resources-java-7">2.8 Try-with-resources (Java 7+)</h2>
+<ul>
+<li>Automatically closes resources such as files, database connections and sockets when the block ends. Before it existed, resources had to be closed in a <code>finally</code> block.
+</li>
+<li>Only classes that implement <code>AutoCloseable</code> (or its subtype <code>Closeable</code>) can be used.
+</li>
+<li>Multiple resources can be declared, separated by semicolons. They are closed in the reverse order of opening.
+</li>
+<li>If both the block and <code>close()</code> throw exceptions, the <code>close()</code> exception is attached to the primary one as a suppressed exception. Retrieve it with <code>getSuppressed()</code>.
+</li></ul>
+<pre><code>try (FileInputStream in = new FileInputStream("a.txt");
+     FileOutputStream out = new FileOutputStream("b.txt")) {
+    // use the streams; both are closed automatically
+}</code></pre>
+<h2 id="29-classnotfoundexception-vs-noclassdeffounderror">2.9 ClassNotFoundException vs NoClassDefFoundError</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Aspect</th>
+<th><code>ClassNotFoundException</code></th>
+<th><code>NoClassDefFoundError</code></th>
+</tr></thead><tbody>
+<tr><td>Type</td><td>Checked exception</td><td>Error (unchecked)</td></tr>
+<tr><td>Cause</td><td>A class is requested by name at run time (for example with <code>Class.forName()</code>, or through <code>ClassLoader.loadClass()</code>), but it is not found on the classpath</td><td>The class was available at compile time, but it is missing at run time, or its static initialization failed</td></tr>
+<tr><td>Handling</td><td>Can be caught or declared</td><td>Should not be caught; fix the classpath</td></tr>
+</tbody></table></div>
+<hr>
+<h1 id="3-object-oriented-programming-oop">3. Object-Oriented Programming (OOP)</h1>
+<h2 id="31-association-aggregation-and-composition">3.1 Association, Aggregation and Composition</h2>
+<ul>
+<li><strong>Association:</strong> a relationship between two separate classes through their objects. It can be one-to-one, one-to-many, many-to-one or many-to-many. Aggregation and composition are its two forms.
+</li>
+<li><strong>Aggregation:</strong> a special form of association.
+<ul>
+<li>Represents a *has-a* relationship.
+</li>
+<li>Unidirectional. For example, a department has students, but a student does not "have" the department in the same sense.
+</li>
+<li>Both objects can exist independently.
+</li></ul>
+</li>
+<li><strong>Composition:</strong> a restricted, stronger form of aggregation.
+<ul>
+<li>Represents a *part-of* relationship, and the parts depend on the whole. Example: a human and a heart. A heart does not exist separately from a human.
+</li></ul>
+</li></ul>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th>Aggregation</th>
+<th>Composition</th>
+</tr></thead><tbody>
+<tr><td>Relation</td><td>has-a</td><td>part-of</td></tr>
+<tr><td>Strength</td><td>Weak association</td><td>Strong association</td></tr>
+<tr><td>Lifetime</td><td>Independent</td><td>Dependent</td></tr>
+</tbody></table></div>
+<h2 id="32-inheritance">3.2 Inheritance</h2>
+<ul>
+<li>A subclass inherits the properties and behavior of its superclass, and can extend them. Example: <code>Car</code> extends <code>Vehicle</code>.
+</li>
+<li>Inheritance represents an *is-a* relationship and is one-directional.
+</li>
+<li>Java uses two keywords for inheritance:
+<ul>
+<li><code>extends</code>: between two classes, or between two interfaces.
+</li>
+<li><code>implements</code>: a class implements an interface.
+</li></ul>
+</li></ul>
+<h3 id="why-java-does-not-support-multiple-class-inheritance">Why Java does not support multiple class inheritance</h3>
+<p>Multiple inheritance is not supported in Java, to keep the language simpler. If class <code>C</code> extends both <code>A</code> and <code>B</code>, and <code>A</code> and <code>B</code> both define <code>display()</code>, the compiler cannot tell which method to call. This is the <strong>diamond problem</strong>.</p>
+<pre><code>class A { public void display() { System.out.println("class A display() method called"); } }
+class B extends A { @Override public void display() { System.out.println("class B display() method called"); } }
+class C extends A { @Override public void display() { System.out.println("class C display() method called"); } }
+
+// Not allowed in Java:
+public class D extends B, C { }   // compile-time error</code></pre>
+<h3 id="solution-default-methods-in-interfaces-java-8">Solution: default methods in interfaces (Java 8+)</h3>
+<p>Since Java 8, interfaces can have <code>default</code> methods. A class can implement two interfaces that have default methods with the same signature, as long as it overrides the method and chooses which one to call.</p>
+<pre><code>interface MyInterface1 {
+    int num = 100;
+    default void display() { System.out.println("display method of MyInterface1"); }
+}
+interface MyInterface2 {
+    int num = 1000;
+    default void display() { System.out.println("display method of MyInterface2"); }
+}
+public class InterfaceExample implements MyInterface1, MyInterface2 {
+    @Override
+    public void display() {
+        MyInterface1.super.display();   // or MyInterface2.super.display()
+    }
+    public static void main(String[] args) {
+        new InterfaceExample().display();
+    }
+}</code></pre>
+<p>If the override in <code>InterfaceExample</code> is removed, the compiler reports an error.</p>
+<h2 id="33-polymorphism">3.3 Polymorphism</h2>
+<p>Polymorphism lets one interface have multiple implementations: one action can be performed in different ways. The most common use is a parent-class reference that refers to a child-class object.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Type</th>
+<th>Also called</th>
+<th>Achieved by</th>
+</tr></thead><tbody>
+<tr><td>Compile-time polymorphism</td><td>Static polymorphism</td><td>Method overloading (and operator overloading in some languages)</td></tr>
+<tr><td>Run-time polymorphism</td><td>Dynamic method dispatch</td><td>Method overriding</td></tr>
+</tbody></table></div>
+<ul>
+<li><strong>Method overloading:</strong> several methods with the same name but different parameters (different number or types of arguments).
+</li>
+<li><strong>Method overriding:</strong> a subclass provides its own version of a superclass method. The method called is decided by the actual object at run time, even when it is referenced through a superclass variable.
+</li></ul>
+<pre><code>class Animal { void eat() { System.out.println("animal is eating..."); } }
+class Dog extends Animal { @Override void eat() { System.out.println("dog is eating..."); } }
+
+Animal a = new Dog();
+a.eat();   // prints "dog is eating..."</code></pre>
+<h2 id="34-abstraction">3.4 Abstraction</h2>
+<p>Abstraction hides implementation details and shows only the functionality to the user. Java achieves it in two ways: <strong>abstract classes</strong> and <strong>interfaces</strong>.</p>
+<h3 id="abstract-class">Abstract class</h3>
+<ul>
+<li>Declared with the <code>abstract</code> keyword. It cannot be instantiated and must be extended.
+</li>
+<li>Can have abstract and non-abstract methods, constructors and static methods.
+</li>
+<li>Can have <code>final</code> methods, which subclasses cannot override.
+</li>
+<li>Can have non-static, non-final fields, and public, protected and private concrete methods.
+</li>
+<li>A class can extend only one class, abstract or not.
+</li></ul>
+<h3 id="abstract-class-vs-interface">Abstract class vs interface</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Feature</th>
+<th>Abstract class</th>
+<th>Interface</th>
+</tr></thead><tbody>
+<tr><td>Instance variables</td><td>Yes (any access modifier)</td><td>Only <code>public static final</code> constants</td></tr>
+<tr><td>Methods</td><td>Abstract and concrete</td><td>Abstract, <code>default</code>, <code>static</code>, <code>private</code> (Java 8+)</td></tr>
+<tr><td>Constructor</td><td>Yes</td><td>No</td></tr>
+<tr><td>Access modifiers</td><td>Any (public, protected, private)</td><td>Public by default</td></tr>
+<tr><td>Inheritance</td><td><code>extends</code> (single)</td><td><code>implements</code> (multiple)</td></tr>
+</tbody></table></div>
+<h2 id="35-encapsulation">3.5 Encapsulation</h2>
+<ul>
+<li>Encapsulation wraps data (variables) and code (methods) into a single unit, and hides the object's internal details.
+</li>
+<li>Make all data members <code>private</code>, and access them through public getters and setters. A JavaBean is a typical fully encapsulated class.
+</li>
+<li>Setters give control over data. For example, a setter can reject <code>id</code> values that are not greater than 100, or negative values.
+</li>
+<li>Providing only a getter makes a field read-only. Providing only a setter makes it write-only.
+</li>
+<li>It is the main way to achieve data hiding, because other classes cannot access private data directly.
+</li></ul>
+<h2 id="36-oop-interview-points">3.6 OOP Interview Points</h2>
+<h3 id="principles-of-oop">Principles of OOP</h3>
+<ul>
+<li><strong>Object:</strong> any entity with state and behavior, physical or logical (chair, pen, bike).
+</li>
+<li><strong>Class:</strong> a logical template for a group of objects.
+</li>
+<li><strong>Inheritance:</strong> a class acquires the properties and behavior of a parent class. It gives code reuse and supports run-time polymorphism.
+</li>
+<li><strong>Polymorphism:</strong> one task performed in different ways (for example, a cat "meows" and a dog "barks"). Achieved with overloading and overriding.
+</li>
+<li><strong>Abstraction:</strong> hiding internal details and showing only functionality (for example, a phone call). Achieved with abstract classes and interfaces.
+</li>
+<li><strong>Encapsulation:</strong> binding code and data into one unit (for example, a capsule). A JavaBean is a fully encapsulated class, because all its data members are private.
+</li></ul>
+<h3 id="encapsulation">Encapsulation</h3>
+<ul>
+<li>Encapsulation protects an object's data and behavior from misuse by other objects. In Java it is done with access modifiers, getters and setters.
+</li>
+<li>Even when a private variable is reached through a public getter or setter, the setter can validate or restrict changes, which is the value of encapsulation.
+</li></ul>
+<h3 id="protected-vs-default-access">Protected vs default access</h3>
+<ul>
+<li><strong>protected:</strong> visible within the same package, and in subclasses (even in other packages).
+</li>
+<li><strong>default</strong> (package-private): visible only within the same package.
+</li></ul>
+<h3 id="abstract-class-vs-interface-when-to-use">Abstract class vs interface: when to use</h3>
+<ul>
+<li>Use an <strong>abstract class</strong> when related classes share state or partial behavior, or need constructors.
+</li>
+<li>Use an <strong>interface</strong> to define a contract (a capability) that unrelated classes can implement. A class can implement many interfaces but extend only one class.
+</li>
+<li>An interface where all methods are abstract is equivalent to a contract. Default and static methods let interfaces hold shared behavior without breaking existing implementations.
+</li></ul>
+<h3 id="static">Static</h3>
+<ul>
+<li>A <strong>static variable</strong> belongs to the class and is shared by all objects.
+</li>
+<li>A <strong>static method</strong> can access only static members directly.
+</li>
+<li>A <strong>static block</strong> runs once, when the class is loaded.
+</li>
+<li>A static method can be called from another class as <code>ClassName.method()</code>. A non-static method needs an object: <code>obj.method()</code>.
+</li>
+<li>A non-static method can call a static method of the same class directly.
+</li></ul>
+<h3 id="overloading-vs-overriding">Overloading vs overriding</h3>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th>Overloading</th>
+<th>Overriding</th>
+</tr></thead><tbody>
+<tr><td>Where</td><td>Same class (or subclass)</td><td>Subclass only</td></tr>
+<tr><td>Signature</td><td>Must differ (parameters)</td><td>Must be the same</td></tr>
+<tr><td>Return type</td><td>Can differ, but it is not enough alone to overload</td><td>Must be the same (or covariant)</td></tr>
+<tr><td>Binding</td><td>Compile time</td><td>Run time</td></tr>
+</tbody></table></div>
+<p><strong>Overriding rules:</strong></p>
+<ol>
+<li>A method can be overridden only in a subclass, not in the same class.
+</li>
+<li>The overriding method cannot throw a broader checked exception than the overridden method. For example, if the original throws <code>IOException</code>, the override cannot throw <code>Exception</code>.
+</li>
+<li>The overriding method cannot reduce access. A <code>public</code> method cannot become <code>protected</code> or package-private. A <code>protected</code> method can become <code>protected</code> or <code>public</code>.
+</li>
+<li><code>private</code>, <code>static</code> and <code>final</code> methods cannot be overridden.
+</li>
+<li>The return type must be the same as the overridden method's.
+</li></ol>
+<p><strong>Overloading rules:</strong></p>
+<ol>
+<li>Changing the method signature (name, number, order or types of parameters) is required.
+</li>
+<li>Changing only the return type does not overload a method. The compiler reports "duplicate method".
+</li></ol>
+<p><strong>Default access of an abstract method:</strong> an abstract method with no access modifier has package access. It becomes visible outside the package only when a child class overrides it with <code>public</code>.</p>
+<h3 id="final">Final</h3>
+<ul>
+<li><strong>Final variable:</strong> cannot be reassigned.
+</li>
+<li><strong>Final method:</strong> cannot be overridden.
+</li>
+<li><strong>Final class:</strong> cannot be subclassed. Examples in the standard library are <code>java.lang.System</code> and <code>java.lang.String</code>. This gives security and efficiency.
+</li></ul>
+<h3 id="other-oop-points">Other OOP points</h3>
+<ul>
+<li><strong>Reflection:</strong> the ability to inspect and call classes, methods and fields at run time.
+</li>
+<li><strong>Object creation:</strong> an object is created with <code>new</code>, which allocates memory on the heap and runs a constructor.
+</li>
+<li><strong>Constructor:</strong> a special method with the class name and no return type. A <strong>default constructor</strong> is provided by the compiler when no constructor is declared.
+</li>
+<li><strong><code>this</code>:</strong> refers to the current object. <strong><code>super</code>:</strong> refers to the parent class, for example to call a parent constructor or method.
+</li>
+<li><strong><code>super()</code> in a constructor:</strong> must be the first statement, so the parent part of the object is initialized before the child part.
+</li>
+<li><strong>Creating an object only when fields have certain values:</strong> do this in the constructor, or in a factory method that validates the values first and throws an exception if they are invalid.
+</li>
+<li><strong>Calling an abstract class:</strong> you cannot create an instance of an abstract class. You can create a reference of the abstract type that points to a subclass object: <code>Animal a = new Dog();</code>.
+</li>
+<li><strong>Parent reference, child object:</strong> when <code>a.someMethod()</code> is called and both classes override it, the method of the actual object (<code>Dog</code>) runs, not of the reference type (<code>Animal</code>). This is run-time polymorphism.
+</li>
+<li><strong><code>toString()</code>:</strong> returns a string representation of an object. Override it so that printing an object shows useful data rather than its address.
+</li>
+<li><strong><code>equals()</code> vs <code>==</code>:</strong> <code>==</code> compares references. <code>equals()</code> compares content, if the class overrides it.
+</li>
+<li><strong>Multiple inheritance:</strong> not supported for classes because of the diamond problem. The workaround is to implement several interfaces, using default methods where needed.
+</li></ul>
+<h3 id="solid-principles">SOLID principles</h3>
+<p>SOLID is five class-design principles:</p>
+<ul>
+<li><strong>Single Responsibility (SRP):</strong> a class should have only one reason to change. Example: a <code>Vehicle</code> class that prints details, calculates value and saves to the database should be split into three classes.
+</li>
+<li><strong>Open-Closed (OCP):</strong> classes should be open for extension but closed for modification. Instead of adding <code>if (v instanceof Truck)</code> branches in a calculator, let each subclass override <code>calculateValue()</code>.
+</li>
+<li><strong>Liskov Substitution (LSP):</strong> a subclass must be usable wherever its base class is used, without breaking behavior. Classic counter-example: a <code>Square</code> that extends <code>Rectangle</code> and changes both dimensions when only one is set, so it cannot safely replace a <code>Rectangle</code>.
+</li>
+<li><strong>Interface Segregation (ISP):</strong> clients should not be forced to depend on methods they do not use. Prefer several small interfaces over one large one.
+</li>
+<li><strong>Dependency Inversion (DIP):</strong> depend on abstractions (interfaces) rather than concrete classes.
+</li></ul>
+<h2 id="37-additional-oop-points">3.7 Additional OOP Points</h2>
+<ul>
+<li><strong>JavaBean vs POJO:</strong>
+<ul>
+<li>A <strong>JavaBean</strong> follows conventions: getter and setter naming, a public no-argument constructor, and being serializable.
+</li>
+<li>A <strong>POJO</strong> (plain old Java object) has no required interface, base class or annotation. It is any simple object, typically with private fields and getters and setters.
+</li></ul>
+</li>
+<li><strong>Marker interface:</strong> an interface with no methods, used to tag a class with metadata for the JVM or a framework. Examples: <code>Serializable</code>, <code>Cloneable</code>.
+</li>
+<li><strong>Can static methods be overridden?</strong> No. Static methods belong to the class, not to instances, so they are not polymorphic. A static method in a subclass with the same signature *hides* the parent's method rather than overriding it.
+</li></ul>
+<hr>
+<h1 id="4-multithreading">4. Multithreading</h1>
+<h2 id="41-overview">4.1 Overview</h2>
+<p>Multithreading allows two or more parts of a program to run concurrently, for maximum CPU utilization. Each part is a <strong>thread</strong>. Threads are lightweight processes that run within a process.</p>
+<h2 id="42-creating-threads">4.2 Creating Threads</h2>
+<p>There are two mechanisms:</p>
+<ol>
+<li>Extend the <code>Thread</code> class and override <code>run()</code>.
+</li>
+<li>Implement the <code>Runnable</code> interface and override <code>run()</code>.
+</li></ol>
+<p>In both cases, the thread begins in <code>run()</code>, and <code>start()</code> is called to start it. <code>start()</code> invokes <code>run()</code> on a new thread.</p>
+<pre><code>// 1. Extending Thread
+class MultithreadingDemo extends Thread {
+    public void run() {
+        System.out.println("Thread " + Thread.currentThread().getId() + " is running");
+    }
+}
+// Main: for 8 iterations -&gt; new MultithreadingDemo().start();
+
+// 2. Implementing Runnable
+class MultithreadingDemo implements Runnable {
+    public void run() {
+        System.out.println("Thread " + Thread.currentThread().getId() + " is running");
+    }
+}
+// Main: for 8 iterations -&gt; new Thread(new MultithreadingDemo()).start();</code></pre>
+<p>Sample output (order may vary): <code>Thread 8 is running</code>, <code>Thread 9 is running</code>, ... <code>Thread 15 is running</code>.</p>
+<h2 id="43-thread-class-vs-runnable-interface">4.3 Thread Class vs Runnable Interface</h2>
+<ol>
+<li>Extending <code>Thread</code> uses up the class's only inheritance slot, because Java has no multiple class inheritance. Implementing <code>Runnable</code> leaves the class free to extend another base class.
+</li>
+<li>Extending <code>Thread</code> gives inbuilt thread methods such as <code>yield()</code> and <code>interrupt()</code>, which are not available in <code>Runnable</code>.
+</li></ol>
+<h2 id="44-thread-lifecycle">4.4 Thread Lifecycle</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>State</th>
+<th>Meaning</th>
+</tr></thead><tbody>
+<tr><td>New</td><td>Thread is created but not started (also called "born")</td></tr>
+<tr><td>Runnable</td><td><code>start()</code> has been called; the thread is executing or ready to execute</td></tr>
+<tr><td>Blocked</td><td>Waiting to acquire a monitor lock to enter a <code>synchronized</code> block or method</td></tr>
+<tr><td>Waiting</td><td>Waiting indefinitely for another thread to signal it</td></tr>
+<tr><td>Timed Waiting</td><td>Waiting for a specified time, or until the awaited event occurs</td></tr>
+<tr><td>Terminated (Dead)</td><td>Completed its task or was otherwise stopped</td></tr>
+</tbody></table></div>
+<h2 id="46-thread-interview-points">4.6 Thread Interview Points</h2>
+<ul>
+<li><strong>Thread:</strong> the smallest, lightweight part of a process that runs concurrently with other threads of the same process. Each thread has its own path of execution, so an exception in one thread does not stop the others. All threads of a process share the same memory.
+</li>
+<li><strong>Multithreading:</strong> running multiple threads at the same time.
+</li>
+<li><strong>Starting a thread:</strong> create it by extending <code>Thread</code> or by implementing <code>Runnable</code>, then call <code>start()</code>.
+</li></ul>
+<h3 id="multitasking-vs-multithreading">Multitasking vs multithreading</h3>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th>Multitasking</th>
+<th>Multithreading</th>
+</tr></thead><tbody>
+<tr><td>Unit</td><td>Processes</td><td>Threads</td></tr>
+<tr><td>Memory</td><td>Each process has separate memory and resources</td><td>Threads of a process share the same memory and resources</td></tr>
+<tr><td>Involves</td><td>Multiprocessing</td><td>Does not involve multiprocessing</td></tr>
+</tbody></table></div>
+<ul>
+<li><strong>Multiprocessing:</strong> like multitasking, but more than one CPU is involved.
+</li>
+<li><strong>Parallel processing:</strong> using multiple CPUs in one computer system.
+</li></ul>
+<h3 id="monitor-wait-notify-and-notifyall">Monitor, wait, notify and notifyAll</h3>
+<ul>
+<li>Java synchronizes access through a <strong>monitor</strong>, which can be thought of as a box that holds one thread at a time. When a thread enters, the other threads must wait until it exits.
+</li>
+<li><code>wait()</code>: releases the monitor and makes the calling thread sleep until another thread calls <code>notify()</code> or <code>notifyAll()</code> on the same object.
+</li>
+<li><code>notify()</code>: wakes up one thread that called <code>wait()</code> on the same object.
+</li>
+<li><code>notifyAll()</code>: wakes up all threads that called <code>wait()</code> on the same object. The highest-priority thread runs first.
+</li>
+<li><code>wait()</code>, <code>notify()</code> and <code>notifyAll()</code> can only be called from within a synchronized method or block.
+</li></ul>
+<h3 id="why-synchronized-is-used">Why <code>synchronized</code> is used</h3>
+<p>When two or more threads need the same shared resource, <code>synchronized</code> makes sure only one thread uses it at a time. While a thread is inside a synchronized method, no other thread can call any other synchronized method on the same object. The other threads wait until the first one leaves.</p>
+<h3 id="countdownlatch">CountDownLatch</h3>
+<ul>
+<li>Makes a task wait until other threads have finished. Example: the main task can start only after all required services have started.
+</li>
+<li>You create it with a count, the number of threads to wait for. Each thread calls <code>countDown()</code> when ready. When the count reaches zero, the waiting task continues.
+</li></ul>
+<h3 id="cyclicbarrier">CyclicBarrier</h3>
+<ul>
+<li>A number of threads (called *parties*) wait for each other at a common point, the <strong>barrier</strong>. Each thread calls <code>await()</code>. When the last thread arrives, all threads continue.
+</li>
+<li>It is similar to <code>CountDownLatch</code>, but a <code>CyclicBarrier</code> can be reused after it is tripped.
+</li>
+<li>Used when several threads do separate sub-tasks and their results must be combined into a final output.
+</li></ul>
+<h2 id="47-thread-safety-and-executors-qa">4.7 Thread Safety and Executors (Q&amp;A)</h2>
+<ul>
+<li><strong>Sharing data between threads:</strong> use <code>synchronized</code>, or a <code>volatile</code> variable for simple visibility of a value between threads.
+</li>
+<li><strong><code>volatile</code></strong> tells the JVM and threads to read the variable from main memory, not from a cached copy in the thread. It is used in concurrent programming. It provides visibility, not atomicity for compound operations (such as <code>count++</code>).
+</li>
+<li><strong><code>transient</code></strong> is different: it excludes a field from serialization (see Serialization).
+</li></ul>
+<h3 id="executorservice">ExecutorService</h3>
+<ul>
+<li><code>ExecutorService</code> extends <code>Executor</code> with methods to manage and control task execution. It manages a pool of worker threads, and tasks are submitted to it.
+</li>
+<li>It handles creation, management and reuse of threads.
+</li>
+<li><strong>Why use it instead of creating threads manually?</strong>
+<ul>
+<li>*Thread pooling:* threads are reused instead of created for each task.
+</li>
+<li>*Resource efficiency:* less CPU and memory overhead.
+</li>
+<li>*Scheduling:* tasks can run with a delay or periodically.
+</li>
+<li>*Graceful shutdown:* provides methods to stop tasks cleanly.
+</li></ul>
+</li></ul>
+<h2 id="48-thread-states-methods-and-types">4.8 Thread States, Methods and Types</h2>
+<ul>
+<li><strong>Thread states</strong> (a thread is in exactly one state at a time):
+<ul>
+<li><code>NEW</code>: created but not started.
+</li>
+<li><code>RUNNABLE</code>: executing in the JVM.
+</li>
+<li><code>BLOCKED</code>: waiting to acquire a monitor lock.
+</li>
+<li><code>WAITING</code>: waiting indefinitely for another thread to act.
+</li>
+<li><code>TIMED_WAITING</code>: waiting for a set time, or for another thread to act.
+</li>
+<li><code>TERMINATED</code>: has exited.
+</li></ul>
+</li>
+<li><strong>Useful <code>Thread</code> methods:</strong> <code>getName()</code>, <code>getPriority()</code>, <code>isAlive()</code>, <code>join()</code> (wait for the thread to finish), <code>run()</code> (the entry point), <code>sleep()</code> (pause for a period), <code>start()</code> (starts a new thread and calls <code>run()</code> on it).
+</li>
+<li><strong><code>sleep()</code> vs <code>wait()</code>:</strong>
+</li></ul>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th><code>sleep()</code></th>
+<th><code>wait()</code></th>
+</tr></thead><tbody>
+<tr><td>Belongs to</td><td><code>Thread</code></td><td><code>Object</code></td></tr>
+<tr><td>Releases the lock</td><td>No</td><td>Yes</td></tr>
+<tr><td>Must be in a synchronized context</td><td>No</td><td>Yes</td></tr>
+<tr><td>Purpose</td><td>Delay</td><td>Inter-thread communication</td></tr>
+</tbody></table></div>
+<ul>
+<li><strong><code>start()</code> twice:</strong> not allowed. Calling <code>start()</code> on a thread that has already started throws <code>IllegalThreadStateException</code>.
+</li>
+<li><strong><code>sleep()</code></strong> does not stop processing for others. After the sleep, the thread moves to <code>RUNNABLE</code> and the scheduler decides when it runs.
+</li>
+<li><strong><code>join()</code></strong> pauses the current thread until the specified thread terminates.
+</li>
+<li><strong>User vs daemon threads:</strong> a user thread is created by the program, and the JVM waits for it before exiting. A <strong>daemon thread</strong> runs in the background, has low priority, provides support to other threads, and does not keep the JVM alive. It ends automatically when the user threads end.
+</li>
+<li><strong>Synchronized block vs synchronized method:</strong> a synchronized <strong>block</strong> is preferred. A synchronized method locks the whole object, so unrelated synchronized methods in the same class are blocked too. A block can lock only the object that needs protecting.
+</li></ul>
+<h2 id="49-concurrency-concepts">4.9 Concurrency Concepts</h2>
+<ul>
+<li><strong>Process vs thread:</strong> a process is a running program with its own address space. Threads are sub-processes that share the address space of their process.
+</li>
+<li><strong>Context switching:</strong> saving the state of one thread or process so that it can resume later. It lets one CPU manage many threads.
+</li>
+<li><strong>Thread scheduler:</strong> allocates CPU time to threads and decides their order of execution.
+</li>
+<li><strong>Time slicing:</strong> the scheduler divides CPU time between active threads.
+</li>
+<li><strong>Thread priority:</strong> a hint to the scheduler, not a guarantee of order.
+</li>
+<li><strong>Deadlock:</strong> two or more threads wait for locks held by each other, so none can continue.
+</li>
+<li><strong>Livelock:</strong> threads keep changing state in response to each other, but make no progress (for example, endless loops).
+</li>
+<li><strong>Thread safety</strong> can be achieved with <code>synchronized</code>, <code>volatile</code>, or atomic wrapper classes such as <code>AtomicInteger</code>.
+</li></ul>
+<h2 id="410-deadlock">4.10 Deadlock</h2>
+<p>A deadlock occurs when thread A waits for a lock held by thread B, and thread B waits for a lock held by thread A. The <code>synchronized</code> keyword can cause this, because a thread blocks while it waits for the object's monitor.</p>
+<p><strong>Detecting a deadlock:</strong> take a thread dump of the application and look for threads in the <code>BLOCKED</code> state. Check which lock each one is waiting for, and which thread holds that lock. Each lock has a unique ID that makes this possible.</p>
+<p><strong>Avoiding deadlock</strong> (it cannot always be avoided completely):</p>
+<ul>
+<li><strong>Avoid nested locks.</strong> Holding one lock while acquiring another is the main cause.
+</li>
+<li><strong>Avoid unnecessary locks.</strong> Lock only what must be protected.
+</li>
+<li><strong>Use <code>Thread.join()</code> with a timeout</strong>, so a thread does not wait forever for another.
+</li></ul>
+<h2 id="411-synchronization-notes">4.11 Synchronization Notes</h2>
+<ul>
+<li>Multithreading makes programs asynchronous. If one thread writes data while another reads it, the result can be inconsistent.
+</li>
+<li><code>synchronized</code> solves this. Once a thread is inside a synchronized method, no other thread can call any other synchronized method on the same object until it leaves.
+</li>
+<li><strong><code>volatile</code> vs <code>synchronized</code>:</strong>
+<ul>
+<li><code>volatile</code> guarantees <strong>visibility</strong>: the latest value is always read from main memory. Use it for shared flags or status variables.
+</li>
+<li><code>synchronized</code> guarantees <strong>atomicity and visibility</strong> by locking a block of code. Use it for compound actions or updates to shared mutable state.
+</li></ul>
+</li></ul>
+<h2 id="412-futures-and-parallel-calls">4.12 Futures and Parallel Calls</h2>
+<ul>
+<li><strong><code>Future</code></strong> (Java 5): submit a task asynchronously. <code>get()</code> blocks until the result arrives. There is no chaining or callbacks.
+</li>
+<li><strong><code>CompletableFuture</code></strong> (Java 8): non-blocking and asynchronous. Supports chaining (<code>thenApply</code>, <code>thenAccept</code>) and combining several tasks.
+<ul>
+<li>Without <code>supplyAsync()</code> or an executor, the work may still run on the same thread. Asynchronous does not mean parallel unless the task is submitted to a pool.
+</li></ul>
+</li>
+<li><strong>Calling two services in parallel and waiting for both:</strong>
+<pre><code>CompletableFuture&lt;ResponseA&gt; futureA = CompletableFuture.supplyAsync(() -&gt; serviceA.call(), customExecutor);
+CompletableFuture&lt;ResponseB&gt; futureB = CompletableFuture.supplyAsync(() -&gt; serviceB.call(), customExecutor);
+
+CompletableFuture.allOf(futureA, futureB).join();   // wait for both
+
+ResponseA resA = futureA.get();
+ResponseB resB = futureB.get();</code></pre>
+</li></ul>
+<h2 id="413-runnable-vs-callable">4.13 Runnable vs Callable</h2>
+<ul>
+<li><strong>Runnable:</strong> no return value. Cannot throw checked exceptions.
+</li>
+<li><strong>Callable:</strong> returns a result. Can throw checked exceptions. Used with <code>Future</code>.
+</li></ul>
+<h2 id="414-more-thread-interview-points">4.14 More Thread Interview Points</h2>
+<ul>
+<li><strong>Daemon threads:</strong> <code>setDaemon(true)</code> must be called before <code>start()</code>, or <code>IllegalThreadStateException</code> is thrown. A child thread created by a daemon thread is also a daemon.
+</li>
+<li><strong>Lifecycle summary:</strong> a new thread is <code>NEW</code>. <code>start()</code> makes it <code>RUNNABLE</code>. The thread scheduler gives CPU time to <code>RUNNABLE</code> threads. Other states are <code>WAITING</code>, <code>BLOCKED</code> and <code>TERMINATED</code>. When no user threads remain, the JVM shuts down.
+</li>
+<li><strong>Calling <code>run()</code> directly</strong> runs it as a normal method in the current thread. Only <code>start()</code> creates a new thread.
+</li>
+<li><strong>Interrupting a thread:</strong> call <code>interrupt()</code> on it to break out of a <code>sleep()</code> or <code>wait()</code>. The thread receives an <code>InterruptedException</code>.
+</li>
+<li><strong>Ways to achieve thread safety:</strong> <code>synchronized</code>, atomic classes, explicit <code>Lock</code> implementations, <code>volatile</code>, immutable classes and thread-safe classes.
+</li>
+<li><strong>Static synchronization:</strong> a <code>static synchronized</code> method locks the <strong>class</strong> (the <code>Class</code> object). A regular <code>synchronized</code> method locks the <strong>instance</strong>. So only one thread can run a static synchronized method at a time, across all instances.
+</li>
+<li><strong><code>notify()</code> vs <code>notifyAll()</code>:</strong> <code>notify()</code> wakes one waiting thread. <code>notifyAll()</code> wakes all of them.
+</li>
+<li><strong>Race condition:</strong> several threads access a shared resource at the same time, and the result depends on which one runs first. Synchronization prevents it.
+</li>
+<li><strong>Thread priority:</strong> a value from 1 (<code>MIN_PRIORITY</code>) to 10 (<code>MAX_PRIORITY</code>). The default (<code>NORM_PRIORITY</code>) is 5. The scheduler prefers higher-priority threads, but priority does not guarantee order. <code>setPriority()</code> throws <code>IllegalArgumentException</code> if the value is out of range.
+</li>
+<li><strong>ThreadLocal:</strong> a variable that has a separate value for each thread, the way an instance variable has one value per object.
+</li>
+<li><strong>Taking a thread dump:</strong> on Windows, press Ctrl+Break. On Linux, run <code>kill -3 &lt;pid&gt;</code>. Or use <code>jstack &lt;pid&gt;</code>, where the process ID comes from <code>jps</code>.
+</li>
+<li><strong><code>Thread.holdsLock(obj)</code></strong> returns <code>true</code> if the current thread holds the monitor lock on <code>obj</code>.
+</li></ul>
+<h3 id="thread-pools-and-the-executor-framework">Thread pools and the Executor framework</h3>
+<ul>
+<li>A <strong>thread pool</strong> is a set of worker threads created at start-up. They are assigned tasks and returned to the pool when the task completes.
+</li>
+<li><strong>Why:</strong> creating a thread for each request is slow and resource-heavy, and a process can create only a limited number of threads.
+</li>
+<li>From Java 5, the <strong>Executor framework</strong> creates pools: single-thread pool (one task at a time), fixed thread pool (a fixed number of threads), and cached thread pool (expands for many short-lived tasks).
+</li></ul>
+<h3 id="executor-vs-executorservice-vs-executors">Executor vs ExecutorService vs Executors</h3>
+<ul>
+<li><code>Executor</code> is the parent interface. <code>ExecutorService</code> extends it.
+</li>
+<li><code>Executor.execute()</code> takes a <code>Runnable</code> and returns <code>void</code>. <code>ExecutorService.submit()</code> takes a <code>Runnable</code> or a <code>Callable</code>, and returns a <code>Future</code> with the result.
+</li>
+<li><code>Executors</code> is a factory class:
+<pre><code>ExecutorService single = Executors.newSingleThreadExecutor();
+ExecutorService fixed = Executors.newFixedThreadPool(10);
+ExecutorService scheduled = Executors.newScheduledThreadPool(10);</code></pre>
+</li></ul>
+<h3 id="callable-example">Callable example</h3>
+<pre><code>ExecutorService services = Executors.newSingleThreadExecutor();
+Future&lt;String&gt; future = services.submit(new Task());   // Task implements Callable&lt;String&gt;
+System.out.println("In Future Object" + future.get());</code></pre>
+<h3 id="deadlock-example">Deadlock example</h3>
+<p>Two threads take two locks in opposite orders, so each can end up holding one lock and waiting for the other forever.</p>
+<pre><code>String str1 = "Java";
+String str2 = "UNIX";
+
+// Thread 1: locks str1, then str2
+synchronized (str1) {
+    synchronized (str2) { System.out.println(str1 + str2); }
+}
+
+// Thread 2: locks str2, then str1  -&gt; deadlock with Thread 1
+synchronized (str2) {
+    synchronized (str1) { System.out.println(str2 + str1); }
+}</code></pre>
+<p>Fix: make every thread acquire the locks in the same order.</p>
+<h3 id="volatile-and-atomic-variables">Volatile and atomic variables</h3>
+<ul>
+<li><code>volatile</code> gives visibility: every read comes from main memory, not from a thread's cache. It does not make compound operations atomic.
+</li>
+<li>The <code>java.util.concurrent.atomic</code> package provides atomic variables for single values: <code>AtomicInteger</code>, <code>AtomicLong</code>, <code>AtomicBoolean</code> and <code>AtomicReference</code>. Their methods include <code>get()</code>, <code>set()</code>, <code>lazySet()</code>, <code>compareAndSet(expect, update)</code>, <code>addAndGet(delta)</code> and <code>decrementAndGet()</code>. Each operation cannot be interfered with by other threads.
+</li>
+<li>In short: <code>volatile</code> ensures that a memory state is visible across threads. Atomic classes ensure that an operation on a variable is performed atomically.
+</li></ul>
+<h3 id="sharing-data-between-threads">Sharing data between threads</h3>
+<p>Share a common object, or use a concurrent data structure such as <code>BlockingQueue</code>. Use <code>volatile</code>, atomic classes, or <code>synchronized</code> to keep updates safe.</p>
+<h3 id="synchronized-vs-reentrantlock"><code>synchronized</code> vs <code>ReentrantLock</code></h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Feature</th>
+<th><code>synchronized</code></th>
+<th><code>ReentrantLock</code></th>
+</tr></thead><tbody>
+<tr><td>Type</td><td>JVM keyword</td><td>Class in <code>java.util.concurrent.locks</code></td></tr>
+<tr><td>Lock acquisition</td><td>Automatic</td><td>Manual: <code>lock()</code></td></tr>
+<tr><td>Lock release</td><td>Automatic</td><td>Manual: <code>unlock()</code>. Release in a <code>finally</code> block.</td></tr>
+<tr><td>Reentrant</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Try without waiting</td><td>No</td><td><code>tryLock()</code></td></tr>
+<tr><td>Timed acquisition</td><td>No</td><td><code>tryLock(timeout)</code></td></tr>
+<tr><td>Interruptible waiting</td><td>No</td><td><code>lockInterruptibly()</code></td></tr>
+<tr><td>Fairness</td><td>No</td><td>Fair or non-fair lock</td></tr>
+<tr><td>Multiple conditions</td><td>One monitor</td><td>Multiple <code>Condition</code> objects</td></tr>
+<tr><td>Simplicity</td><td>Easier</td><td>More flexible</td></tr>
+</tbody></table></div>
+<hr>
+<h1 id="5-memory-management">5. Memory Management</h1>
+<h2 id="51-overview">5.1 Overview</h2>
+<p>Java manages memory automatically. Objects are allocated and freed by the <strong>garbage collector (GC)</strong>, so the application does not need its own memory management logic.</p>
+<h2 id="52-jvm-run-time-data-areas">5.2 JVM Run-time Data Areas</h2>
+<p>Some areas are created by the JVM and exist until the JVM exits. Others are created per thread, when the thread is created, and destroyed when it exits.</p>
+<ol>
+<li><strong>Class (Method) Area:</strong> stores per-class structures: the runtime constant pool, field and method data, and method code. In HotSpot it lives in <strong>Metaspace</strong> (native memory, not on the heap) since Java 8. Before Java 8 it was PermGen.
+</li>
+<li><strong>Heap:</strong> the runtime area where objects are allocated. It is the main area managed by the GC and is divided into generations (young and old) in most collectors. Size is controlled with <code>-Xms</code> (initial) and <code>-Xmx</code> (maximum).
+</li>
+<li><strong>Stack (per thread):</strong> stores frames for method calls, containing local variables, partial results and references to the constant pool. A new frame is created on each method invocation and destroyed when it completes. Size is controlled with <code>-Xss</code>. Exceeding it causes <code>StackOverflowError</code>.
+</li>
+<li><strong>Program Counter (PC) Register (per thread):</strong> holds the address of the JVM instruction currently being executed.
+</li>
+<li><strong>Native Method Stack (per thread):</strong> used by native (non-Java) methods.
+</li></ol>
+<h2 id="53-why-stack-and-heap-are-designed-this-way">5.3 Why Stack and Heap Are Designed This Way</h2>
+<ul>
+<li>The <strong>stack</strong> holds short-lived data: local variables and primitives. Each thread has its own stack.
+</li>
+<li>The <strong>heap</strong> holds longer-lived data, such as objects that must be shared across methods and threads. It is shared by all threads.
+</li>
+<li>The heap is much larger than the stack.
+</li>
+<li>Because objects are on the heap, they can be passed easily between threads and code blocks.
+</li></ul>
+<h2 id="54-garbage-collection">5.4 Garbage Collection</h2>
+<ul>
+<li>The JVM decides when GC runs. It frees the programmer from manual deallocation.
+</li>
+<li><code>System.gc()</code> and <code>Runtime.getRuntime().gc()</code> request garbage collection, but the JVM makes the final decision, so GC is not guaranteed.
+</li></ul>
+<h2 id="55-memory-related-errors">5.5 Memory-related Errors</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Error</th>
+<th>Cause</th>
+</tr></thead><tbody>
+<tr><td><code>StackOverflowError</code></td><td>Excessive or very deep recursion</td></tr>
+<tr><td><code>OutOfMemoryError: Java heap space</code></td><td>The application cannot allocate more objects in the heap</td></tr>
+<tr><td><code>OutOfMemoryError: Metaspace</code></td><td>Class metadata fills Metaspace, for example through excessive class or classloader creation</td></tr>
+</tbody></table></div>
+<h2 id="56-memory-leaks">5.6 Memory Leaks</h2>
+<p>A <strong>memory leak</strong> occurs when objects are no longer needed by the application but are still reachable, so the GC cannot reclaim them.</p>
+<p><strong>Common causes:</strong> static collections, caches without eviction or TTL, listeners that are not removed, unclosed resources, and <code>ThreadLocal</code> values that are not cleaned up.</p>
+<p><strong>Relationship to OutOfMemoryError:</strong> Memory leak → objects stay reachable unnecessarily → heap usage keeps increasing → GC cannot reclaim enough memory → <code>OutOfMemoryError</code>.</p>
+<p>A leak can eventually cause an <code>OutOfMemoryError</code>, but <code>OutOfMemoryError</code> can also occur without a leak, for example when the application genuinely needs more heap than is configured.</p>
+<h2 id="57-troubleshooting-a-memory-leak">5.7 Troubleshooting a Memory Leak</h2>
+<ol>
+<li><strong>Monitor the heap.</strong> If the old generation keeps growing after GC, that is a strong warning sign.
+</li>
+<li><strong>Take heap dumps.</strong> Useful JVM option: <code>-XX:+HeapDumpOnOutOfMemoryError</code>. Analyze the <code>.hprof</code> file with tools such as VisualVM or JProfiler.
+</li>
+<li><strong>Watch GC behavior.</strong> If the post-GC baseline keeps increasing, investigate which objects are being retained.
+</li></ol>
+<h2 id="58-permgen-vs-metaspace">5.8 PermGen vs Metaspace</h2>
+<ul>
+<li>Before JDK 8, class metadata (bytecode, names, JIT information) was stored in <strong>PermGen</strong>, which had a fixed size and did not grow automatically.
+</li>
+<li>From JDK 8 onward PermGen was removed. Class metadata is stored in <strong>Metaspace</strong>, in native memory. It grows automatically by default, is garbage collected, and has no fixed size limit by default.
+</li></ul>
+<hr>
+<h1 id="6-serialization">6. Serialization</h1>
+<p>Serialization converts an object into a stream of bytes, so it can be written to a file, sent over a network or stored in a database. <strong>De-serialization</strong> does the reverse: it rebuilds the object from the byte stream. The Java Serialization API provides both features. A class must implement <code>java.io.Serializable</code> to be eligible.</p>
+<p>Best practice: use the <code>.ser</code> file extension.</p>
+<h2 id="61-serializing-an-object">6.1 Serializing an object</h2>
+<pre><code>Student obj = new Student(101, 25, "Chaitanya", "Agra", 6);
+try (FileOutputStream fos = new FileOutputStream("Student.ser");
+     ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+    oos.writeObject(obj);
+    System.out.println("Serialzation Done!!");
+} catch (IOException ioe) {
+    System.out.println(ioe);
+}</code></pre>
+<h2 id="62-de-serializing-an-object">6.2 De-serializing an object</h2>
+<pre><code>Student o = null;
+try (FileInputStream fis = new FileInputStream("Student.ser");
+     ObjectInputStream ois = new ObjectInputStream(fis)) {
+    o = (Student) ois.readObject();
+} catch (IOException ioe) {
+    ioe.printStackTrace();
+} catch (ClassNotFoundException cnfe) {
+    System.out.println("Student Class is not found.");
+}
+System.out.println("Student Name:" + o.getStuName());
+System.out.println("Student Age:" + o.getStuAge());
+System.out.println("Student Roll No:" + o.getStuRollNum());
+System.out.println("Student Address:" + o.getStuAddress());   // null
+System.out.println("Student Height:" + o.getStuHeight());     // 0</code></pre>
+<p>Output:</p>
+<pre><code>Student Name:Chaitanya
+Student Age:25
+Student Roll No:101
+Student Address:null
+Student Height:0</code></pre>
+<p><strong>Why address is null and height is 0:</strong> those fields were declared <code>transient</code> in the <code>Student</code> class. Transient fields are not serialized, so they are restored to their default values (<code>null</code> for objects, <code>0</code> for numbers).</p>
+<h2 id="63-serialization-interview-points">6.3 Serialization Interview Points</h2>
+<ul>
+<li><strong><code>transient</code></strong> is the keyword used to exclude an instance variable from serialization. Its value is not saved, and it is restored to its default value on de-serialization.
+</li>
+<li>A class must implement <code>java.io.Serializable</code> to be serialized.
+</li></ul>
+<hr>
+<h1 id="7-java-8">7. Java 8</h1>
+<h2 id="71-new-features-in-java-8">7.1 New Features in Java 8</h2>
+<ul>
+<li><strong>Lambda expressions:</strong> a language feature that treats actions as objects.
+</li>
+<li><strong>Method references:</strong> refer to existing methods by name, to write lambdas more compactly.
+</li>
+<li><strong>Optional class:</strong> a wrapper that expresses that a value may or may not be present.
+</li>
+<li><strong>Functional interfaces:</strong> interfaces with a single abstract method, which can be implemented with a lambda.
+</li>
+<li><strong>Default methods:</strong> interfaces can have full method implementations alongside abstract methods.
+</li>
+<li><strong>Nashorn JavaScript engine:</strong> runs and evaluates JavaScript from Java.
+</li>
+<li><strong>Stream API:</strong> processes collections of objects in a functional style.
+</li>
+<li><strong><code>forEach()</code></strong> method on the <code>Iterable</code> interface.
+</li>
+<li><strong>New Date and Time API:</strong> an immutable, improved API inspired by Joda-Time.
+</li>
+<li><strong>Base64</strong> encoding and decoding.
+</li></ul>
+<h2 id="72-advantages-of-java-8">7.2 Advantages of Java 8</h2>
+<ul>
+<li>More compact code, with less boilerplate.
+</li>
+<li>More readable, reusable and testable code.
+</li>
+<li>Support for parallel operations.
+</li></ul>
+<h2 id="73-functional-interfaces">7.3 Functional Interfaces</h2>
+<p>A functional interface has exactly one abstract method. It can also have any number of default and static methods, and it can redeclare public <code>java.lang.Object</code> methods (such as <code>toString</code> or <code>equals</code>) without counting them as abstract.</p>
+<pre><code>@FunctionalInterface
+public interface FunctionalInterface_one {
+    void firstInt_method();
+    @Override String toString();          // from Object, not counted
+    @Override boolean equals(Object obj); // from Object, not counted
+}</code></pre>
+<ul>
+<li><code>@FunctionalInterface</code> is optional, but it makes the compiler reject an interface with more than one abstract method.
+</li>
+<li>Many existing interfaces are functional, for example <code>Comparable</code> and <code>Runnable</code>.
+</li>
+<li>Functional interfaces are implemented with lambda expressions.
+</li></ul>
+<h2 id="74-lambda-expressions">7.4 Lambda Expressions</h2>
+<p>A lambda expression is an anonymous function: it has no name and does not belong to any class. It is written as <code>(parameters) -&gt; body</code>.</p>
+<p><strong>Structure:</strong></p>
+<pre><code>(Argument List) -&gt; { expression; }
+(Argument List) -&gt; { statements; }</code></pre>
+<p><strong>Examples:</strong></p>
+<pre><code>() -&gt; { System.out.println("Hello"); }     // no argument
+(int a) -&gt; { System.out.println(a); }      // one argument
+(int a, int b) -&gt; { return a + b; }        // two arguments, returns the sum
+(a, b) -&gt; a + b;                           // types inferred from context</code></pre>
+<p><strong>Rules:</strong></p>
+<ul>
+<li>A lambda can have zero or more arguments.
+</li>
+<li>Argument types can be omitted, because they are inferred from context. You cannot declare the type of some arguments and omit it for others.
+</li>
+<li>With a single parameter whose type is inferred, the parentheses are optional.
+</li></ul>
+<p><strong>Relation to functional interfaces:</strong> a lambda provides the implementation of a functional interface's single abstract method, so the method does not need to be written out again. This avoids bulky anonymous classes.</p>
+<pre><code>@FunctionalInterface
+interface Drawable { void draw(); }
+
+int width = 10;
+Drawable d2 = () -&gt; { System.out.println("Drawing " + width); };
+d2.draw();   // Drawing 10</code></pre>
+<h2 id="75-optional-class">7.5 Optional Class</h2>
+<ul>
+<li><code>Optional</code> is a <code>final</code> class in <code>java.util</code> (Java SE 8).
+</li>
+<li>It represents a value that may or may not exist.
+</li>
+<li>Its main benefit is avoiding explicit null checks, and reducing <code>NullPointerException</code>s at run time.
+</li></ul>
+<pre><code>String[] str = new String[10];
+Optional&lt;String&gt; checkNull = Optional.ofNullable(str[5]);
+if (checkNull.isPresent()) {
+    String word = str[5].toLowerCase();
+} else {
+    System.out.println("string is null");
+}</code></pre>
+<h2 id="76-default-methods">7.6 Default Methods</h2>
+<ul>
+<li>Default methods are interface methods with a body, marked with the <code>default</code> keyword.
+</li>
+<li>Their purpose is <strong>backward compatibility</strong>. If new abstract methods were added to an interface that JDK already ships, every class implementing it would break. A default method can be added without breaking them.
+</li></ul>
+<p><strong>Calling an interface default method from a class:</strong> use <code>InterfaceName.super.method()</code>.</p>
+<pre><code>interface Vehicle {
+    default void print() { System.out.println("I am a vehicle!"); }
+}
+class Car implements Vehicle {
+    public void print() { Vehicle.super.print(); }
+}</code></pre>
+<p><strong>Calling a static interface method:</strong> use the interface name.</p>
+<pre><code>interface Vehicle {
+    static void blowHorn() { System.out.println("Blowing horn!!!"); }
+}
+// Vehicle.blowHorn();</code></pre>
+<h2 id="77-method-references">7.7 Method References</h2>
+<p>A method reference is a compact form of a lambda that only calls an existing method. The <code>::</code> operator separates the class or object name from the method name.</p>
+<ul>
+<li>Lambda <code>num -&gt; System.out.println(num)</code> → method reference <code>System.out::println</code>.
+</li>
+<li>A method reference can point to:
+<ul>
+<li>Static methods (e.g. <code>Integer::parseInt</code>)
+</li>
+<li>Instance methods (e.g. <code>System.out::println</code>)
+</li>
+<li>Constructors using <code>new</code> (e.g. <code>TreeSet::new</code>)
+</li></ul>
+</li></ul>
+<h2 id="78-type-inference">7.8 Type Inference</h2>
+<p>Type inference means the compiler determines the types of expressions (including lambda parameters and generic arguments) at compile time, by looking at each method call and its declaration.</p>
+<h2 id="79-stream-api">7.9 Stream API</h2>
+<h3 id="stream-vs-collection">Stream vs Collection</h3>
+<p>A stream is a sequence of elements that can be pipelined through methods to produce a result. The Stream API is for processing streams of <strong>objects</strong>. It is not related to <code>InputStream</code> and <code>OutputStream</code> from <code>java.io</code>, which handle bytes.</p>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th>Collection</th>
+<th>Stream</th>
+</tr></thead><tbody>
+<tr><td>Introduced</td><td>JDK 1.2</td><td>JDK 8</td></tr>
+<tr><td>Evaluation</td><td>Eager (objects are created up front)</td><td>Lazy (computation happens when needed)</td></tr>
+<tr><td>Purpose</td><td>Stores data (a set of objects)</td><td>Computes on data</td></tr>
+<tr><td>Size</td><td>Limited number of elements</td><td>Can be unlimited</td></tr>
+<tr><td>Iteration</td><td>Can be iterated any number of times</td><td>Can be consumed only once; create a new stream to revisit</td></tr>
+<tr><td>Effect on source</td><td>-</td><td>Does not modify the source; produces a result</td></tr>
+</tbody></table></div>
+<h3 id="features-of-streams">Features of streams</h3>
+<ul>
+<li>A stream is not a data structure. It takes input from collections, arrays or I/O channels.
+</li>
+<li>Streams do not change the original data source. They only produce a result.
+</li>
+<li>Intermediate operations are lazy and return a stream, so they can be pipelined. A terminal operation ends the pipeline and returns the result.
+</li></ul>
+<h3 id="sequential-vs-parallel-streams">Sequential vs parallel streams</h3>
+<ul>
+<li><code>collection.stream()</code> creates a sequential stream. <code>collection.parallelStream()</code> creates a parallel one. A sequential stream can also be made parallel with <code>parallel()</code>.
+</li>
+<li>A sequential stream keeps elements in order.
+</li>
+<li>A parallel stream splits work across cores, so <strong>order is not guaranteed</strong>. Use <code>forEachOrdered()</code> instead of <code>forEach()</code> to keep order.
+</li></ul>
+<pre><code>List&lt;String&gt; list = Arrays.asList("Hello ", "G", "E", "E", "K", "S!");
+list.stream().forEach(System.out::print);            // Hello GEEKS!
+list.parallelStream().forEach(System.out::print);    // order varies
+list.parallelStream().forEachOrdered(System.out::print); // Hello GEEKS!</code></pre>
+<p><strong>Does <code>parallelStream</code> improve performance?</strong> It depends on the workload.</p>
+<ul>
+<li><strong>Helps when:</strong> the data set is large (roughly tens of thousands of elements or more) and each element's work is CPU-heavy.
+</li>
+<li><strong>Hurts or does nothing when:</strong>
+<ul>
+<li>The collection is small. Splitting, scheduling and merging cost more than the work.
+</li>
+<li>The work is I/O-bound (database calls, HTTP requests, file reads). Parallel streams use the shared <code>ForkJoinPool.commonPool()</code>, so blocking calls can starve other parallel tasks in the same JVM. This matters on servers.
+</li>
+<li>The pipeline mutates shared state or has side effects, which causes race conditions or wrong results.
+</li></ul>
+</li></ul>
+<h3 id="stream-operations">Stream operations</h3>
+<p><strong>Intermediate operations</strong> (return a stream):</p>
+<ul>
+<li><code>map</code>: applies a function to each element.
+<pre><code>List&lt;Integer&gt; square = Arrays.asList(2, 3, 4, 5).stream().map(x -&gt; x * x).collect(Collectors.toList());</code></pre>
+</li>
+<li><code>filter</code>: keeps elements that match a <code>Predicate</code>.
+<pre><code>List&lt;String&gt; result = Arrays.asList("Reflection", "Collection", "Stream")
+        .stream().filter(s -&gt; s.startsWith("S")).collect(Collectors.toList());</code></pre>
+</li>
+<li><code>sorted</code>: sorts the stream.
+</li></ul>
+<p>Stateless vs stateful intermediate operations:</p>
+<ul>
+<li><strong>Stateless:</strong> <code>filter</code>, <code>map</code>. Keep no state from previous elements.
+</li>
+<li><strong>Stateful:</strong> <code>distinct</code>, <code>sorted</code>. May depend on previous elements.
+</li></ul>
+<p><strong>Terminal operations</strong> (end the pipeline):</p>
+<ul>
+<li><code>collect</code>: gathers results, for example into a list or set.
+</li>
+<li><code>forEach</code>: iterates over every element.
+</li>
+<li><code>reduce</code>: combines elements into one value, using a <code>BinaryOperator</code>.
+<pre><code>int even = Arrays.asList(2, 3, 4, 5).stream()
+        .filter(x -&gt; x % 2 == 0)
+        .reduce(0, (ans, i) -&gt; ans + i);   // 6</code></pre>
+</li></ul>
+<h3 id="stream-pipelining-and-collectors">Stream pipelining and collectors</h3>
+<ul>
+<li>Most stream operations return a stream, so calls can be chained. These are <strong>intermediate</strong> operations. <code>collect()</code> is usually the <strong>terminal</strong> operation that ends the pipeline.
+</li>
+<li><strong>Collectors</strong> combine the processed elements into the final result, such as a <code>List</code>, <code>Set</code> or <code>String</code>.
+</li></ul>
+<h2 id="710-iterator-vs-spliterator">7.10 Iterator vs Spliterator</h2>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th>Iterator</th>
+<th>Spliterator</th>
+</tr></thead><tbody>
+<tr><td>Introduced</td><td>JDK 1.2</td><td>JDK 8</td></tr>
+<tr><td>Used with</td><td>Collection API</td><td>Stream API</td></tr>
+<tr><td>Traversal</td><td>Sequential only</td><td>Sequential and parallel</td></tr>
+</tbody></table></div>
+<h2 id="711-nashorn-javascript-engine">7.11 Nashorn JavaScript Engine</h2>
+<ul>
+<li>Nashorn is the JavaScript engine shipped with Java 8. The earlier engine was based on Mozilla Rhino.
+</li>
+<li>It complies better with the ECMAScript specification and performs better, because it compiles code in memory and passes bytecode to the JVM.
+</li>
+<li>The command-line tool <code>jjs</code> runs JavaScript files and an interactive mode.
+</li></ul>
+<pre><code>// sample.js
+print('Hello, World!!');
+
+C:\Java\jjs sample.js
+// Output: Hello, World!!</code></pre>
+<h2 id="712-new-date-and-time-api-javatime">7.12 New Date and Time API (<code>java.time</code>)</h2>
+<p><strong>Problems with the old API (<code>java.util.Date</code>):</strong></p>
+<ul>
+<li>Poor design that was hard to understand, and not ISO-compliant.
+</li>
+<li>Mutable and not thread-safe.
+</li>
+<li>Performance was weaker.
+</li></ul>
+<p><strong>New API:</strong> designed in Java SE 8 under <code>java.time</code>. It is ISO-compliant, thread-safe and performs better.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Class</th>
+<th>Represents</th>
+</tr></thead><tbody>
+<tr><td><code>LocalDate</code></td><td>A date, with no time or time zone</td></tr>
+<tr><td><code>LocalTime</code></td><td>A time, with no date or time zone</td></tr>
+<tr><td><code>LocalDateTime</code></td><td>A date and time, with no time zone</td></tr>
+<tr><td><code>OffsetDateTime</code>, <code>OffsetTime</code></td><td>Date and time with a timezone offset</td></tr>
+<tr><td><code>ZoneId</code></td><td>Timezone identifier used for offsets and zones</td></tr>
+<tr><td>Instant</td><td>A point on the timeline in UTC, with nanosecond resolution. Best for machine timestamps.</td></tr>
+<tr><td>ZonedDateTime</td><td>A date and time in a specific time zone (for example Asia/Kochi)</td></tr>
+<tr><td>Duration vs Period</td><td>Duration measures machine units (seconds, nanoseconds). Period measures human units (days, months, years).</td></tr>
+</tbody></table></div>
+<pre><code>LocalDate today = LocalDate.now();
+System.out.println("Current date: " + today);</code></pre>
+<h2 id="713-built-in-functional-interfaces">7.13 Built-in Functional Interfaces</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Interface</th>
+<th>Signature</th>
+<th>Description</th>
+</tr></thead><tbody>
+<tr><td><code>Predicate&lt;T&gt;</code></td><td><code>boolean test(T t)</code></td><td>Takes one argument and returns true or false. Example: <code>value -&gt; value != null</code></td></tr>
+<tr><td><code>Function&lt;T,R&gt;</code></td><td><code>R apply(T t)</code></td><td>Takes one argument and returns a result. Example: <code>value -&gt; value + 3</code></td></tr>
+<tr><td><code>Consumer&lt;T&gt;</code></td><td><code>void accept(T t)</code></td><td>Takes one argument and returns nothing (a side effect)</td></tr>
+<tr><td><code>Supplier&lt;T&gt;</code></td><td><code>T get()</code></td><td>Takes no argument and returns a value (a factory)</td></tr>
+<tr><td><code>BiFunction&lt;T,U,R&gt;</code></td><td><code>R apply(T t, U u)</code></td><td>Takes two arguments and returns a result</td></tr>
+<tr><td><code>UnaryOperator&lt;T&gt;</code></td><td><code>T apply(T t)</code></td><td>Like <code>Function</code>, but input and output have the same type</td></tr>
+<tr><td><code>BinaryOperator&lt;T&gt;</code></td><td><code>T apply(T x, T y)</code></td><td>Like <code>BiFunction</code>, but all types are the same. Useful for sum, multiply and similar operations</td></tr>
+</tbody></table></div>
+<ul>
+<li>Functional interface and SAM (Single Abstract Method) interface are the same thing.
+</li>
+<li>A class can implement these interfaces, but lambdas are the usual way.
+</li></ul>
+<pre><code>Predicate&lt;Object&gt; predicate = value -&gt; value != null;
+
+Function&lt;Long, Long&gt; adder = value -&gt; value + 3;
+Long result = adder.apply(8L);   // 11
+
+UnaryOperator&lt;Person&gt; unaryOperator = person -&gt; { person.name = "New Name"; return person; };
+BinaryOperator&lt;MyValue&gt; binaryOperator = (value1, value2) -&gt; { value1.add(value2); return value1; };</code></pre>
+<h2 id="714-other-java-8-additions">7.14 Other Java 8 Additions</h2>
+<ul>
+<li><strong>Base64</strong> (<code>java.util.Base64</code>) provides three encoders and decoders:
+<ul>
+<li>*Basic:* output uses <code>A-Za-z0-9+/</code>; no line feeds are added, and the decoder rejects other characters.
+</li>
+<li>*URL:* output is safe for URLs and filenames.
+</li>
+<li>*MIME:* output is in a MIME-friendly format.
+</li></ul>
+</li>
+<li><strong>Collection API:</strong>
+<ul>
+<li><code>forEachRemaining(Consumer)</code> on <code>Iterator</code> (default method): performs the action on each remaining element.
+</li>
+<li><code>removeIf(Predicate)</code> on <code>Collection</code> (default method): removes all elements matching the predicate.
+</li>
+<li><code>spliterator()</code> on <code>Collection</code>: traverses elements sequentially or in parallel.
+</li>
+<li><code>Map</code> gains <code>replaceAll()</code>, <code>compute()</code> and <code>merge()</code>.
+</li>
+<li><code>HashMap</code> performance is improved when keys collide.
+</li></ul>
+</li>
+<li><strong>Concurrency API:</strong>
+<ul>
+<li><code>ConcurrentHashMap</code> gains <code>compute()</code>, <code>forEach()</code>, <code>forEachEntry()</code>, <code>forEachKey()</code>, <code>forEachValue()</code>, <code>merge()</code>, <code>reduce()</code> and <code>search()</code>.
+</li>
+<li><code>Executors.newWorkStealingPool()</code> creates a work-stealing pool, using the available processors as its target parallelism.
+</li>
+<li><code>CompletableFuture</code> can be completed explicitly by setting its value and status.
+</li></ul>
+</li>
+<li><strong>Miscellaneous:</strong>
+<ul>
+<li><code>ThreadLocal.withInitial(Supplier)</code> creates instances easily.
+</li>
+<li><code>Comparator</code> gains default and static methods for natural and reverse ordering.
+</li>
+<li><code>Integer</code>, <code>Long</code> and <code>Double</code> have <code>min()</code>, <code>max()</code> and <code>sum()</code>.
+</li>
+<li><code>Boolean</code> has <code>logicalAnd()</code>, <code>logicalOr()</code> and <code>logicalXor()</code>.
+</li>
+<li>The <code>Math</code> class gains several utility methods.
+</li>
+<li>The JDBC-ODBC Bridge is removed.
+</li>
+<li>PermGen is removed.
+</li></ul>
+</li></ul>
+<h2 id="715-lambda-and-stream-examples">7.15 Lambda and Stream Examples</h2>
+<pre><code>// Lambda without and with a return keyword
+Addable ad1 = (a, b) -&gt; (a + b);
+Addable ad2 = (int a, int b) -&gt; { return a + b; };
+
+// forEach with a lambda
+List&lt;String&gt; list = new ArrayList&lt;&gt;(Arrays.asList("ankit", "mayank", "irfan", "jai"));
+list.forEach(n -&gt; System.out.println(n));
+
+// Thread: anonymous class vs lambda
+Runnable r2 = () -&gt; { System.out.println("Thread2 is running..."); };
+new Thread(r2).start();
+
+// Sort objects by name with a lambda comparator
+Collections.sort(productList, (p1, p2) -&gt; p1.name.compareTo(p2.name));
+
+// Filter products priced above 20000
+productList.stream()
+        .filter(p -&gt; p.price &gt; 20000)
+        .forEach(product -&gt; System.out.println(product.name + ": " + product.price));
+
+// Event listener (Swing)
+b.addActionListener(e -&gt; tf.setText("hello swing"));</code></pre>
+<h2 id="716-stream-shortcuts">7.16 Stream Shortcuts</h2>
+<ul>
+<li><strong>Remove duplicates from a list:</strong>
+<pre><code>// Using a Set (the order is not kept)
+Set&lt;Integer&gt; setWithoutDuplicates = numbersList.stream().collect(Collectors.toSet());
+
+// Using distinct() (keeps order)
+List&lt;Integer&gt; listWithoutDuplicates = numbersList.stream().distinct().collect(Collectors.toList());</code></pre>
+</li>
+<li><strong>Convert an array to a stream:</strong> <code>Stream.of(testArray).forEach(System.out::println);</code>
+</li>
+<li><strong>Sort strings by length:</strong>
+<pre><code>Arrays.sort(stringArray, Comparator.comparing(String::length));
+list.sort((first, second) -&gt; Integer.compare(first.length(), second.length()));
+List&lt;String&gt; sorted = strings.stream().sorted(Comparator.comparing(String::length)).toList();</code></pre>
+</li>
+<li><strong><code>peek()</code>:</strong> a stream method that performs an action on each element as it passes through the pipeline. It is useful for debugging a lambda pipeline or logging intermediate values.
+</li></ul>
+<h2 id="717-java-8-interview-points">7.17 Java 8 Interview Points</h2>
+<ul>
+<li><strong>Why use functional interfaces?</strong> Lambdas instantiate them directly, which avoids bulky anonymous classes.
+</li>
+<li><strong>Why default and static interface methods?</strong> New methods can be added to an existing interface without forcing every implementing class to change. This is the basis of backward compatibility.
+</li>
+<li><strong>Default method conflicts:</strong> if two interfaces provide default methods with the same signature, and a class implements both, the compiler reports "unrelated defaults". The class must override the method. It can call one of them with <code>InterfaceA.super.canPerform()</code>.
+</li>
+<li><strong>Static interface methods</strong> cannot be overridden in implementing classes.
+</li>
+<li><strong>Functional programming</strong> means writing code with expressions: functions are passed as arguments and used like values. Java 8 brought this style through lambdas.
+</li>
+<li><strong>Abstract class vs interface in Java 8:</strong> default methods make them look similar, but they still differ. An abstract class can have constructors, state and partial implementation. An interface is a pure contract with no constructors, and it is meant to provide full abstraction.
+</li></ul>
+<h2 id="718-map-and-flatmap">7.18 Map and FlatMap</h2>
+<ul>
+<li><code>map()</code>: transforms each element one-to-one.
+</li>
+<li><code>flatMap()</code>: flattens nested structures, such as lists inside lists, into a single stream.
+</li></ul>
+<hr>
+<h1 id="8-java-collections">8. Java Collections</h1>
+<h2 id="81-collection-framework">8.1 Collection Framework</h2>
+<p>The Collection framework is a unified architecture for storing and manipulating groups of objects. It has:</p>
+<ol>
+<li><strong>Interfaces</strong> and their <strong>implementations</strong> (classes).
+</li>
+<li><strong>Algorithms</strong> (utility methods such as sorting and searching).
+</li></ol>
+<p>It provides interfaces (<code>Set</code>, <code>List</code>, <code>Queue</code>, <code>Deque</code>) and classes (<code>ArrayList</code>, <code>Vector</code>, <code>LinkedList</code>, <code>PriorityQueue</code>, <code>HashSet</code>, <code>LinkedHashSet</code>, <code>TreeSet</code>). Maps (key/value pairs) are not collections in the strict sense, but they are fully integrated with the framework.</p>
+<h2 id="82-iterable-interface">8.2 Iterable Interface</h2>
+<p><code>Iterable</code> is the root interface of all collection classes. <code>Collection</code> extends it, so every collection is <code>Iterable</code>. It has one abstract method: <code>Iterator&lt;T&gt; iterator()</code>.</p>
+<h2 id="83-collection-interfaces">8.3 Collection Interfaces</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Interface</th>
+<th>Description</th>
+</tr></thead><tbody>
+<tr><td><code>Collection</code></td><td>Top of the collection hierarchy; works with groups of objects</td></tr>
+<tr><td><code>List</code></td><td>Ordered collection that may contain duplicates</td></tr>
+<tr><td><code>Set</code></td><td>Collection of unique elements</td></tr>
+<tr><td><code>SortedSet</code></td><td>A <code>Set</code> whose elements are kept sorted</td></tr>
+<tr><td><code>Map</code></td><td>Maps unique keys to values</td></tr>
+<tr><td><code>Map.Entry</code></td><td>A key/value pair in a map (inner interface of <code>Map</code>)</td></tr>
+<tr><td><code>SortedMap</code></td><td>A <code>Map</code> whose keys are kept in ascending order</td></tr>
+<tr><td><code>Enumeration</code></td><td>Legacy interface for iterating over elements one at a time; superseded by <code>Iterator</code></td></tr>
+</tbody></table></div>
+<h2 id="84-list">8.4 List</h2>
+<p>A <code>List</code> is an ordered collection that allows duplicates. Implementations: <code>ArrayList</code>, <code>LinkedList</code>, <code>Vector</code>, <code>Stack</code>.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Class</th>
+<th>Description</th>
+</tr></thead><tbody>
+<tr><td><code>ArrayList</code></td><td>Backed by an array. Grows automatically when elements are added beyond its capacity. Not synchronized.</td></tr>
+<tr><td><code>LinkedList</code></td><td>Linear structure of nodes. Each node stores the element and a reference to the next node. Elements are not contiguous in memory.</td></tr>
+<tr><td><code>Vector</code></td><td>Like <code>ArrayList</code> and keeps insertion order, but it is <strong>synchronized</strong>, so it is slower. Rarely used in non-threaded code.</td></tr>
+<tr><td><code>Stack</code></td><td>Last-in-first-out structure. A legacy subclass of <code>Vector</code>.</td></tr>
+</tbody></table></div>
+<h2 id="85-set">8.5 Set</h2>
+<p>A <code>Set</code> is an unordered collection that cannot store duplicates. Implementations:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Class</th>
+<th>Description</th>
+</tr></thead><tbody>
+<tr><td><code>HashSet</code></td><td>Backed by a hash table; elements are placed by hash code. No ordering. Allows one <code>null</code>. Not synchronized. Adding a duplicate does not add a second copy.</td></tr>
+<tr><td><code>LinkedHashSet</code></td><td>Like <code>HashSet</code>, but keeps insertion order.</td></tr>
+<tr><td><code>TreeSet</code></td><td>Keeps elements sorted.</td></tr>
+</tbody></table></div>
+<h2 id="86-map">8.6 Map</h2>
+<p>A <code>Map</code> maps keys to values. It cannot contain duplicate keys.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Class</th>
+<th>Ordering</th>
+<th>Null keys/values</th>
+<th>Synchronized</th>
+<th>Notes</th>
+</tr></thead><tbody>
+<tr><td><code>HashMap</code></td><td>No order</td><td>Allows null key and values</td><td>No</td><td>Uses hashing (a hash table). Fast insert, search and delete.</td></tr>
+<tr><td><code>LinkedHashMap</code></td><td>Insertion order</td><td>Allows null</td><td>No</td><td>Hash table plus a linked list</td></tr>
+<tr><td><code>TreeMap</code></td><td>Sorted by key (ascending)</td><td>No null key</td><td>No</td><td>Implements <code>NavigableMap</code> and <code>SortedMap</code></td></tr>
+<tr><td><code>Hashtable</code></td><td>No order</td><td>Does not allow null keys or values</td><td>Yes</td><td>Oldest hash table implementation</td></tr>
+</tbody></table></div>
+<ul>
+<li><code>HashMap</code> was introduced in JDK 1.2, as the non-synchronized alternative to <code>Hashtable</code>.
+</li>
+<li><code>HashMap</code> and <code>Hashtable</code> both store key/value pairs. The key is hashed, and the hash code selects the index where the value is stored.
+</li></ul>
+<h2 id="87-queue-and-deque">8.7 Queue and Deque</h2>
+<p><strong>Queue:</strong> elements are added at the end and removed from the front (FIFO). Implementations:</p>
+<ul>
+<li><code>LinkedList</code>
+</li>
+<li><code>PriorityQueue</code>: serves elements by priority, set with a <code>Comparator</code>, rather than in FIFO order.
+</li></ul>
+<p><strong>Deque</strong> (double-ended queue): elements can be added and removed at both ends. It can act as a FIFO queue or as a LIFO stack. Implementations:</p>
+<ul>
+<li><code>LinkedList</code>
+</li>
+<li><code>ArrayDeque</code>: a resizable array that supports adding and removing at the head or tail.
+</li></ul>
+<h2 id="88-iterator-and-listiterator">8.8 Iterator and ListIterator</h2>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th>Iterator</th>
+<th>ListIterator</th>
+</tr></thead><tbody>
+<tr><td>Works on</td><td>List and Set</td><td>List only</td></tr>
+<tr><td>Direction</td><td>Forward only</td><td>Forward and backward</td></tr>
+<tr><td>Access to indexes</td><td>No</td><td>Yes</td></tr>
+</tbody></table></div>
+<ul>
+<li><strong>Fail-fast:</strong> Iterators on <code>ArrayList</code> and <code>HashMap</code> throw <code>ConcurrentModificationException</code> if the collection is structurally modified while being iterated.
+</li>
+<li><strong>Fail-safe:</strong> Iterators on <code>CopyOnWriteArrayList</code> and <code>ConcurrentHashMap</code> do not throw, because they work on a copy of the collection.
+</li></ul>
+<h2 id="89-sorting-custom-objects-comparable-vs-comparator">8.9 Sorting Custom Objects: Comparable vs Comparator</h2>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th>Comparable</th>
+<th>Comparator</th>
+</tr></thead><tbody>
+<tr><td>Package</td><td><code>java.lang</code></td><td><code>java.util</code></td></tr>
+<tr><td>Method</td><td><code>compareTo(T obj)</code></td><td><code>compare(T o1, T o2)</code></td></tr>
+<tr><td>Sort sequences</td><td>One natural ordering (for example by id, name or price)</td><td>Multiple orderings</td></tr>
+<tr><td>Changes the class</td><td>Yes, the class implements the interface</td><td>No, it is a separate object</td></tr>
+<tr><td>Used with</td><td><code>Collections.sort(list)</code> or <code>Arrays.sort(array)</code></td><td><code>Collections.sort(list, comparator)</code></td></tr>
+</tbody></table></div>
+<p>Return values: negative if <code>this</code> (or the first argument) is less than the other, zero if equal, positive if greater.</p>
+<pre><code>// Comparable: natural ordering by age (ascending)
+public class Student implements Comparable&lt;Student&gt; {
+    private String studentname;
+    private int rollno;
+    private int studentage;
+    // constructor, getters and setters
+
+    @Override
+    public int compareTo(Student comparestu) {
+        return this.studentage - comparestu.getStudentage();   // descending: comparestu.getStudentage() - this.studentage
+    }
+
+    @Override
+    public String toString() {
+        return "[ rollno=" + rollno + ", name=" + studentname + ", age=" + studentage + "]";
+    }
+}
+
+Collections.sort(arraylist);   // uses compareTo</code></pre>
+<pre><code>// Comparator: several orderings, defined as static fields in the class
+public static Comparator&lt;Student&gt; StuNameComparator = (s1, s2) -&gt;
+        s1.getStudentname().toUpperCase().compareTo(s2.getStudentname().toUpperCase());
+
+public static Comparator&lt;Student&gt; StuRollno = (s1, s2) -&gt; s1.getRollno() - s2.getRollno();
+
+Collections.sort(arraylist, Student.StuNameComparator);   // by name
+Collections.sort(arraylist, Student.StuRollno);           // by roll number</code></pre>
+<h2 id="810-arraylist-vs-linkedlist">8.10 ArrayList vs LinkedList</h2>
+<ul>
+<li><code>ArrayList</code> is backed by a dynamically resizing array. Search by index is constant time. Add and remove in the middle are slower. Use it when reading is more frequent than adding or removing.
+</li>
+<li><code>LinkedList</code> is a doubly linked list. Add and remove are constant time. Use it when frequently inserting and removing.
+</li></ul>
+<h2 id="811-other-collection-notes">8.11 Other Collection Notes</h2>
+<ul>
+<li><strong>RandomAccess</strong> is a marker interface with no methods. <code>ArrayList</code> and <code>Vector</code> implement it, which means random access (for example, getting element 10 or element 17869) takes the same time.
+</li>
+<li><strong>Default initial capacity of <code>ArrayList</code>:</strong> 10.
+</li>
+<li><strong>Diamond operator (<code>&lt;&gt;</code>):</strong> lets the compiler infer the type arguments of a generic class, so the constructor does not need to repeat them.
+</li>
+<li><strong>Hash collisions:</strong> two different keys with the same hash value land in the same bucket. Java keeps both entries in that bucket, and <code>equals()</code> picks the right one. Two standard strategies are separate chaining and open addressing.
+</li>
+<li><strong>Internal working of <code>HashMap</code>:</strong> the key's <code>hashCode()</code> (after an internal hash function) gives the bucket index. Entries in the same bucket are compared with <code>equals()</code> to find the right value.
+</li>
+<li><strong>Custom keys in a <code>HashMap</code>:</strong> <code>hashCode()</code> and <code>equals()</code> must be consistent with each other. Make key objects immutable, so the hash code does not change after insertion. If a mutable key is used, its <code>hashCode()</code> must not depend on fields that can change.
+</li></ul>
+<pre><code>public class Account {
+    private int accountNumber;
+    private String holderName;   // can change at run time; not part of equality
+
+    @Override
+    public int hashCode() { return 31 + accountNumber; }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        return accountNumber == ((Account) obj).accountNumber;
+    }
+}</code></pre>
+<ul>
+<li><strong>Concurrent collections</strong> (<code>java.util.concurrent</code>): <code>ConcurrentHashMap</code>, <code>CopyOnWriteArrayList</code> and <code>CopyOnWriteArraySet</code>. They support concurrent reads and adjustable concurrency for updates. <code>ConcurrentHashMap</code> is thread-safe and does not allow null keys or values.
+</li>
+<li><strong><code>Collection</code> vs <code>Collections</code>:</strong> <code>Collection</code> is the root interface of the framework. <code>Collections</code> is a utility class with static methods (for example <code>sort</code>, <code>reverseOrder</code>) that operate on collections.
+</li></ul>
+<h2 id="812-common-collection-recipes">8.12 Common Collection Recipes</h2>
+<pre><code>// Remove duplicates from an ArrayList while keeping insertion order
+Set&lt;E&gt; unique = new LinkedHashSet&lt;&gt;(arrayList);
+arrayList.clear();
+arrayList.addAll(unique);
+
+// Sort a map by value, keeping the sorted order (LinkedHashMap)
+List&lt;Map.Entry&lt;K, V&gt;&gt; entries = new ArrayList&lt;&gt;(map.entrySet());
+entries.sort(Map.Entry.comparingByValue());
+Map&lt;K, V&gt; sortedMap = new LinkedHashMap&lt;&gt;();
+entries.forEach(e -&gt; sortedMap.put(e.getKey(), e.getValue()));
+
+// Sort a String array in descending order
+Arrays.sort(stringArray, Collections.reverseOrder());</code></pre>
+<h2 id="813-collection-interview-questions-quick-answers">8.13 Collection Interview Questions (Quick Answers)</h2>
+<ul>
+<li><strong>ArrayList vs Vector:</strong> <code>Vector</code> is synchronized. <code>ArrayList</code> is not.
+</li>
+<li><strong>ArrayList vs LinkedList:</strong> see <a href="#810-arraylist-vs-linkedlist">8.10</a>.
+</li>
+<li><strong>HashMap vs Hashtable:</strong> <code>Hashtable</code> is synchronized and does not allow nulls. <code>HashMap</code> is not synchronized and allows one null key.
+</li>
+<li><strong>HashSet vs TreeSet:</strong> <code>HashSet</code> has no order and is faster. <code>TreeSet</code> keeps elements sorted and does not allow nulls. <code>HashSet</code> performs better for add, remove, contains and size.
+</li>
+<li><strong>Iterator vs Enumeration:</strong> <code>Enumeration</code> is for legacy classes such as <code>Vector</code>. <code>Iterator</code> works on all collections, is fail-fast, and is slightly slower.
+</li>
+<li><strong>Iterator vs ListIterator:</strong> see the table in 8.8.
+</li>
+<li><strong>ArrayList vs HashMap:</strong> <code>ArrayList</code> is a list of values with index access. <code>HashMap</code> maps keys to values.
+</li>
+<li><strong>List, Set and Map:</strong> <code>List</code> is ordered with duplicates allowed. <code>Set</code> has unique elements. <code>Map</code> stores key/value pairs with unique keys.
+</li>
+<li><strong>Remove duplicates from an ArrayList:</strong> see 8.12.
+</li></ul>
+<h2 id="814-more-collection-interview-points">8.14 More Collection Interview Points</h2>
+<ul>
+<li><strong>for-each loop vs Iterator:</strong> a for-each loop cannot modify the collection during iteration, and doing so throws <code>ConcurrentModificationException</code>. An <code>Iterator</code> can remove elements safely (with <code>iterator.remove()</code>). Both give the same traversal performance. For nested loops, for-each is more readable.
+</li>
+<li><strong>How HashSet prevents duplicates:</strong> <code>HashSet.add()</code> calls <code>HashMap.put()</code> with the element as the key and a constant dummy value (<code>PRESENT</code>). If the key already exists, the old value is replaced, so the set never contains duplicates.
+</li>
+<li><strong>TreeSet:</strong> like <code>HashSet</code> but sorted in ascending order. It does not allow null elements. It is not synchronized, but it can be wrapped with <code>Collections.synchronizedSortedSet(new TreeSet&lt;&gt;(...))</code>.
+</li>
+<li><strong>hashCode and equals contract:</strong>
+<ol>
+<li>If two objects are equal according to <code>equals()</code>, they must return the same <code>hashCode()</code>.
+</li>
+<li>Two unequal objects may still have the same hash code. This is a *collision*. Example: with <code>n % 10</code> as the hash function, 17 and 27 both map to 7, but they are not the same number.
+</li></ol>
+</li>
+<li><strong>ArrayList vs HashMap memory:</strong> an <code>ArrayList</code> stores only the values and uses internal indexes. A <code>HashMap</code> stores a key and a value for each entry, so it uses more memory.
+</li></ul>
+<h2 id="815-hashmap-and-concurrenthashmap-internals-qa">8.15 HashMap and ConcurrentHashMap Internals (Q&amp;A)</h2>
+<h3 id="how-hashmap-works">How HashMap works</h3>
+<ul>
+<li>A <code>HashMap</code> stores key-value pairs in an array of buckets.
+</li>
+<li><code>put()</code> computes the key's hash, applies an internal hash function, and calculates the bucket index. Keys that land in the same bucket are kept together. When a bucket has several entries, <code>equals()</code> identifies the exact key.
+</li>
+<li><code>get()</code> recalculates the bucket index and uses <code>equals()</code> to find the key.
+</li>
+<li>When the number of entries exceeds <code>capacity × loadFactor</code> (default 16 × 0.75 = 12), the map resizes and rehashes its entries.
+</li>
+<li>Average lookup and insertion are O(1).
+</li></ul>
+<h3 id="hash-collisions">Hash collisions</h3>
+<ul>
+<li>A collision occurs when two different keys produce the same bucket index. It cannot be avoided completely, because the number of buckets is limited.
+</li>
+<li>Entries in one bucket are kept in a linked list.
+</li>
+<li><strong>Since Java 8:</strong> when a bucket holds more than 8 entries and the table has at least 64 buckets, the list is converted to a Red-Black Tree, so lookup improves from O(n) to O(log n). When the bucket drops below 6 entries, it reverts to a list. A good <code>hashCode()</code> keeps collisions rare.
+</li></ul>
+<h3 id="equals-and-hashcode-must-be-consistent"><code>equals()</code> and <code>hashCode()</code> must be consistent</h3>
+<ul>
+<li>Hash-based collections (<code>HashMap</code>, <code>HashSet</code>, <code>Hashtable</code>) use <code>hashCode()</code> to choose the bucket, and <code>equals()</code> to find the exact object in it.
+</li>
+<li>If two objects are equal by <code>equals()</code>, they must return the same <code>hashCode()</code>. Otherwise duplicates can be stored, or existing objects cannot be found.
+</li></ul>
+<h3 id="concurrenthashmap">ConcurrentHashMap</h3>
+<ul>
+<li>Thread-safe, and provides the same operations as <code>HashMap</code>.
+</li>
+<li>Reads do not lock. Writes lock only the part of the map they change, so several writers can work on different parts at the same time. The classic design (Java 7) divided the map into 16 segments by default. Newer versions (Java 8 and later) lock individual bins using compare-and-swap, which gives similar results.
+</li>
+<li>Does not allow <code>null</code> keys or values.
+</li>
+<li>Its iterators are <strong>weakly consistent</strong> (fail-safe): they do not throw <code>ConcurrentModificationException</code> when the map is modified during iteration, and may or may not show the latest updates.
+</li></ul>
+<h2 id="816-arraysaslist-vs-listof">8.16 Arrays.asList() vs List.of()</h2>
+<pre><code>List&lt;String&gt; list1 = Arrays.asList("A", "B", "C");
+list1.set(1, "X");   // allowed: fixed-size list backed by the array
+list1.add("D");      // UnsupportedOperationException
+
+List&lt;String&gt; list2 = List.of("A", "B", "C");   // Java 9+
+list2.set(1, "X");   // UnsupportedOperationException: fully immutable</code></pre>
+<ul>
+<li><code>Arrays.asList()</code>: fixed size. Elements can be updated with <code>set()</code>, but not added or removed.
+</li>
+<li><code>List.of()</code> (Java 9+): fully immutable. No add, remove or update.
+</li>
+<li>Use <code>Arrays.asList()</code> when updates are needed but resizing is not. Use <code>List.of()</code> for immutability and safety.
+</li></ul>
+<h2 id="817-hashmap-vs-hashtable-vs-concurrenthashmap-summary">8.17 HashMap vs Hashtable vs ConcurrentHashMap (Summary)</h2>
+<ul>
+<li><strong>HashMap:</strong> not synchronized, allows null keys and values, fast in single-threaded code. Package <code>java.util</code>.
+</li>
+<li><strong>Hashtable:</strong> synchronized (thread-safe, but slower), no null keys or values.
+</li>
+<li><strong>ConcurrentHashMap:</strong> thread-safe with better concurrency. Locks only part of the map, not the whole map. No null keys or values. Package <code>java.util.concurrent</code>.
+</li>
+<li>HashMap is not thread-safe. For concurrent use, prefer <code>ConcurrentHashMap</code>, or <code>Collections.synchronizedMap()</code> as a safer option.
+</li>
+<li>Overriding <code>equals()</code> without <code>hashCode()</code> breaks map lookups. Equal objects can get different hash codes. Override both when a custom object is used as a key.
+</li></ul>
+<hr>
+<h1 id="9-garbage-collectors">9. Garbage Collectors</h1>
+<h2 id="91-common-java-8-garbage-collectors">9.1 Common Java 8 Garbage Collectors</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Collector</th>
+<th>Typical use</th>
+</tr></thead><tbody>
+<tr><td>Serial GC</td><td>Small applications</td></tr>
+<tr><td>Parallel GC</td><td>Throughput-oriented applications</td></tr>
+<tr><td>CMS (Concurrent Mark Sweep)</td><td>Low-pause applications</td></tr>
+<tr><td>G1 GC</td><td>Large heaps and predictable pauses</td></tr>
+</tbody></table></div>
+<ul>
+<li>G1 GC was introduced before Java 8, but Java 8 supports it, and it became an important alternative to CMS.
+</li>
+<li>G1 divides the heap into multiple regions, managed dynamically as Eden, Survivor, Old or Humongous regions.
+</li>
+<li>It identifies the regions with the most reclaimable garbage and collects them first.
+</li></ul>
+<h2 id="92-java-8-heap-layout">9.2 Java 8 Heap Layout</h2>
+<ul>
+<li>Objects are stored in the <strong>heap</strong>, which has Young and Old generations.
+</li>
+<li>New objects are created in <strong>Eden</strong>. Objects that survive collections can be promoted to the <strong>Old Generation</strong>.
+</li>
+<li>Class metadata is stored in <strong>Metaspace</strong> (see Memory Management).
+</li>
+<li>Each thread has its own stack holding local variables, method parameters, method call frames and references to heap objects.
+</li>
+<li>The GC automatically removes objects that are no longer reachable.
+</li></ul>
+<h2 id="93-garbage-collectors-by-workload">9.3 Garbage Collectors by Workload</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Collector</th>
+<th>JVM option</th>
+<th>Best for</th>
+</tr></thead><tbody>
+<tr><td>Serial GC</td><td><code>-XX:+UseSerialGC</code></td><td>Tiny applications, command-line tools, small heaps</td></tr>
+<tr><td>Parallel GC</td><td><code>-XX:+UseParallelGC</code></td><td>Batch jobs: maximum throughput</td></tr>
+<tr><td>CMS</td><td><code>-XX:+UseConcMarkSweepGC</code> (threads: <code>-XX:ParallelCMSThreads=</code>)</td><td>Low pause times (older collector)</td></tr>
+<tr><td>G1 GC</td><td><code>-XX:+UseG1GC</code></td><td>Web services: balanced throughput and latency. It is the default in modern Java.</td></tr>
+<tr><td>ZGC / Shenandoah</td><td>-</td><td>Very large heaps (for example trading systems): lowest pauses</td></tr>
+</tbody></table></div>
+<ul>
+<li>Pick a collector by passing its option as a JVM argument.
+</li>
+<li><strong>Java 8 improvement:</strong> with G1, <code>-XX:+UseStringDeduplication</code> (Java 8u20 and later) stores duplicate <code>String</code> values in a single <code>char[]</code> array, which reduces heap use.
+</li></ul>
+<h2 id="94-note-on-java-8-g1-and-metaspace">9.4 Note on Java 8 G1 and Metaspace</h2>
+<p>See Section 5 for Metaspace and PermGen, and <a href="#91-common-java-8-garbage-collectors">Section 9.1</a> for G1 details.</p>
+<hr>
+<h1 id="10-java-design-patterns">10. Java Design Patterns</h1>
+<p>Design patterns are typical, reusable solutions to common design problems. Each pattern is a blueprint that can be adapted to the code at hand.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Category</th>
+<th>Purpose</th>
+<th>Patterns</th>
+</tr></thead><tbody>
+<tr><td>Creational</td><td>Create objects while hiding the creation logic, instead of calling <code>new</code> directly</td><td>Factory, Abstract Factory, Singleton, Builder, Prototype</td></tr>
+<tr><td>Structural</td><td>Compose classes and objects into larger, flexible structures</td><td>Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy</td></tr>
+<tr><td>Behavioral</td><td>Handle communication and responsibilities between objects</td><td>Chain of Responsibility, Observer, Strategy, Command, State, Visitor, Interpreter, Iterator, Memento, Template Method, Mediator</td></tr>
+</tbody></table></div>
+<h2 id="101-creational-patterns">10.1 Creational Patterns</h2>
+<h3 id="factory-method">Factory Method</h3>
+<ul>
+<li>A superclass or interface defines how to create an object, and subclasses or a factory class decide which concrete class to instantiate.
+</li>
+<li>The client works only with the common interface, so code does not depend on the concrete classes. Replace direct <code>new</code> calls with calls to a factory method.
+</li>
+<li><strong>Use case:</strong> dynamic implementation loading. For example, a <code>PaymentFactory</code> returns a <code>CreditCardPaymentProcessor</code> or a <code>PayPalPaymentProcessor</code> depending on the user's choice.
+</li></ul>
+<pre><code>public interface Shape { void draw(); }
+public class Rectangle implements Shape { public void draw() { System.out.println("Inside Rectangle::draw() method."); } }
+public class Square implements Shape    { public void draw() { System.out.println("Inside Square::draw() method."); } }
+
+public class ShapeFactory {
+    public Shape getShape(String shapeType) {
+        if (shapeType == null) return null;
+        if (shapeType.equalsIgnoreCase("RECTANGLE")) return new Rectangle();
+        if (shapeType.equalsIgnoreCase("SQUARE")) return new Square();
+        return null;
+    }
+}
+
+Shape shape = new ShapeFactory().getShape("RECTANGLE");
+shape.draw();   // Inside Rectangle::draw() method.</code></pre>
+<h3 id="abstract-factory">Abstract Factory</h3>
+<ul>
+<li>Produces <strong>families</strong> of related objects without naming their concrete classes. It is one level above the Factory pattern, because it returns factories.
+</li>
+<li><strong>Advantages:</strong> isolates client code from concrete classes, makes it easy to exchange object families, and keeps objects consistent.
+</li>
+<li><strong>Example:</strong> an <code>AbstractFactory</code> with <code>getBank(String)</code> and <code>getLoan(String)</code>. <code>BankFactory</code> returns <code>HDFC</code> or <code>SBI</code> banks, and <code>LoanFactory</code> returns <code>HomeLoan</code> or <code>EducationLoan</code>. A <code>FactoryCreator.getFactory("Bank")</code> method chooses the factory.
+</li></ul>
+<h3 id="builder">Builder</h3>
+<ul>
+<li>Constructs a complex object step by step. The same construction code can produce different representations of the object.
+</li>
+<li><strong>Advantages:</strong> separates construction from representation, gives better control over construction, and allows the internal representation to change.
+</li>
+<li><strong>Example:</strong> a <code>CivilEngineer</code> (the director) calls <code>buildBasement()</code>, <code>buildStructure()</code>, <code>buildRoof()</code> and <code>buildInterior()</code> on a <code>HouseBuilder</code>. <code>IglooHouseBuilder</code> and <code>TipiHouseBuilder</code> each build a different <code>House</code>, and <code>getHouse()</code> returns the result.
+</li>
+<li><strong>Practical use:</strong> immutable DTOs or entities with many fields. Libraries such as Lombok provide <code>@Builder</code>.
+</li></ul>
+<h3 id="prototype">Prototype</h3>
+<ul>
+<li>Creates a new object by <strong>copying</strong> an existing one, instead of creating it from scratch. The copy can be customized.
+</li>
+<li>Example: a <code>Prototype</code> interface with <code>getClone()</code>, implemented by an <code>EmployeeRecord</code> class. <code>getClone()</code> returns a new <code>EmployeeRecord</code> with the same field values.
+</li></ul>
+<h3 id="singleton">Singleton</h3>
+<p>Ensures a class has only one instance, with a global access point. Useful for a shared resource such as a database connection, which would be costly to create for every object.</p>
+<p>To build a singleton: a <code>private static</code> instance, a <code>private</code> constructor, and a <code>public static</code> factory method (<code>getInstance()</code>).</p>
+<ul>
+<li><strong>Eager initialization:</strong> the instance is created when the class is loaded.
+<pre><code>public class GFG {
+    private static final GFG instance = new GFG();
+    private GFG() { }
+    public static GFG getInstance() { return instance; }
+}</code></pre>
+</li>
+<li><strong>Lazy initialization:</strong> the instance is created the first time it is needed.
+<pre><code>public class GFG {
+    private static GFG instance;
+    private GFG() { }
+    public static GFG getInstance() {
+        if (instance == null) instance = new GFG();
+        return instance;
+    }
+}</code></pre>
+</li>
+<li><strong>Thread-safe lazy initialization:</strong> make <code>getInstance()</code> <code>synchronized</code>, so two threads cannot create two instances at the same time.
+<pre><code>public static synchronized GFG getInstance() {
+    if (instance == null) instance = new GFG();
+    return instance;
+}</code></pre>
+</li></ul>
+<h2 id="102-structural-patterns">10.2 Structural Patterns</h2>
+<h3 id="adapter-also-called-wrapper">Adapter (also called Wrapper)</h3>
+<p>Converts the interface of a class into the interface that a client expects. It lets two incompatible classes work together and reuses existing functionality.</p>
+<pre><code>public interface MediaPlayer   { void play(String filename); }
+public interface MediaPackage  { void playFile(String filename); }
+
+public class MP3 implements MediaPlayer {
+    public void play(String filename) { System.out.println("Playing MP3 File " + filename); }
+}
+public class MP4 implements MediaPackage {
+    public void playFile(String filename) { System.out.println("Playing MP4 File " + filename); }
+}
+public class VLC implements MediaPackage {
+    public void playFile(String filename) { System.out.println("Playing VLC File " + filename); }
+}
+
+// Adapter: makes a MediaPackage look like a MediaPlayer
+public class FormatAdapter implements MediaPlayer {
+    private MediaPackage media;
+    public FormatAdapter(MediaPackage m) { media = m; }
+    public void play(String filename) {
+        System.out.print("Using Adapter --&gt; ");
+        media.playFile(filename);
+    }
+}
+
+// Usage
+MediaPlayer player = new MP3();
+player.play("file.mp3");
+player = new FormatAdapter(new MP4());
+player.play("file.mp4");
+player = new FormatAdapter(new VLC());
+player.play("file.avi");</code></pre>
+<h3 id="bridge">Bridge</h3>
+<p>Decouples an abstraction from its implementation, so that the two can vary independently. Both can be extended without affecting the other.</p>
+<ul>
+<li><strong>Advantages:</strong> separates implementation from the interface, improves extensibility, and hides implementation details from the client.
+</li>
+<li><strong>Structure:</strong>
+<ul>
+<li><code>DrawAPI</code> is the implementor interface: <code>drawCircle(int radius, int x, int y)</code>.
+</li>
+<li><code>RedCircle</code> and <code>GreenCircle</code> are concrete implementors.
+</li>
+<li><code>Shape</code> is an abstract class that holds a <code>DrawAPI</code> reference and declares <code>draw()</code>.
+</li></ul>
+</li></ul>
+<pre><code>// Concrete abstraction: Circle uses a DrawAPI
+public class Circle extends Shape {
+    private int x, y, radius;
+    public Circle(int x, int y, int radius, DrawAPI drawAPI) { super(drawAPI); this.x = x; this.y = y; this.radius = radius; }
+    public void draw() { drawAPI.drawCircle(radius, x, y); }
+}
+
+Shape redCircle = new Circle(100, 100, 10, new RedCircle());
+Shape greenCircle = new Circle(100, 100, 10, new GreenCircle());
+redCircle.draw();    // Drawing Circle[ color: red, radius: 10, x: 100, 100]
+greenCircle.draw();  // Drawing Circle[ color: green, radius: 10, x: 100, 100]</code></pre>
+<h3 id="composite">Composite</h3>
+<ul>
+<li>Treats a group of objects in the same way as a single object. Objects are arranged in a <strong>tree</strong> that represents both part and whole.
+</li>
+<li>A class holds a group of its own objects and provides methods to add or remove them.
+</li>
+<li><strong>Advantages:</strong> defines class hierarchies of primitive and complex objects, makes it easy to add new kinds of components, and gives flexible structures.
+</li>
+<li><strong>Example:</strong> an <code>Employee</code> class with a list of subordinates. <code>CEO</code> has <code>headSales</code> and <code>headMarketing</code>, and each of them has their own employees. Printing the CEO and then iterating over <code>getSubordinates()</code> prints the whole organization.
+</li></ul>
+<h3 id="decorator">Decorator</h3>
+<ul>
+<li>Attaches extra responsibilities to an object <strong>dynamically</strong>, using composition instead of inheritance.
+</li>
+<li><strong>Advantages:</strong> more flexible than static inheritance, extends behavior by adding new classes, and avoids putting all behavior in one class.
+</li>
+<li><strong>Structure:</strong> a <code>Shape</code> interface, concrete shapes (<code>Rectangle</code>, <code>Circle</code>), an abstract <code>ShapeDecorator</code> that holds a <code>Shape</code>, and a concrete decorator such as <code>RedShapeDecorator</code> that adds a red border.
+<pre><code>Shape circle = new Circle();
+Shape redCircle = new RedShapeDecorator(new Circle());
+circle.draw();     // Shape: Circle
+redCircle.draw();  // Shape: Circle, then Border Color: Red</code></pre>
+</li></ul>
+<h3 id="facade">Facade</h3>
+<ul>
+<li>Provides a simplified interface to a library, framework or a complex set of classes. One class exposes simple methods and delegates the calls to the subsystem.
+</li>
+<li><strong>Advantages:</strong> shields clients from subsystem complexity, and reduces coupling between subsystems and clients.
+</li>
+<li><strong>Example:</strong> <code>ShapeMaker</code> creates <code>Circle</code>, <code>Rectangle</code> and <code>Square</code> internally, and offers <code>drawCircle()</code>, <code>drawRectangle()</code> and <code>drawSquare()</code>.
+</li></ul>
+<h3 id="flyweight">Flyweight</h3>
+<ul>
+<li>Reuses existing objects with the same state instead of creating new ones. It shares the common (intrinsic) part of state between objects to reduce memory and object count.
+</li>
+<li><strong>Advantages:</strong> fewer objects, less memory, and less storage if the objects are persisted.
+</li>
+<li><strong>Example:</strong> a <code>ShapeFactory</code> keeps a <code>HashMap</code> of <code>Circle</code> objects keyed by colour. <code>getCircle("Red")</code> returns the cached circle, or creates and caches one if none exists. Twenty random draws create only as many circles as there are distinct colours.
+</li></ul>
+<h3 id="proxy-also-called-surrogate-or-placeholder">Proxy (also called Surrogate or Placeholder)</h3>
+<ul>
+<li>A proxy is an object that stands in for another object. It controls access to the original, and can do work before or after the request reaches it.
+</li>
+<li><strong>Advantage:</strong> protects the original object from the outside world, and can delay expensive work.
+</li>
+<li><strong>Example:</strong> <code>ProxyImage</code> implements <code>Image</code> and creates the <code>RealImage</code> (which loads the file from disk) only when <code>display()</code> is first called.
+<pre><code>Image image = new ProxyImage("test_10mb.jpg");
+image.display();   // Loading test_10mb.jpg, then Displaying test_10mb.jpg
+image.display();   // Displaying test_10mb.jpg (already loaded)</code></pre>
+</li></ul>
+<h2 id="103-behavioral-patterns">10.3 Behavioral Patterns</h2>
+<p>Behavioral patterns deal with how objects interact and share responsibilities. Objects should communicate while staying loosely coupled, so the implementation and the client are not hard-coded to each other.</p>
+<h3 id="chain-of-responsibility">Chain of Responsibility</h3>
+<ul>
+<li>A request is passed along a chain of handlers. Each handler either processes the request or passes it to the next handler.
+</li>
+<li><strong>Use it for:</strong> decoupling the sender of a request from its receiver, and choosing the processing strategy at run time.
+</li>
+<li><strong>Java example:</strong> Servlet filters. Each <code>Filter.doFilter()</code> processes the request and then calls <code>chain.doFilter(...)</code> to pass control to the next filter.
+<pre><code>public class CustomFilter implements Filter {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        // process the request
+        chain.doFilter(request, response);
+    }
+}</code></pre>
+</li></ul>
+<h3 id="command">Command</h3>
+<ul>
+<li>A request is wrapped in a <strong>command</strong> object and passed to an <strong>invoker</strong>. The invoker finds the object that can execute it, and that object performs the action.
+</li>
+<li><strong>Advantages:</strong> separates the object that triggers an operation from the object that performs it, and makes it easy to add new commands without changing existing classes.
+</li>
+<li><strong>Example:</strong> an <code>Order</code> interface with <code>execute()</code>, implemented by <code>BuyStock</code> and <code>SellStock</code>. Both wrap a <code>Stock</code> receiver. A <code>Broker</code> collects orders with <code>takeOrder()</code> and runs them all with <code>placeOrders()</code>.
+<pre><code>Stock abcStock = new Stock();
+Broker broker = new Broker();
+broker.takeOrder(new BuyStock(abcStock));
+broker.takeOrder(new SellStock(abcStock));
+broker.placeOrders();   // Stock [ Name: ABC, Quantity: 10 ] bought, then ... sold</code></pre>
+</li></ul>
+<h3 id="interpreter">Interpreter</h3>
+<ul>
+<li>Evaluates a language grammar or expression. It defines an expression interface, and implementations that interpret a given context.
+</li>
+<li><strong>Used in:</strong> SQL parsing and symbol-processing engines.
+</li>
+<li><strong>Example in the source:</strong> a <code>Pattern</code> interface with <code>conversion(String)</code>, implemented by <code>InfixToPostfixPattern</code>, which converts an infix expression to postfix. For <code>a+b*c</code>, the output is <code>abc*+</code>.
+</li></ul>
+<h3 id="iterator">Iterator</h3>
+<ul>
+<li>Traverses the elements of a collection without exposing its internal structure (list, stack, tree and so on). Also called *Cursor*.
+</li>
+<li><strong>Advantages:</strong> supports different ways of traversing a collection, and simplifies the collection's interface.
+</li>
+<li><strong>Structure:</strong> an <code>Iterator</code> interface with <code>hasNext()</code> and <code>next()</code>, a <code>Container</code> interface with <code>getIterator()</code>, and a <code>NameRepository</code> that returns a private inner <code>NameIterator</code>.
+</li>
+<li><strong>Note:</strong> this is the same idea as Java's built-in <code>java.util.Iterator</code>.
+</li></ul>
+<h3 id="mediator">Mediator</h3>
+<ul>
+<li>Reduces the communication complexity between many objects. A mediator class handles all communication, so the objects stay loosely coupled.
+</li>
+<li><strong>Used in:</strong> message-based systems such as chat applications, and wherever many objects communicate in complex but well-defined ways.
+</li>
+<li><strong>Example:</strong> a <code>ChatRoom.showMessage(user, message)</code> method. Each <code>User.sendMessage()</code> passes its message through the <code>ChatRoom</code>, so users never reference each other directly.
+</li></ul>
+<h3 id="memento">Memento</h3>
+<ul>
+<li>Saves and restores the previous state of an object without exposing how it is implemented. Also called a snapshot.
+</li>
+<li><strong>Benefits:</strong> preserves encapsulation, and simplifies the originator.
+</li>
+<li><strong>Used in:</strong> undo and redo operations, and database transactions.
+</li>
+<li><strong>Structure:</strong>
+<ul>
+<li><code>Memento</code> holds the saved state.
+</li>
+<li><code>Originator</code> creates a memento with <code>saveStateToMemento()</code> and restores from one with <code>getStateFromMemento()</code>.
+</li>
+<li><code>CareTaker</code> keeps the list of mementos.
+</li></ul>
+</li></ul>
+<pre><code>originator.setState("State #1");
+originator.setState("State #2");
+careTaker.add(originator.saveStateToMemento());
+originator.setState("State #3");
+careTaker.add(originator.saveStateToMemento());
+originator.setState("State #4");
+originator.getStateFromMemento(careTaker.get(0));   // State #2
+originator.getStateFromMemento(careTaker.get(1));   // State #3</code></pre>
+<h3 id="state">State</h3>
+<ul>
+<li>Lets an object change its behavior when its internal state changes. It looks as if the object changed its class.
+</li>
+<li><strong>Benefits:</strong> keeps state-specific behavior in separate classes, and makes state transitions explicit.
+</li>
+<li><strong>Use it when:</strong> an object's behavior depends on its state and must change at run time, or when operations contain large conditional statements that depend on the state.
+</li>
+<li><strong>Structure:</strong> a <code>State</code> interface with <code>doAction(Context)</code>. <code>StartState</code> and <code>StopState</code> implement it, and each calls <code>context.setState(this)</code>. The <code>Context</code> holds the current state.
+<pre><code>Context context = new Context();
+new StartState().doAction(context);   // Player is in start state
+new StopState().doAction(context);    // Player is in stop state</code></pre>
+</li></ul>
+<h3 id="strategy-also-called-policy">Strategy (also called Policy)</h3>
+<ul>
+<li>Several algorithms exist for one task, and the client chooses which one to use, at run time.
+</li>
+<li><strong>Benefits:</strong> a substitute for subclassing. Each behavior lives in its own class, which removes conditional statements, and new behavior can be added without changing the application.
+</li>
+<li><strong>Used when:</strong> several classes differ only in their behavior (for example, the Servlet API).
+</li>
+<li><strong>Example:</strong> a <code>Strategy</code> interface with <code>doOperation(int, int)</code>, implemented by <code>OperationAdd</code>, <code>OperationSubstract</code> and <code>OperationMultiply</code>. A <code>Context</code> object is given a strategy.
+<pre><code>Context context = new Context(new OperationAdd());
+context.executeStrategy(10, 5);       // 15
+context = new Context(new OperationMultiply());
+context.executeStrategy(10, 5);       // 50</code></pre>
+</li></ul>
+<h3 id="observer">Observer</h3>
+<ul>
+<li>A one-to-many relationship: when one object (the <strong>subject</strong>) changes, all dependent objects (<strong>observers</strong>) are notified automatically.
+</li>
+<li>Defines a subscription mechanism for notifying several objects about events in the observed object.
+</li>
+<li><strong>Benefits:</strong> describes loose coupling between subject and observers, and supports broadcast communication.
+</li>
+<li><strong>Structure:</strong>
+<ul>
+<li><code>Subject</code> keeps a list of observers, has <code>attach(observer)</code>, and calls <code>notifyAllObservers()</code> in <code>setState()</code>.
+</li>
+<li><code>Observer</code> is an abstract class with <code>update()</code>. <code>BinaryObserver</code>, <code>OctalObserver</code> and <code>HexaObserver</code> each print the subject's state in their own format.
+</li></ul>
+</li></ul>
+<pre><code>Subject subject = new Subject();
+new HexaObserver(subject);
+new OctalObserver(subject);
+new BinaryObserver(subject);
+subject.setState(15);   // Hex String: F, Octal String: 17, Binary String: 1111
+subject.setState(10);   // Hex String: A, Octal String: 12, Binary String: 1010</code></pre>
+<ul>
+<li><strong>Java examples:</strong> Swing and AWT event listeners.
+</li></ul>
+<h3 id="template-method">Template Method</h3>
+<ul>
+<li>The superclass defines the skeleton of an algorithm in a <strong>final</strong> template method. Subclasses override specific steps, without changing the structure of the algorithm.
+</li>
+<li><strong>Benefit:</strong> reuses code and avoids duplication of the common behavior.
+</li>
+<li><strong>Example:</strong> <code>Game</code> has the final method <code>play()</code>, which calls <code>initialize()</code>, <code>startPlay()</code> and <code>endPlay()</code>. <code>Cricket</code> and <code>Football</code> override the three steps.
+<pre><code>Game game = new Cricket();
+game.play();   // Cricket Game Initialized! ... Cricket Game Finished!</code></pre>
+</li></ul>
+<h3 id="visitor">Visitor</h3>
+<ul>
+<li>Performs an operation on a group of similar objects. The operation is moved out of the objects into a separate <strong>visitor</strong> class, so an algorithm can change without changing the element classes.
+</li>
+<li><strong>Structure:</strong>
+<ul>
+<li><code>ComputerPart</code> (element) has <code>accept(visitor)</code>. <code>Keyboard</code>, <code>Mouse</code> and <code>Monitor</code> implement it.
+</li>
+<li><code>Computer</code> is a composite element that holds the parts. Its <code>accept()</code> visits each part and then itself.
+</li>
+<li><code>ComputerPartVisitor</code> declares a <code>visit()</code> method for each element type. <code>ComputerPartDisplayVisitor</code> implements them.
+</li></ul>
+</li></ul>
+<pre><code>ComputerPart computer = new Computer();
+computer.accept(new ComputerPartDisplayVisitor());
+// Displaying Mouse. Displaying Keyboard. Displaying Monitor. Displaying Computer.</code></pre>
+<h2 id="104-design-pattern-interview-points">10.4 Design Pattern Interview Points</h2>
+<ul>
+<li><strong>Advantages of design patterns:</strong> they are reusable across projects, help define system architecture, capture experience from expert developers, and make the design of an application more transparent.
+</li>
+<li><strong>Factory pattern:</strong> the most used pattern in Java. The creation logic is hidden from the client, and subclasses choose which object to create. Also called a *virtual constructor*.
+</li>
+<li><strong>Abstract Factory:</strong> an interface or abstract class creates families of related objects without naming their concrete classes. It is one level above the Factory pattern.
+</li>
+<li><strong>Structural patterns:</strong> rely on inheritance and interfaces to make classes and objects work together as one structure.
+</li>
+<li><strong>Singleton:</strong>
+<ul>
+<li>Ensures only one instance exists, with a global access point. <code>java.lang.Runtime</code> is an example.
+</li>
+<li>Two forms: early instantiation (created at load time) and lazy instantiation (created when first needed).
+</li>
+<li>Thread-safe options: double-checked locking, a static instance initialized at class loading, or an <code>enum</code> singleton, which is the simplest.
+</li>
+<li>A singleton can be cloned unless <code>clone()</code> is blocked. Override <code>clone()</code> to throw an exception, or use an <code>enum</code>.
+</li></ul>
+</li>
+<li><strong>Adapter:</strong> converts one interface into another, so a class can be used through a different interface. Also called a *wrapper*.
+</li>
+<li><strong>Decorator:</strong> adds behavior at run time with composition instead of inheritance. Used heavily in <code>java.io</code>: <code>BufferedReader</code> and <code>BufferedWriter</code> are examples.
+</li>
+<li><strong>Strategy vs State:</strong> their UML diagrams look the same. <strong>State</strong> manages the state of an object, and changes behavior as the state changes. <strong>Strategy</strong> describes a set of interchangeable algorithms that the client picks.
+</li>
+<li><strong>Composite advantages:</strong> clients treat single objects and groups the same way. Adding new component types is easy, and the structure is flexible.
+</li>
+<li><strong>Patterns used in the JDK:</strong>
+<ul>
+<li>Decorator: wrapper classes and <code>java.io</code> streams.
+</li>
+<li>Singleton: <code>Runtime</code>.
+</li>
+<li>Factory: <code>Integer.valueOf()</code>.
+</li>
+<li>Observer: Swing and AWT event handling.
+</li></ul>
+</li>
+<li><strong>Builder advantages:</strong> clear separation between construction and representation. Fewer constructor parameters, and readable method calls. Objects are always created in a complete state. Immutable objects are easy to build.
+</li>
+<li><strong>Proxy:</strong> a placeholder that controls access to the real object. It can add security (hiding the original's details), and supports on-demand loading. Also called a *surrogate*.
+</li>
+<li><strong>Bridge vs Adapter:</strong> Adapter makes the interfaces of one or more classes look similar. Bridge separates a class's interface from its implementation, so the implementation can change without changing the client code.
+</li></ul>
+<hr>
+<h1 id="11-general-interview-questions-project-and-web-technologies">11. General Interview Questions (Project and Web Technologies)</h1>
+<p>These questions were recorded from interviews and are kept as a checklist. Answers depend on the candidate's own project.</p>
+<p><strong>About the project</strong></p>
+<ol>
+<li>Explain the project in brief.
+</li>
+<li>Draw the workflow of the project.
+</li>
+<li>Which third-party tools were used?
+</li>
+<li>Which ORM was used? What are its advantages over plain JDBC?
+</li>
+<li>Which build tool was used?
+</li>
+<li>What is the main purpose of using a framework? Which framework (for example Struts or SOFIA) was used, and how is it useful?
+</li>
+<li>What was your role in the project?
+</li></ol>
+<p><strong>Web technologies</strong></p>
+<ol>
+<li>How are JSP pages mapped to their controllers?
+</li>
+<li>What is the use of <code>web.xml</code>?
+</li>
+<li>What are servlets? What is the difference between servlets and applets?
+</li>
+<li>What is the life cycle of a servlet?
+</li>
+<li>What is the life cycle of a JSP? What is the difference between servlets and JSP?
+</li>
+<li>What is JBoss, and how is it different from Tomcat?
+</li>
+<li>What is iReport, and how does it work internally?
+</li>
+<li>What is Ajax, and why is it used?
+</li></ol>
+<h2 id="111-web-and-rest-put-vs-patch">11.1 Web and REST: PUT vs PATCH</h2>
+<p>Both are HTTP methods used to update a resource. They differ in how much of the resource they change.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Aspect</th>
+<th>PUT</th>
+<th>PATCH</th>
+</tr></thead><tbody>
+<tr><td>Purpose</td><td>Replace the entire resource</td><td>Update specific fields</td></tr>
+<tr><td>Request body</td><td>Complete resource</td><td>Partial resource</td></tr>
+<tr><td>Fields not in the request</td><td>May be overwritten or removed</td><td>Remain unchanged</td></tr>
+<tr><td>Idempotent</td><td>Yes</td><td>Usually (depends on implementation)</td></tr>
+<tr><td>Payload size</td><td>Larger</td><td>Smaller</td></tr>
+<tr><td>Typical use</td><td>Full update</td><td>Partial update</td></tr>
+</tbody></table></div>
+<hr>
+<h1 id="12-generics-and-jdbc">12. Generics and JDBC</h1>
+<h2 id="121-generics">12.1 Generics</h2>
+<ul>
+<li>Generics were introduced in J2SE 5 to provide type-safe collections and classes.
+</li>
+<li>Without generics, a collection could hold any type of object, and each retrieved item had to be cast.
+</li>
+<li>Syntax: <code>ClassOrInterface&lt;Type&gt;</code>, for example <code>ArrayList&lt;String&gt;</code>.
+</li></ul>
+<p><strong>Benefits:</strong></p>
+<ol>
+<li>Stronger type checks at compile time.
+</li>
+<li>No casting required when retrieving elements.
+</li>
+<li>Type safety: only one type of object can be stored.
+</li></ol>
+<h2 id="122-jdbc-connection-example">12.2 JDBC Connection Example</h2>
+<pre><code>Class.forName("com.mysql.jdbc.Driver");
+Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sonoo", "root", "root");
+// "sonoo" is the database name; "root" is the username and password
+Statement stmt = con.createStatement();
+ResultSet rs = stmt.executeQuery("select * from emp");
+while (rs.next()) {
+    System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
+}
+con.close();</code></pre>
+<hr>
+<h1 id="13-java-17-and-java-21-features">13. Java 17 and Java 21 Features</h1>
+<h2 id="131-java-17">13.1 Java 17</h2>
+<ul>
+<li><strong>Sealed classes and interfaces:</strong> restrict which classes or interfaces may extend or implement them. Declared with <code>sealed</code> and a <code>permits</code> clause.
+<pre><code>public sealed class Shape permits Circle, Square, Rectangle {
+    // common properties and methods
+}</code></pre>
+</li>
+<li><strong>Pattern matching for <code>switch</code>:</strong> matches patterns for Strings, enums and records in <code>case</code> labels. Adds *guarded* patterns (<code>pattern &amp;&amp; boolean expression</code>) and *parenthesized* patterns. The arrow (<code>-&gt;</code>) indicates the code to run on a match. (Finalized in Java 21.)
+</li>
+<li><strong>Enhanced pseudo-random number generators:</strong> a new interface type and implementations for PRNG algorithms, with better support for stream-based operations.
+</li>
+<li><strong>Strongly encapsulated JDK internals:</strong> non-critical internal JDK elements are strongly encapsulated.
+</li>
+<li><strong>Foreign Function and Memory API:</strong> lets Java programs access code and data outside the JVM.
+</li>
+<li><strong>Vector API:</strong> expresses vector computations that compile to optimal vector instructions at run time.
+</li></ul>
+<h2 id="132-java-21">13.2 Java 21</h2>
+<ol>
+<li><strong>Virtual threads (Project Loom):</strong> lightweight threads managed by the JVM rather than the OS. They can be created in very large numbers and suit I/O-heavy applications.
+</li></ol>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th>Platform thread</th>
+<th>Virtual thread</th>
+</tr></thead><tbody>
+<tr><td>Created by</td><td>Operating system</td><td>JVM</td></tr>
+<tr><td>Cost</td><td>Heavy (about 1-2 MB)</td><td>Lightweight (about 1-10 KB)</td></tr>
+<tr><td>Quantity</td><td>Thousands (limited by the OS)</td><td>Millions (limited by the heap)</td></tr>
+<tr><td>Context switching</td><td>High overhead</td><td>Minimal</td></tr>
+<tr><td>Best for</td><td>Traditional multithreading</td><td>I/O-heavy applications</td></tr>
+</tbody></table></div>
+<pre><code>new Thread(() -&gt; System.out.println("Hello from a platform thread")).start();
+Thread.ofVirtual().start(() -&gt; System.out.println("Hello from a virtual thread"));</code></pre>
+<p>Virtual threads improve scalability for I/O-heavy applications without complex asynchronous code.</p>
+<ol>
+<li><strong>Pattern matching enhancements:</strong>
+<pre><code>if (obj instanceof String s) {          // no separate cast needed
+    System.out.println(s);
+}
+record Point(int x, int y) {}
+if (obj instanceof Point(int x, int y)) {
+    System.out.println("x: " + x + ", y: " + y);
+}</code></pre>
+</li>
+<li><strong>Record patterns:</strong> match and extract the components of a record directly in <code>switch</code>.
+<pre><code>record Car(String brand, String model) {}
+public String describeCar(Car car) {
+    return switch (car) {
+        case Car(var brand, var model) -&gt; brand + " " + model;
+        default -&gt; "Unknown car";
+    };
+}</code></pre>
+</li>
+<li><strong>Sequenced collections:</strong> collections with a defined encounter order (first to last).
+<pre><code>SequencedCollection&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.addFirst("A");
+list.addLast("B");
+String first = list.getFirst();
+String last = list.getLast();
+list.reversed();   // reversed view</code></pre>
+</li>
+<li><strong>String templates (preview):</strong> string interpolation without concatenation, for example <code>"Hello, \{name}!"</code>. Processors can be used for formatting queries.
+</li>
+<li><strong>Unnamed patterns and variables (preview):</strong> the underscore <code>_</code> marks unused variables or patterns.
+<pre><code>switch (obj) {
+    case String _ -&gt; System.out.println("It's a string");
+    case Integer _ -&gt; System.out.println("It's an integer");
+    case _ -&gt; System.out.println("Something else");
+}
+list.forEach((_, v) -&gt; System.out.println(v));</code></pre>
+</li>
+<li><strong>Foreign Function and Memory API (third preview):</strong> calls native code and accesses native memory safely, without JNI.
+<pre><code>Arena arena = Arena.ofConfined();
+MemorySegment segment = arena.allocateArray(ValueLayout.JAVA_INT, 10);</code></pre>
+</li>
+<li><strong>Scoped values (preview):</strong> a thread-safe, immutable way to share data across method calls.
+<pre><code>static final ScopedValue&lt;User&gt; CURRENT_USER = ScopedValue.newInstance();
+ScopedValue.where(CURRENT_USER, user).run(() -&gt; System.out.println(CURRENT_USER.get()));</code></pre>
+</li>
+<li><strong>Generational ZGC:</strong> the Z garbage collector supports a generational mode for better performance.
+</li>
+<li><strong>Structured concurrency (preview):</strong> coordinates concurrent subtasks with better error handling.
+<pre><code>try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+    Callable&lt;String&gt; task1 = scope.fork(() -&gt; "Result 1");
+    Callable&lt;String&gt; task2 = scope.fork(() -&gt; "Result 2");
+    scope.joinUntil(deadline);
+    System.out.println(task1.get() + " and " + task2.get());
+}</code></pre>
+</li></ol>
+<hr>
+<h1 id="14-programming-examples">14. Programming Examples</h1>
+<h2 id="141-stream-exercises">14.1 Stream Exercises</h2>
+<p>Each example uses a <code>List</code> or <code>String</code> and a single stream pipeline.</p>
+<pre><code>// 1. Separate even and odd numbers
+List&lt;Integer&gt; numbers = Arrays.asList(1, 2, 3, 4, 5);
+List&lt;Integer&gt; evenNumbers = numbers.stream().filter(n -&gt; n % 2 == 0).toList();   // [2, 4]
+List&lt;Integer&gt; oddNumbers  = numbers.stream().filter(n -&gt; n % 2 != 0).toList();   // [1, 3, 5]
+// Alternative: numbers.stream().collect(Collectors.partitioningBy(n -&gt; n % 2 == 0))
+
+// 2. Sort a list of strings by length
+List&lt;String&gt; strings = Arrays.asList("ac", "a", "abc");
+List&lt;String&gt; sortedStrings = strings.stream()
+        .sorted(Comparator.comparing(String::length))
+        .toList();                                                                  // [a, ac, abc]
+
+// 3. Second largest number
+Integer secondLargest = numbers.stream()
+        .sorted(Comparator.reverseOrder())
+        .skip(1)
+        .findFirst()
+        .orElse(null);                                                              // 4
+
+// 4. Reverse each word in a sentence
+String reversed = Arrays.stream("Hello World".split(" "))
+        .map(word -&gt; new StringBuilder(word).reverse().toString())
+        .collect(Collectors.joining(" "));                                          // olleH dlroW
+
+// 5. Frequency of each character
+"programming".chars()
+        .mapToObj(c -&gt; (char) c)
+        .collect(Collectors.groupingBy(c -&gt; c, Collectors.counting()))
+        .forEach((c, count) -&gt; System.out.println(c + ": " + count));
+
+// 6. Frequency with a simpler (less efficient) form
+"hello world".chars()
+        .mapToObj(c -&gt; (char) c)
+        .forEach(c -&gt; System.out.println(c + ": " + "hello world".chars().filter(ch -&gt; ch == c).count()));
+
+// 7. First non-repeating character (single pipeline, keeps insertion order)
+Character first = "analogy".chars()
+        .mapToObj(c -&gt; (char) c)
+        .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))
+        .entrySet().stream()
+        .filter(e -&gt; e.getValue() == 1)
+        .map(Map.Entry::getKey)
+        .findFirst()
+        .orElse(null);                                                              // 'n'</code></pre>
+<h3 id="working-with-objects-person-and-employee">Working with objects (<code>Person</code> and <code>Employee</code>)</h3>
+<pre><code>// Group people by city, keeping first names in a set
+people.stream()
+        .collect(Collectors.groupingBy(Person::getCity,
+                 Collectors.mapping(Person::getFirstName, Collectors.toSet())));
+
+// Split people into those older than 50 and the rest
+people.stream()
+        .collect(Collectors.partitioningBy(p -&gt; p.getAge() &gt; 50));
+
+// Count people older than 50 in each city, split by the age condition
+people.stream()
+        .collect(Collectors.partitioningBy(p -&gt; p.getAge() &gt; 50,
+                 Collectors.groupingBy(Person::getCity, Collectors.counting())));
+
+// Average salary per department for employees older than 30
+Map&lt;String, Double&gt; avgSalaryByDept = employees.stream()
+        .filter(e -&gt; e.getAge() &gt; 30)
+        .collect(Collectors.groupingBy(Employee::getDepartment,
+                 Collectors.averagingDouble(Employee::getSalary)));
+
+// Second-highest salary in each department
+Map&lt;String, Optional&lt;Employee&gt;&gt; secondHighest = employees.stream()
+        .collect(Collectors.groupingBy(Employee::getDepartment,
+                 Collectors.collectingAndThen(Collectors.toList(),
+                     list -&gt; list.stream()
+                         .sorted(Comparator.comparingDouble(Employee::getSalary).reversed())
+                         .skip(1)
+                         .findFirst())));</code></pre>
+<h2 id="142-concurrency-demonstrations">14.2 Concurrency Demonstrations</h2>
+<p>The source includes a demo class that runs each of these examples in turn. The concepts are covered in Multithreading.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Example</th>
+<th>What it shows</th>
+</tr></thead><tbody>
+<tr><td>Runnable and Callable</td><td><code>Runnable</code> runs with no result. <code>Callable</code> returns a value and can throw checked exceptions.</td></tr>
+<tr><td>ExecutorService</td><td>A fixed pool of 2 threads runs a <code>Runnable</code> and a <code>Callable</code> via <code>submit()</code>.</td></tr>
+<tr><td>Future</td><td><code>future.get()</code> blocks until a 2-second task completes.</td></tr>
+<tr><td>CompletableFuture</td><td><code>supplyAsync()</code> runs a task. <code>thenAccept()</code> handles the result. Chained calls use <code>thenApply()</code>, <code>thenAccept()</code>, <code>thenRun()</code> and <code>exceptionally()</code>.</td></tr>
+<tr><td>CyclicBarrier</td><td>Three threads call <code>await()</code> and continue together once all have arrived.</td></tr>
+<tr><td>CountDownLatch</td><td>The main thread calls <code>await()</code> until three worker threads have called <code>countDown()</code>.</td></tr>
+</tbody></table></div>
+<pre><code>// CountDownLatch example
+CountDownLatch latch = new CountDownLatch(3);
+Runnable task = () -&gt; {
+    // do work
+    latch.countDown();
+};
+new Thread(task, "Thread 1").start();
+new Thread(task, "Thread 2").start();
+new Thread(task, "Thread 3").start();
+latch.await();   // continues after all three count down
+System.out.println("All threads have completed their tasks.");</code></pre>
+<h2 id="143-practical-design-problem-problem-statement">14.3 Practical Design Problem (Problem Statement)</h2>
+<p>An event management system sends events to a queue. The application reads them ten messages at a time, and must:</p>
+<ol>
+<li>Audit system events.
+</li>
+<li>Validate each event by calling a REST service, using the event ID and client system information.
+</li>
+<li>Send an email notification if an event fails validation.
+</li>
+<li>Based on the event type, insert, update or delete the related object in the database, if the event ID is already in the table.
+</li></ol>
+<p>The source gives the problem only, without a solution.</p>
+<hr>
+<h2 id="sources">Sources</h2>
+<p>The original file cited these reference sites: justfortechies.com, studytonight.com, javaconceptoftheday.com, journaldev.com and beginnersbook.com.</p>
+</main>
 </body>
 </html>
