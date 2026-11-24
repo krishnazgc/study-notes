@@ -674,6 +674,56 @@ Q: Do you have experience with containers and Docker?
 Answer: (Note: Even if you haven't used it recently, express a foundational understanding.)
 "Yes, I have foundational experience with Docker. I understand core container concepts such as writing Dockerfile configurations, creating container images, managing networks and volumes, and utilizing docker-compose to orchestrate multi-container environments locally."
 
+Q. An api processes the same payment request twice because of network retires, how would you design an idempotent solution ?
+
+	 The core idea is to make the payment request carry a client-generated idempotency key, and have the server record what happened under that key so a retry returns the original result instead of charging again.
+
+1. The client generates the key once per logical payment
+	 
+Create a UUID before the first attempt, e.g. Idempotency-Key: 7c9e..., and persist it with the order so it survives app restarts.
+Every retry of that same payment sends the same key. Only a genuinely new payment gets a new key.
+Retrying with a fresh key is the bug: the server can't tell it's a duplicate.
+	 
+2. The server stores the key with a request fingerprint and status
+
+A table like this:
+
+CREATE TABLE idempotency_keys (
+  key            TEXT PRIMARY KEY,        -- scoped per merchant/customer: (client_id, key)
+  request_hash   TEXT NOT NULL,           -- hash of method + path + normalized body
+  status         TEXT NOT NULL,           -- IN_PROGRESS | COMPLETED | FAILED
+  response_code  INT,
+  response_body  JSONB,                   -- stored so replays return the same answer
+  locked_until   TIMESTAMP,               -- lease for crash recovery
+  created_at     TIMESTAMP DEFAULT now(),
+  expires_at     TIMESTAMP                -- e.g. 24-72h retention
+);
+
+Request handling:
+
+1. Insert the key first (INSERT ... ON CONFLICT DO NOTHING), with status IN_PROGRESS and a lease.
+2. If the insert conflicted, load the existing row:
+	request_hash differs → return 422. The same key was reused with a different payload, which is a client bug.
+	COMPLETED → return the stored response_code and response_body without touching the payment provider.
+	IN_PROGRESS and the lease is still valid → return 409 Conflict ("retry later"). 
+	This handles a concurrent duplicate that arrives while the first request is still running.
+	IN_PROGRESS and the lease has expired → the first worker probably crashed. Take over, but go to step 4 first.
+3. Process the payment, passing the same key to the provider (Stripe, Adyen, etc. support idempotency keys too). 
+   That way a retry that happens after your server calls the provider but before you store the result doesn't create a second charge on their side.
+4. Mark the row COMPLETED and store the response, ideally in the same DB transaction as the business write (payment record, ledger entry, order status).
+
+Summary
+-------
+Problem							Mechanism
+-------						-----------------	 
+Client retries				Same client-generated key on every attempt
+Server replays				Stored response returned for COMPLETED keys
+Concurrent duplicates		Unique insert plus IN_PROGRESS lease → 409
+Same key, different body	Request hash mismatch → 422
+Crash mid-payment			Lease expiry plus provider reconciliation, not blind retry
+Downstream duplicate		Pass the key to the payment provider
+Last line of defense		Unique constraint on the payment record
+
   </pre>
 </body>
 </html>
